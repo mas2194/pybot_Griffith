@@ -1,78 +1,190 @@
 # PyBot × Griffith: complete module I/O distillation
 
-This fork adds an experimental way to learn **each module's complete call result**
-with the official [Griffith](https://github.com/tsukushi-gate/Griffith) library.
-The target includes the return value, the entire updated conversation memory,
-mutable candidate arguments, and exceptions. The model receives the original
-call arguments, rather than six precomputed eligibility flags.
+An experimental fork of [PyBot](https://github.com/huggingface/pybot) that distills **complete module call results** — return value, updated conversation memory, mutable candidate arguments, and exceptions — directly from raw serialized call arguments using the official [Griffith](https://github.com/tsukushi-gate/Griffith) library (`e0675f4e`).
 
-**This is a bounded training and conformance experiment over 4 trained modules (6 hooks),
-not a full 116-hook PyBot replacement.** The original `python -m pybot` chatbot
-continues to run its existing rules under `bot/`. Learned calls are exposed separately through
-`python -m moduleio predict` and never call the original teacher as a fallback.
+[日本語ガイド](docs/moduleio/README.ja.md) · [Measured Results](experiments/moduleio/RESULTS.md) · [Summary JSON](experiments/moduleio/summary.json)
 
-**Measured improvement in hard discretized LUT evaluation: 0/18 → 15/18 whole-call exact matches**
-on the untouched 18-call held-out validation set (`15/18` hard / `16/18` soft; `18/18` valid JSON,
-`17/18` return exact, `16/18` memory exact, beating the upgraded floating-point control's `14/18`).
-On a strictly leak-free **318-call diverse unseen-entity validation split**, upgrading Griffith's
-`LogicMLP` FFNs from **2-input** to **4-input** WARP LUTs (`model.pt`, `497,160` params,
-2,048 4-input LUT neurons) matches **214/318 (67.3%)** (`211/318` with learnable wiring), beating
-the 2-input learnable-wiring model (**201/318 = 63.2%**, `1,259,016` params) with 60% fewer parameters,
-while 6-input LUTs (`ffn_n_inputs=6`) score **136/318 (42.8%)** and the 4,096-LUT 2-input variant
-matches **223/318 (70.1%)** (`13/18` Orig 18), versus **38/318 (11.9%)** Always-None and
-**247/318 (77.7%)** for the FP control.
+> **Scope**: Bounded conformance experiment over **4 trained modules / 6 hooks** (`favourites.observe/respond`, `group_ages.observe/respond`, `name_taken_back.observe`, `a_cake_between_its_layers.respond`), not a replacement for all 116 PyBot hooks. The original rule-based chatbot (`python -m pybot` under `bot/`) is untouched, and learned inference via `moduleio.predictor` or `python -m moduleio predict` runs strictly without importing `bot/`.
 
-[日本語の設計・再現手順](docs/moduleio/README.ja.md) ·
-[Measured experiment](experiments/moduleio/RESULTS.md)
+## Measured Results
 
-## Module I/O contract
+All models are evaluated with input-only prompts (no teacher fallback, no answer lookup, no prefix hints) under **hard** discretized LUT inference (`whole_call_exact`: exact match across return value, full updated memory, candidates, and exception).
 
-| Hook | Input | Learned output |
+| Model | LUT Arity (`2^N`) | Params | Orig 18 Hard / Soft | Diverse 318 Hard | Diverse 318 Valid JSON | CPU Mean (318) |
+|---|---|---:|---:|---:|---:|---:|
+| Previous baseline (`0/18`) | N=2 (4) | — | 0/18 / 0/18 | — | — | — |
+| Always-None + unchanged memory | — | 0 | 4/18 / — | 38/318 (11.9%) | 318/318 | — |
+| FP Control (`L0`, `fp/fp`, `4L/mlp4`) | — | 991,236 | 14/18 / — | 247/318 (77.7%) | 312/318 | 0.311s |
+| **Promoted: `L0+LogicFFN-KD-Fixed N=4` (`4L/mlp2`, `model.pt`)** | **N=4 (16)** | **497,160** | **15/18 / 16/18** | **214/318 (67.3%)** | **311/318 (97.8%)** | **1.329s** |
+| `L0+LogicFFN-KD-Learnable N=4` (`4L/mlp2`) | N=4 (16) | 2,070,024 | 15/18 / 15/18 | 211/318 (66.4%) | 309/318 | 1.436s |
+| `L0+LogicFFN-KD-4096` (`4L/mlp4`, fixed) | N=2 (4) | 480,776 | 13/18 / 14/18 | 223/318 (70.1%) | 305/318 | 1.184s |
+| `L0+LogicFFN-KD-Learnable N=2` (`4L/mlp2`) | N=2 (4) | 1,259,016 | 15/18 / 15/18 | 201/318 (63.2%) | 307/318 | 1.135s |
+| `L0+LogicFFN-KD-Learnable N=6` (`4L/mlp2`) | N=6 (64) | 2,954,760 | 13/18 / 13/18 | 136/318 (42.8%) | 283/318 | 3.170s |
+| `L2-LogicAttn` (scratch, `xnor_popcount+softmax`, learnable) | N=2 / 4 / 6 | 1.13M / 1.54M / 2.01M | 4/18 each | 36 / 34 / 23 of 318 | 281 / 237 / 143 | 1.35s / 1.69s / 2.91s |
+
+- **From `0/18` to `15/18` & `214/318`**: Fixing initial attention collapse, switching to compact lossless `compact-v2` serialization ([`moduleio/wire.py`](moduleio/wire.py)), annealing WARP LUTs with late `soft_to_ste`, and distilling from [`experiments/moduleio/fp-control.pt`](experiments/moduleio/fp-control.pt) via Griffith `kd_kl_loss_seq` eliminated the induction-head saddle point without a large soft-to-hard drop.
+- **Why `N=4` fixed wiring won promotion**: Raising `LogicMLP` arity from `N=2` (4 entries/LUT) to **`N=4`** (16 entries/LUT) boosts 2-layer FFN fan-in (`4 → 16` inputs) enough that fixed sparse wiring outperforms both `N=2 Learnable` (`214/318` vs `201/318`) and `N=4 Learnable` (`211/318`) while cutting parameters by **60%** (`497,160` vs `1,259,016`).
+- **Why `N=6` and `L2-LogicAttn` trailed**: `N=6` multiplies Walsh-Hadamard basis work `16×` (`O(2^N)`), forcing smaller micro-batches (`4×2`) on 16 GB MPS, slowing CPU inference `2.4×` (`3.170s`), and hurting late STE convergence (`136/318`). In `L2-LogicAttn`, pre-LUT `Binarize(threshold=0.0)` and 32-bit `xnor_popcount` cap attention capacity before truth-table evaluation, leaving `N=2/4/6` flat at `4/18` from scratch.
+
+### Compiled C99 Hard Inference (`export-c`)
+
+[`moduleio/export_c.py`](moduleio/export_c.py) compiles a trained checkpoint into a self-contained C99 shared library with causal KV-cache, folded static LUT wiring, and 64-bit Boolean truth-table lookups. Benchmarked on Apple Silicon ARM64 (`Apple clang 21.0.0`, `-O3 -mcpu=native`, single-threaded C99 vs 8-thread PyTorch CPU on Diverse 318, `batch=1`, `hard` mode):
+
+| Model | `.pt` → `.bin` | Orig 18 (Hard) | Diverse 318 (Hard) | PT CPU (8t) | C99 + KV (1t) | C99 Tok/s | Speedup vs PT |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **Promoted `model.pt` (`FFN N=4 Fixed`)** | **2.13 → 1.87 MB** | **15/18** | **214/318 (67.3%)** | **1,328.7 ms** (`75.2 tok/s`) | **24.16 ms** (p95 `27.96 ms`) | **4,134 tok/s** | **55.0×** |
+| `FFN N=2 Learn` (`4L/mlp2`) | 4.98 → 1.81 MB | 15/18 | 201/318 (63.2%) | 1,134.7 ms (`89.5 tok/s`) | 23.92 ms (p95 `27.53 ms`) | 4,247 tok/s | 47.4× |
+| `FFN N=4 Learn` (`4L/mlp2`) | 8.20 → 1.87 MB | 15/18 | 211/318 (66.4%) | 1,435.5 ms (`70.3 tok/s`) | 24.22 ms (p95 `27.84 ms`) | 4,166 tok/s | 59.3× |
+| `FFN N=6 Learn` (`4L/mlp2`) | 11.70 → 2.06 MB | 13/18 | 137/318* (`PT 136/318`) | 3,169.6 ms (`31.8 tok/s`) | 28.69 ms (p95 `32.83 ms`) | 3,512 tok/s | 110.5× |
+| `FP Control` (`L0`, `4L/mlp4`) | 3.80 → 3.78 MB | 14/18 | 247/318 (77.7%) | 310.9 ms (`327.3 tok/s`) | 66.12 ms (p95 `74.91 ms`) | 1,539 tok/s | 4.7× |
+
+<sub>\* `FFN N=6 Learn` had 1 borderline float32 ULP sign flip near zero (`max_diff = 5.72e-6`) giving C99 `137/318` vs PyTorch `136/318`; the other 4 models matched PyTorch 100% identically on both Orig 18 and Diverse 318.</sub>
+
+- **Why C99 makes the LUT model `2.74×` faster than C99 FP Control**: PyTorch `hard` mode still runs float32 Walsh-Hadamard transforms without KV-cache (`O(T^2)`). In C99 + KV-cache (Orig 18 profile), `FP Control` (`66.75 ms`) spends `43.80 ms` (65.6%) in FP FFN vs `22.25 ms` (33.3%) in Attention, whereas `model.pt` (`23.68 ms`) cuts FFN **37×** to `1.18 ms` (`0.80 ms` `LutLayer_0` WH + `0.38 ms` discrete 64-bit `LutLayer_1` truth-table lookup + `FromLogic`), leaving Attention at `21.79 ms` (92.0%). Disabling KV-cache in C99 drops `model.pt` to `1,892.8 ms/call` (`52.8 tok/s`).
+- **Compile-time wiring elimination & official Griffith C kernel**: `export-c` lowers truth tables via `griffith_logic.export.discretize.truth_tables_from_lut_layer` and folds `LearnableMapping` weights via `argmax` into static `uint16_t` indices (`11.70 → 2.06 MB` for `N=6`; compiled shared library is `49.6 KB`). Compiling block 0's pure-Boolean 2-layer `N=4` LUT stack with official Griffith `deploy.cbackend.generate_c` runs in **`444.7 ns/block`** (`1.78 µs` for 4 blocks; 100/100 exact match vs `ir.simulate`).
+- **`ToLogic` binarization trade-off**: Passing `binarize_tologic=True` converts `LutLayer_0` into a discrete truth-table lookup too, but saves only `0.35 ms/call` (`24.16 → 23.81 ms`, `4,209 tok/s`) because Attention dominates 92% of runtime, while dropping exact match to `10/18` (Orig 18) and `109/318` (Diverse 318).
+
+## Architecture & Boundaries
+
+- **Discretized Griffith LUT components in [`experiments/moduleio/model.pt`](experiments/moduleio/model.pt)**: 8 WARP **4-input** `LutLayer` layers (**2,048 LUT neurons** × 16 truth-table entries = 32,768 entries across all 4 `LogicMLP` FFN blocks, `--ffn-n-inputs 4 --wiring fixed`), evaluated deterministically with hard truth tables at inference.
+- **Remaining FP components**: `token_embed`, `pos_embed`, `LayerNorm`, `nn.MultiheadAttention` (`L0`), vocabulary output `head`, and continuous `ToLogic('sigmoid')` / `FromLogic('groupsum_centered')` bridges remain floating-point. Hard evaluation discretizes every LUT (and learned wiring when `--wiring learnable` is enabled); it does **not** make the entire Transformer a pure Boolean circuit.
+- **Griffith library & AP法 note**: Pinned to official Griffith `e0675f4e36596954aa424d522e0ee966bba9a3e1`. Griffith's `APTrainer` (Akiho Propagation) only supports flat `nn.Sequential` fixed-wiring `independent` classifiers and explicitly rejects `LogicLadderGPT` and `wiring="learnable"`, so training uses `LogicLadderGPT` with `soft_to_ste` and `kd_kl_loss_seq`.
+
+## Module I/O Contract
+
+| Hook | Input | Learned Output |
 |---|---|---|
-| `observe` | text, full memory before the call | return, full memory after the call, exception |
-| `respond` | text, full memory before the call | reply or `None`, full memory after the call, exception |
-| `choose` | text, full memory, candidates | return, full updated memory and candidates, exception |
-| `after` | text, chosen reply, full memory | return, full memory after the call, exception |
+| `observe` | user text, full memory before call | return value, full memory after call, exception |
+| `respond` | user text, full memory before call | reply or `None`, full memory after call, exception |
+| `choose` | user text, full memory, candidate list | chosen item, full updated memory & candidates, exception |
+| `after` | user text, chosen reply, full memory | return value, full memory after call, exception |
 
-The collector discovers **116 phase hooks in 102 modules** in the recorded PyBot
-revision. It traces the original runtime without changing the order of calls,
-candidate memory copies, selected response, or random-number progression.
-`None` responses with state changes are retained. The `compact-v2` wire codec
-([wire.py](moduleio/wire.py)) places `environment` before `arguments` and uses `"="`
-unchanged-state sentinels while preserving tuple/list distinctions, dictionary order,
-floating-point bits, and shared container references. Unsupported objects or cycles
-fail explicitly.
+Across PyBot revision `7d63c7fb`, `python -m moduleio inventory` discovers **116 hooks in 102 modules** (16 `observe`, 97 `respond`, 1 `choose`, 2 `after`). The `compact-v2` codec encodes `environment` before `arguments` and represents unchanged memory/candidate objects with `"="` sentinels while preserving tuple/list distinctions, dict order, float bits, bytes, and shared references (cycles and unsupported objects fail explicitly).
 
-The promoted student (`experiments/moduleio/model.pt`) uses Griffith's `LogicLadderGPT`
-with **discretized 4-input WARP `LutLayer` FFNs (2,048 LUT neurons × 16 entries,
-`ffn_n_inputs=4`, `wiring="fixed"`)** across all 4 Transformer blocks, distilled with
-Griffith's `kd_kl_loss_seq` from the FP control (`fp-control.pt`). We also expose
-2-, 4-, and 6-input LUT support across both FFN (`--ffn-n-inputs`) and Attention
-(`--n-inputs`) with optional `LearnableMapping` (`--wiring learnable`).
-Embeddings, `LayerNorm`, `nn.MultiheadAttention`, and the vocabulary head remain
-floating-point: **hard evaluation means all LUTs and learned LUT wiring are discretized;
-it does not mean the entire Transformer is a pure Boolean circuit.** Notice also that
-Griffith's `APTrainer` (Akiho Propagation) only supports flat `nn.Sequential`
-fixed-wiring `independent` LUT classifiers and rejects `LogicLadderGPT` and
-`wiring="learnable"`, so training uses `LogicLadderGPT` with `soft_to_ste` and
-Griffith KD instead. The library is pinned to `e0675f4e36596954aa424d522e0ee966bba9a3e1`.
+## Quickstart
 
-## Install and reproduce
-
-The learning experiment requires Python 3.11+ and PyTorch; the original PyBot
-continues to need only Python 3.8+.
+Requires **Python 3.11+** and PyTorch for `moduleio` (the original rule-based `pybot` continues to need only Python 3.8+).
 
 ```sh
 pip install '.[moduleio]'
-python -m moduleio inventory
+```
 
-# Generate the 3,681-call leak-free dataset (diverse-train / diverse-validation are checked in).
+### Run Teacher-Free Inference
+
+Python API using the checked-in promoted checkpoint [`experiments/moduleio/model.pt`](experiments/moduleio/model.pt):
+
+```python
+from moduleio.predictor import load_predictor
+
+predictor = load_predictor("experiments/moduleio/model.pt")
+result = predictor.predict_call(
+    "group_ages", "respond",
+    {
+        "text": "how old is my youngest",
+        "memory": {
+            "group_ages": {
+                "word": "kids",
+                "ages": [4, 7],
+                "line": "my kids are 4 and 7",
+            }
+        },
+    },
+    seed=0,
+    environment_date="2026-11-21",
+)
+print(result["return"])  # "Your youngest is 4."
+```
+
+Or via the CLI:
+
+```sh
+cat <<'EOF' > /tmp/pybot_call.json
+{
+  "text": "how old is my youngest",
+  "memory": {
+    "group_ages": {
+      "word": "kids",
+      "ages": [4, 7],
+      "line": "my kids are 4 and 7"
+    }
+  }
+}
+EOF
+
+python -m moduleio predict \
+  --checkpoint experiments/moduleio/model.pt \
+  --module group_ages \
+  --hook respond \
+  --arguments /tmp/pybot_call.json \
+  --seed 0 \
+  --date 2026-11-21
+```
+
+### Compile & Run in Native C99
+
+Export the promoted checkpoint to self-contained C99 (`moduleio_runtime.c`, `moduleio_runtime.h`, `weights.bin`, and compiled shared library) and run KV-cached hard inference via [`CompiledCModel`](moduleio/export_c.py):
+
+```sh
+python -m moduleio export-c \
+  --checkpoint experiments/moduleio/model.pt \
+  --output-dir /tmp/pybot_c
+```
+
+```python
+from moduleio.data import input_for_call
+from moduleio.evaluation import decode_output
+from moduleio.export_c import CompiledCModel
+
+args = {
+    "text": "how old is my youngest",
+    "memory": {
+        "group_ages": {
+            "word": "kids",
+            "ages": [4, 7],
+            "line": "my kids are 4 and 7",
+        }
+    },
+}
+prompt = input_for_call(
+    "group_ages", "respond", args,
+    seed=0, environment_date="2026-11-21", wire_format="compact-v2",
+)
+with CompiledCModel("/tmp/pybot_c") as model:
+    gen = model.generate(prompt, profile=True)
+result = decode_output(gen["text"], "respond", input_arguments=args, wire_format="compact-v2")
+print(result["return"])  # "Your youngest is 4."
+```
+
+### Evaluate Checked-In Models
+
+```sh
+# Untouched 18-call canonical held-out benchmark (hard mode)
+python -m moduleio evaluate \
+  --checkpoint experiments/moduleio/model.pt \
+  --data experiments/moduleio/model.pt.validation.jsonl.gz \
+  --output /tmp/hard-validation.json \
+  --mode hard --device cpu --threads 8
+
+# Leak-free 318-call diverse unseen-entity benchmark (hard mode)
+python -m moduleio evaluate \
+  --checkpoint experiments/moduleio/model.pt \
+  --data experiments/moduleio/diverse-validation.jsonl.gz \
+  --output /tmp/hard-diverse-validation.json \
+  --mode hard --device cpu --threads 8
+```
+
+### Reproduce Training & Run Tests
+
+Training expects a single GPU/MPS process at a time on 16 GB unified-memory Macs (`--grad-accum 2` keeps peak MPS driver memory around ~4.2 GB for `N=4`). You can also explore `--ffn-n-inputs {2,4,6}`, `--n-inputs {2,4,6}`, and `--wiring {fixed,learnable}`.
+
+```sh
+# Optional: regenerate the 3,681-call leak-free teacher corpus
 python examples/moduleio/make_diverse_specs.py
 python -m moduleio collect-calls \
   --spec examples/moduleio/diverse_calls.jsonl \
   --output examples/moduleio/diverse_teacher_calls.jsonl.gz
 
-# 1. Train the L0 FP control (teacher for Griffith KD; trained on diverse-train only).
+# 1. Train the L0 FP control (teacher for Griffith KD; trained on diverse-train only)
 python -m moduleio train \
   --data experiments/moduleio/diverse-train.jsonl.gz \
   --validation-data experiments/moduleio/diverse-validation.jsonl.gz \
@@ -86,7 +198,7 @@ python -m moduleio train \
   --loss-weighting example --train-mode soft \
   --device mps --seed 0 --threads 8
 
-# 2. Train the promoted 4-input Griffith WARP LUT FFN model with Griffith KD.
+# 2. Train the promoted 4-input Griffith WARP LUT FFN model with Griffith KD
 python -m moduleio train \
   --data experiments/moduleio/diverse-train.jsonl.gz \
   --validation-data experiments/moduleio/diverse-validation.jsonl.gz \
@@ -105,51 +217,27 @@ python -m moduleio train \
   --loss-weighting example --train-mode soft_to_ste \
   --device mps --seed 0 --threads 8
 
-# 3. Evaluate on both held-out benchmarks in discretized hard mode.
-python -m moduleio evaluate \
-  --checkpoint experiments/moduleio/model.pt \
-  --data experiments/moduleio/model.pt.validation.jsonl.gz \
-  --output experiments/moduleio/hard-validation.json --mode hard --device cpu --threads 8
-
-python -m moduleio evaluate \
-  --checkpoint experiments/moduleio/model.pt \
-  --data experiments/moduleio/diverse-validation.jsonl.gz \
-  --output experiments/moduleio/hard-diverse-validation.json --mode hard --device cpu --threads 8
-```
-
-Evaluation freely generates the **entire typed output** from the input alone.
-It reports whole-call, return, and memory exact match, valid completed outputs,
-active/inactive cases, per-hook results, and a `None`/unchanged-memory baseline.
-Malformed outputs, missing EOS, and overlength inputs remain failures in the
-denominator. Teacher-forced token accuracy is a separate diagnostic.
-
-Natural conversations can also be traced without reducing their states:
-
-```sh
+# Trace full all-hook conversations & run all test suites
+python -m moduleio inventory
 python -m moduleio collect \
   --scenarios examples/moduleio/conversations.jsonl \
-  --output examples/moduleio/runtime_trace.jsonl.gz
-python -m unittest discover -s tests/moduleio -v
+  --output /tmp/runtime_trace.jsonl.gz
+python -m unittest discover -s tests/moduleio -v   # 67 tests
+python -m unittest discover -s tests -v            # 12 original CLI tests
 ```
 
-Natural traces include the complete pre-call RNG state in model inputs. They
-can be much longer than the small demonstration model's context. Training reports
-every excluded record and never silently truncates inputs or outputs. Independent
-call fixtures instead supply a seed and preserve the caller's process RNG.
-Dates are recorded, not virtualized; module-global caches are not snapshotted.
-No guarantee for arbitrary input lengths, hidden process state, or an entire
-learned conversation is implied by a single-call benchmark.
+> **Evaluation Contract**: Evaluation never crops overlength prompts or outputs, keeps malformed/missing-EOS outputs in the denominator, and scores single-call predictions given recorded pre-call memory rather than multi-turn end-to-end rollouts.
 
-## Added files
+## Repository Layout
 
-| Path | Purpose |
+| Path | Contents |
 |---|---|
-| `moduleio/teacher.py`, `codec.py`, `wire.py` | Complete teacher calls and lossless `legacy-v1` / `compact-v2` serialization |
-| `moduleio/data.py` | Input-only prompts, full targets, group splits, explicit coverage |
-| `moduleio/model.py`, `training.py` | Official Griffith `LogicLadderGPT`, `wiring=learnable`, Griffith KD, checkpoints |
-| `moduleio/evaluation.py`, `predictor.py` | Free-generation conformance and teacher-free prediction |
-| `examples/moduleio/` | Input fixtures, recorded calls, all-hook conversation trace |
-| `experiments/moduleio/` | Reproducible weights, split records, measured results |
+| `moduleio/` | Teacher trace collector, typed `codec` & `compact-v2` `wire` codec, `LogicLadderGPT` wrapper, Griffith KD & `soft_to_ste` trainer, evaluator, teacher-free predictor, native C99 exporter/runtime (`export_c.py`) |
+| `docs/moduleio/` | [Japanese design & reproduction guide](docs/moduleio/README.ja.md) |
+| `examples/moduleio/` | Leak-free diverse call spec generator (`3,681` calls), small `120`-call fixture, and `232`-call natural trace across all 116 hooks |
+| `experiments/moduleio/` | Promoted [`model.pt`](experiments/moduleio/model.pt), [`fp-control.pt`](experiments/moduleio/fp-control.pt), train/validation splits, measured JSON reports, [`RESULTS.md`](experiments/moduleio/RESULTS.md), and [`summary.json`](experiments/moduleio/summary.json) |
+| `tests/moduleio/` | Unit tests for codec, wire format, data splits, evaluation contract, training, `N ∈ {2,4,6}` LUTs, teacher-blocked inference, and C99 parity (`67` tests) |
+| `bot/`, `pybot.py`, `tests/` | Original rule-based PyBot runtime and CLI tests (unmodified) |
 
 ---
 
@@ -165,7 +253,7 @@ The description below documents the original rule-based chatbot.
   </a>
 </div>
 
-# PyBot: can Python be a chatbot?
+### PyBot: can Python be a chatbot?
 
 LLMs drive today’s chatbots and agents, but chatbots long predate them. Sixty years ago, [ELIZA](https://en.wikipedia.org/wiki/ELIZA) held conversations by matching patterns in what the user typed and answering with predefined templates. It could seem insightful, but its repertoire was narrow, and expanding it meant writing more rules by hand. How far could a rule-based chatbot go if a swarm of agents did that work instead?
 
@@ -175,7 +263,7 @@ We challenged a swarm of over 1,000 agents to build a chatbot entirely in Python
 
 The result is PyBot: around 640k lines of code that can answer everyday questions, backed by 550k lines of tests the agents wrote themselves.
 
-## Try it out
+### Try it out
 
 Try PyBot in your terminal below, or in the browser on [Hugging Face](https://huggingface.co/spaces/HuggingFaceSwarms/PyBot), where each reply shows which of PyBot’s modules produced it.
 
@@ -231,7 +319,7 @@ echo "how long should i boil an egg" | python -m pybot
 
 For a `pybot` command you can run from anywhere, install the clone with `pip install .`.
 
-## What is in this repository
+### What is in this repository
 
 | Path | What it holds |
 |---|---|
