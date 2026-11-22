@@ -14,6 +14,15 @@
   **214/318（67.3%）**（`ok 311/318 = 97.8%`）を達成し、従来の2入力版 `model-logic-ffn-kd-learnable.pt`（**201/318 = 63.2%**、1,259,016パラメータ）を約2.5分の1のパラメータ数で上回りました。
   同2入力×4,096 LUT版 `model-logic-ffn-kd.pt` は **223/318（70.1%）**、4入力・接続学習版は **211/318（66.4%）**、6入力版は **136/318（42.8%）** です（常に `None` 基準は **38/318（11.9%）**、FP対照は **247/318（77.7%）**）。
 
+| モデル | 入力数 `2^N` | パラメータ数 | Orig 18 (hard / soft) | Diverse 318 (hard) | CPU 平均推論時間 |
+|---|---:|---:|---:|---:|---:|
+| FP対照 (`L0`, `fp/fp`) | — | 991,236 | 14/18 / — | 247/318 (77.7%) | 0.311s |
+| **昇格 `N=4` 固定配線 (`model.pt`)** | **N=4 (16)** | **497,160** | **15/18 / 16/18** | **214/318 (67.3%)** | **1.329s** |
+| `N=4` 接続学習 (`Learnable`) | N=4 (16) | 2,070,024 | 15/18 / 15/18 | 211/318 (66.4%) | 1.436s |
+| `N=2` 接続学習 (`Learnable`) | N=2 (4) | 1,259,016 | 15/18 / 15/18 | 201/318 (63.2%) | 1.135s |
+| `N=6` 接続学習 (`Learnable`) | N=6 (64) | 2,954,760 | 13/18 / 13/18 | 136/318 (42.8%) | 3.170s |
+| `L2-LogicAttn` (AttentionまでLUT, 無KD) | N=2 / 4 / 6 | 1.13M–2.01M | 4/18 each | 36 / 34 / 23 of 318 | 1.35–2.91s |
+
 > **適用範囲の注記**: 昇格モデル `experiments/moduleio/model.pt` は全4ブロックのFFNを
 > 公式 Griffith `LogicMLP`（WARP **4入力** `LutLayer` 2,048ニューロン × 16エントリ、
 > `--ffn-n-inputs 4 --wiring fixed`、評価時は hard 離散LUT）に置き換えています。
@@ -66,7 +75,7 @@
 - **接続学習と LUT 学習の仕組み**: `--wiring learnable` により公式 `LutLayer(..., wiring='learnable')`
   内の `LearnableMapping` が漸進的温度減衰 (`tau_soft: 0.2 -> 0.01`) ののちに `argmax` 離散配線へ移行し、
   同時に LUT 真理値表パラメータ（WARP）が `soft_to_ste` スケジュール（WSD 学習率減衰 + 終盤20% `hard_st`）で離散論理ゲートへ収束します。
-- **FP 蒸留ウォームスタートの役割**: 未学習状態からの LUT 学習（`8/18`・`117/318`）はエンティティ文字列のバイト単位コピー回路（induction head）形成の鞍点で停滞しました。訓練データのみで学習した FP 対照モデル（`fp-control.pt`）からの `--init-from` と公式 Griffith `kd_kl_loss_seq` により、hard 離散化ギャップ無しで **15/18・201/318** まで引き上げられました。
+- **FP 蒸留ウォームスタートの役割**: 未学習状態からの LUT 学習（`8/18`・`117/318`）はエンティティ文字列のバイト単位コピー回路（induction head）形成の鞍点で停滞しました。訓練データのみで学習した FP 対照モデル（`fp-control.pt`）からの `--init-from` と公式 Griffith `kd_kl_loss_seq` により、2入力接続学習版で **15/18・201/318**、さらに4入力固定配線版（`--ffn-n-inputs 4 --wiring fixed`）では **15/18・214/318**（497,160パラメータ）まで引き上げられました。
 - **AP法（`griffith_logic.training.rules.ap.APTrainer`）の制約**: 公式 Griffith の APTrainer は
   `nn.Sequential(..., LutLayer(parameterization="independent", wiring="fixed"), ..., GroupSum)` 形式の
   平坦な分類器専用であり、自己回帰 Attention・残差接続・`LogicLadderGPT`・`wiring="learnable"` を明示的に拒否します。
@@ -173,6 +182,48 @@ result = predictor.predict_call(
 
 このAPIは予測結果（`return`, `memory`, `exception`）のみを返し、元モジュールへのフォールバックは一切行いません。
 未学習モジュール・不正JSON・EOS未生成・長さ超過は `PredictionError` になります。
+
+## ネイティブ C99 コンパイルと推論速度（`export-c`）
+
+[export_c.py](../../moduleio/export_c.py) は、学習済みチェックポイントの離散 LUT 真理値表（公式 `truth_tables_from_lut_layer`）と学習済み接続（`LearnableMapping` の `argmax` を静的 `uint16_t` 配線へ畳み込み）を抽出し、因果 KV-cache 付き自己完結型 C99 ランタイム（共有ライブラリ + `weights.bin`）へコンパイルします。
+
+Apple Silicon ARM64（`Apple clang 21.0.0`, `-O3 -mcpu=native`、シングルスレッド C99 + KV-cache vs 8スレッド PyTorch CPU、Diverse 318 検証セット `batch=1`・`hard` モード）での実測結果:
+
+| モデル | `.pt` → `.bin` | Orig 18 (hard) | Diverse 318 (hard) | PT CPU (8t) | C99 + KV (1t) | C99 スループット | 高速化倍率 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **昇格 `model.pt` (`FFN N=4` 固定)** | **2.13 → 1.87 MB** | **15/18** | **214/318 (67.3%)** | **1,328.7 ms** (`75.2 tok/s`) | **24.16 ms** (p95 `27.96 ms`) | **4,134 tok/s** | **55.0×** |
+| `FFN N=2` 接続学習 | 4.98 → 1.81 MB | 15/18 | 201/318 (63.2%) | 1,134.7 ms (`89.5 tok/s`) | 23.92 ms (p95 `27.53 ms`) | 4,247 tok/s | 47.4× |
+| `FFN N=4` 接続学習 | 8.20 → 1.87 MB | 15/18 | 211/318 (66.4%) | 1,435.5 ms (`70.3 tok/s`) | 24.22 ms (p95 `27.84 ms`) | 4,166 tok/s | 59.3× |
+| `FFN N=6` 接続学習 | 11.70 → 2.06 MB | 13/18 | 137/318* (`PT 136/318`) | 3,169.6 ms (`31.8 tok/s`) | 28.69 ms (p95 `32.83 ms`) | 3,512 tok/s | 110.5× |
+| `FP対照` (`L0`, `4L/mlp4`) | 3.80 → 3.78 MB | 14/18 | 247/318 (77.7%) | 310.9 ms (`327.3 tok/s`) | 66.12 ms (p95 `74.91 ms`) | 1,539 tok/s | 4.7× |
+
+<sub>\* `FFN N=6` 接続学習では 0 付近の境界値で float32 ULP 1ビット差（`max_diff = 5.72e-6`）により C99 が 1 件改善して `137/318`（PT `136/318`）となりました。他の4モデルは Orig 18・Diverse 318 ともに PyTorch と 100% 完全一致しました。</sub>
+
+- **PyTorch では遅い LUT モデルが C99 で FP 対照の `2.74×` 高速になる理由**: PyTorch `hard` 推論では KV-cache 無し（`O(T^2)`）のまま浮動小数点 Walsh-Hadamard 演算を実行します。一方 C99 + KV-cache 下（Orig 18 内訳）では、`FP対照`（`66.75 ms`）が FFN に `43.80 ms`（65.6%）・Attention に `22.25 ms`（33.3%）を費やすのに対し、`model.pt`（`23.68 ms`）では FFN が **`1.18 ms`**（`LutLayer_0` WH `0.80 ms` + 離散64bit `LutLayer_1` 引表参照 & `FromLogic` `0.38 ms`）へと **37分の1** に縮小し、全体時間の **92.0%（`21.79 ms`）は FP Attention** が占めます（KV-cache 無効時は `1,892.8 ms/call`, `52.8 tok/s`）。
+- **接続行列のコンパイル時消去と公式 Griffith C カーネル**: 接続学習ありモデルの重み行列をコンパイル時に静的 `uint16_t` 配線へ畳み込むことで、`N=6` は `11.70 MB → 2.06 MB` まで縮小しました（生成共有ライブラリは `49.6 KB`）。なお、ブロック0の純粋ブール 2層 `N=4` LUT スタックを公式 Griffith `deploy.cbackend.generate_c` で単独 C 化すると **`444.7 ns / block`**（4ブロック合計 `1.78 µs`、`ir.simulate` と 100/100 一致）で動作します。
+- **`ToLogic` 二値化のトレードオフ**: `binarize_tologic=True` を指定すると第1層 LUT も純粋ブール参照になりますが、既に Attention が 92% を占めるためレイテンシ短縮は `0.35 ms/call`（`24.16 → 23.81 ms`, `4,209 tok/s`）にとどまり、一致率は Orig `10/18`・Diverse `109/318` に低下します。
+
+```sh
+python -m moduleio export-c \
+  --checkpoint experiments/moduleio/model.pt \
+  --output-dir /tmp/pybot_c
+```
+
+```python
+from moduleio.data import input_for_call
+from moduleio.evaluation import decode_output
+from moduleio.export_c import CompiledCModel
+
+args = {
+    "text": "how old is my youngest",
+    "memory": {"group_ages": {"word": "kids", "ages": [4, 7], "line": "my kids are 4 and 7"}},
+}
+prompt = input_for_call("group_ages", "respond", args, seed=0, environment_date="2026-11-21", wire_format="compact-v2")
+with CompiledCModel("/tmp/pybot_c") as model:
+    gen = model.generate(prompt, profile=True)
+result = decode_output(gen["text"], "respond", input_arguments=args, wire_format="compact-v2")
+print(result["return"])  # "Your youngest is 4."
+```
 
 ## 達成範囲と限界
 

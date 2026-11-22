@@ -2,7 +2,7 @@
   "date": "2026-11-22",
   "moduleio_tests": {
     "command": ".venv/bin/python -m unittest discover -s tests/moduleio -v",
-    "passed": 65,
+    "passed": 67,
     "failed": 0,
     "skipped": 0
   },
@@ -11,6 +11,13 @@
     "passed": 12,
     "failed": 0,
     "skipped": 0
+  },
+  "c99_export": {
+    "promoted_model_latency_ms": 24.16,
+    "promoted_model_tok_per_s": 4134.0,
+    "speedup_vs_pytorch_cpu_8t": 55.0,
+    "speedup_vs_c99_fp_control": 2.74,
+    "griffith_generate_c_lut_block_ns": 444.7
   },
   "end_to_end_unseen_predict": "passed on favourites.observe/respond (unseen 'crimson' and held-out 'black'), group_ages.respond, and name_taken_back.observe (unseen 'Zara')",
   "diff_check": "passed",

@@ -223,6 +223,16 @@ def _predict(args):
     print(codec.dumps(output))
 
 
+def _export_c(args):
+    from .export_c import export_c_model
+    report = export_c_model(
+        args.checkpoint,
+        args.output_dir,
+        compile_shared=not args.no_compile,
+    )
+    print(_json(report))
+
+
 def parser():
     result = argparse.ArgumentParser(description=__doc__)
     commands = result.add_subparsers(dest="command", required=True)
@@ -316,6 +326,10 @@ def parser():
     predict.add_argument("--seed", type=int, default=0)
     predict.add_argument("--date")
     predict.add_argument("--max-new-tokens", type=int)
+    export_c = commands.add_parser("export-c", help="compile a trained checkpoint to native C99")
+    export_c.add_argument("--checkpoint", required=True)
+    export_c.add_argument("--output-dir", required=True)
+    export_c.add_argument("--no-compile", action="store_true")
     return result
 
 
@@ -330,7 +344,8 @@ def main(argv=None):
             print(_json(report))
         else:
             {"collect": _collect, "collect-calls": _collect_calls, "train": _train,
-             "evaluate": _evaluate, "predict": _predict}[args.command](args)
+             "evaluate": _evaluate, "predict": _predict,
+             "export-c": _export_c}[args.command](args)
     except (ImportError, ValueError, OSError, PredictionError, TeacherCaptureError) as exc:
         print(f"moduleio: {exc}", file=sys.stderr)
         return 2
