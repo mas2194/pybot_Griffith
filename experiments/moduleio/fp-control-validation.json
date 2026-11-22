@@ -2,14 +2,14 @@
   "method": "free_generation",
   "mode": "hard",
   "counts": {
-    "whole_call_exact": 0,
-    "return_exact": 4,
-    "memory_exact": 0,
-    "exception_exact": 5,
+    "whole_call_exact": 14,
+    "return_exact": 16,
+    "memory_exact": 16,
+    "exception_exact": 18,
     "candidates_exact": 0,
-    "ok": 5,
-    "invalid_json": 12,
-    "invalid_schema": 1,
+    "ok": 18,
+    "invalid_json": 0,
+    "invalid_schema": 0,
     "invalid_utf8": 0,
     "eos_missing": 0,
     "overflow": 0,
@@ -18,31 +18,31 @@
     "choose_examples": 0
   },
   "rates": {
-    "whole_call_exact": 0.0,
-    "return_exact": 0.2222222222222222,
-    "memory_exact": 0.0,
-    "exception_exact": 0.2777777777777778,
+    "whole_call_exact": 0.7777777777777778,
+    "return_exact": 0.8888888888888888,
+    "memory_exact": 0.8888888888888888,
+    "exception_exact": 1.0,
     "candidates_exact": null,
-    "valid_complete_output": 0.2777777777777778
+    "valid_complete_output": 1.0
   },
   "latency_seconds": {
-    "total": 21.142460057998505,
-    "mean": 1.1745811143332503,
-    "median": 0.9682137414997669,
-    "p95": 2.4453464690004694,
-    "max": 2.4453464690004694
+    "total": 5.281891081947833,
+    "mean": 0.2934383934415463,
+    "median": 0.3433053335174918,
+    "p95": 0.4455798749695532,
+    "max": 0.4455798749695532
   },
   "by_activity": {
     "active": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 2,
-        "memory_exact": 0,
-        "exception_exact": 3,
+        "whole_call_exact": 10,
+        "return_exact": 12,
+        "memory_exact": 12,
+        "exception_exact": 14,
         "candidates_exact": 0,
-        "ok": 3,
-        "invalid_json": 10,
-        "invalid_schema": 1,
+        "ok": 14,
+        "invalid_json": 0,
+        "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
         "overflow": 0,
@@ -51,30 +51,30 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.14285714285714285,
-        "memory_exact": 0.0,
-        "exception_exact": 0.21428571428571427,
+        "whole_call_exact": 0.7142857142857143,
+        "return_exact": 0.8571428571428571,
+        "memory_exact": 0.8571428571428571,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.21428571428571427
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 18.480414669998936,
-        "mean": 1.3200296192856382,
-        "median": 1.1450588900002003,
-        "p95": 2.4453464690004694,
-        "max": 2.4453464690004694
+        "total": 4.818736999994144,
+        "mean": 0.3441954999995817,
+        "median": 0.3601455625030212,
+        "p95": 0.4455798749695532,
+        "max": 0.4455798749695532
       }
     },
     "inactive": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 2,
-        "memory_exact": 0,
-        "exception_exact": 2,
+        "whole_call_exact": 4,
+        "return_exact": 4,
+        "memory_exact": 4,
+        "exception_exact": 4,
         "candidates_exact": 0,
-        "ok": 2,
-        "invalid_json": 2,
+        "ok": 4,
+        "invalid_json": 0,
         "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
@@ -84,33 +84,33 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.5,
-        "memory_exact": 0.0,
-        "exception_exact": 0.5,
+        "whole_call_exact": 1.0,
+        "return_exact": 1.0,
+        "memory_exact": 1.0,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.5
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 2.6620453879995694,
-        "mean": 0.6655113469998923,
-        "median": 0.641783846999715,
-        "p95": 0.9426300499999343,
-        "max": 0.9426300499999343
+        "total": 0.46315408195368946,
+        "mean": 0.11578852048842236,
+        "median": 0.11276885398547165,
+        "p95": 0.12763516599079594,
+        "max": 0.12763516599079594
       }
     }
   },
   "by_module": {
     "favourites": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 1,
-        "memory_exact": 0,
-        "exception_exact": 2,
+        "whole_call_exact": 5,
+        "return_exact": 7,
+        "memory_exact": 6,
+        "exception_exact": 8,
         "candidates_exact": 0,
-        "ok": 2,
-        "invalid_json": 5,
-        "invalid_schema": 1,
+        "ok": 8,
+        "invalid_json": 0,
+        "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
         "overflow": 0,
@@ -119,30 +119,30 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.125,
-        "memory_exact": 0.0,
-        "exception_exact": 0.25,
+        "whole_call_exact": 0.625,
+        "return_exact": 0.875,
+        "memory_exact": 0.75,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.25
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 8.83985602699886,
-        "mean": 1.1049820033748574,
-        "median": 1.0654487369997696,
-        "p95": 1.6651913529995,
-        "max": 1.6651913529995
+        "total": 2.120303249976132,
+        "mean": 0.2650379062470165,
+        "median": 0.29080062548746355,
+        "p95": 0.37690350000048056,
+        "max": 0.37690350000048056
       }
     },
     "group_ages": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 0,
-        "memory_exact": 0,
-        "exception_exact": 0,
+        "whole_call_exact": 3,
+        "return_exact": 3,
+        "memory_exact": 4,
+        "exception_exact": 4,
         "candidates_exact": 0,
-        "ok": 0,
-        "invalid_json": 4,
+        "ok": 4,
+        "invalid_json": 0,
         "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
@@ -152,30 +152,30 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.0,
-        "memory_exact": 0.0,
-        "exception_exact": 0.0,
+        "whole_call_exact": 0.75,
+        "return_exact": 0.75,
+        "memory_exact": 1.0,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.0
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 8.34926238999924,
-        "mean": 2.08731559749981,
-        "median": 2.2067015984994214,
-        "p95": 2.4453464690004694,
-        "max": 2.4453464690004694
+        "total": 1.2054317910806276,
+        "mean": 0.3013579477701569,
+        "median": 0.29388325003674254,
+        "p95": 0.3839447909849696,
+        "max": 0.3839447909849696
       }
     },
     "name_taken_back": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 3,
-        "memory_exact": 0,
-        "exception_exact": 3,
+        "whole_call_exact": 6,
+        "return_exact": 6,
+        "memory_exact": 6,
+        "exception_exact": 6,
         "candidates_exact": 0,
-        "ok": 3,
-        "invalid_json": 3,
+        "ok": 6,
+        "invalid_json": 0,
         "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
@@ -185,33 +185,33 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.5,
-        "memory_exact": 0.0,
-        "exception_exact": 0.5,
+        "whole_call_exact": 1.0,
+        "return_exact": 1.0,
+        "memory_exact": 1.0,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.5
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 3.9533416410004065,
-        "mean": 0.6588902735000678,
-        "median": 0.675875790000191,
-        "p95": 0.919193273000019,
-        "max": 0.919193273000019
+        "total": 1.9561560408910736,
+        "mean": 0.32602600681517896,
+        "median": 0.4224494584777858,
+        "p95": 0.4455798749695532,
+        "max": 0.4455798749695532
       }
     }
   },
   "by_hook": {
     "observe": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 4,
-        "memory_exact": 0,
-        "exception_exact": 4,
+        "whole_call_exact": 10,
+        "return_exact": 12,
+        "memory_exact": 10,
+        "exception_exact": 12,
         "candidates_exact": 0,
-        "ok": 4,
-        "invalid_json": 7,
-        "invalid_schema": 1,
+        "ok": 12,
+        "invalid_json": 0,
+        "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
         "overflow": 0,
@@ -220,30 +220,30 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.3333333333333333,
-        "memory_exact": 0.0,
-        "exception_exact": 0.3333333333333333,
+        "whole_call_exact": 0.8333333333333334,
+        "return_exact": 1.0,
+        "memory_exact": 0.8333333333333334,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.3333333333333333
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 13.440933474999838,
-        "mean": 1.1200777895833198,
-        "median": 0.9564953529998093,
-        "p95": 2.4453464690004694,
-        "max": 2.4453464690004694
+        "total": 4.12390612391755,
+        "mean": 0.3436588436597958,
+        "median": 0.36906024999916553,
+        "p95": 0.4455798749695532,
+        "max": 0.4455798749695532
       }
     },
     "respond": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 0,
-        "memory_exact": 0,
-        "exception_exact": 1,
+        "whole_call_exact": 4,
+        "return_exact": 4,
+        "memory_exact": 6,
+        "exception_exact": 6,
         "candidates_exact": 0,
-        "ok": 1,
-        "invalid_json": 5,
+        "ok": 6,
+        "invalid_json": 0,
         "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
@@ -253,19 +253,19 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.0,
-        "memory_exact": 0.0,
-        "exception_exact": 0.16666666666666666,
+        "whole_call_exact": 0.6666666666666666,
+        "return_exact": 0.6666666666666666,
+        "memory_exact": 1.0,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.16666666666666666
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 7.701526582998667,
-        "mean": 1.2835877638331112,
-        "median": 1.075072744999943,
-        "p95": 2.320264397999381,
-        "max": 2.320264397999381
+        "total": 1.1579849580302835,
+        "mean": 0.19299749300504723,
+        "median": 0.21880575001705438,
+        "p95": 0.24329991702688858,
+        "max": 0.24329991702688858
       }
     }
   },
@@ -282,11 +282,11 @@
       "memory_exact": false,
       "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 1.6651913529995,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",{\"$type\":\"dict\",\"$id\":2,\"items\":[[\"favourites\",{\"$type\":\"dict\",\"$id\":3,\"items\":[[\"colour\",\"orange\"]]}]]}],[\"favourite_recent\",{\"$type\":\"dict\",\"$id\":4,\"items\":[[\"thing\",\"colour\"],[\"turn\",{\"$type\":\"int\",\"value\":\"0\"}]]}]]}],[\"exception\",null]]}",
+      "elapsed_seconds": 0.3590741250081919,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{\"favourites\":{\"colour\":\"purrle\"}},\"favourite_recent\":{\"thing\":\"colour\",\"turn\":0}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 342,
-      "input_tokens": 361
+      "generated_tokens": 133,
+      "input_tokens": 185
     },
     {
       "index": 1,
@@ -294,18 +294,17 @@
       "module": "favourites",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
+      "status": "ok",
       "whole_call_exact": false,
-      "return_exact": false,
+      "return_exact": true,
       "memory_exact": false,
-      "exception_exact": false,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 1.1371000409999397,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",{\"$type\":\"dict\",\"$id\":2,\"items\":[[\"favourites\",{\"$type\":\"dict\",\"$id\":3,\"items\":[[\"colvex. 1,{\":[[\"dn_age\"favon\"$tulur lurect\"$tectems\":\",\",\",\"$id\":4 ks\",\"t\":[[\"thing\",\"color\"],nopet\"]}]}]}]]}]]}],\",\" n\"[\":[\"nure]]}]]}],[\"exception\",null]]}",
+      "elapsed_seconds": 0.34214408398838714,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{\"favourites\":{\"color\":\"purqe\"}},\"favourite_recent\":{\"thing\":\"color\",\"turn\":0}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 340,
-      "input_tokens": 359,
-      "error": "Expecting ',' delimiter: line 1 column 195 (char 194)"
+      "generated_tokens": 130,
+      "input_tokens": 183
     },
     {
       "index": 2,
@@ -316,14 +315,14 @@
       "status": "ok",
       "whole_call_exact": false,
       "return_exact": false,
-      "memory_exact": false,
+      "memory_exact": true,
       "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 1.207515439999952,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",\"Your favourite colour is silver.\"],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",{\"$type\":\"dict\",\"$id\":2,\"items\":[[\"favourites\",{\"$type\":\"dict\",\"$id\":3,\"items\":[[\"colour\",\"silver\"]]}]]}]]}],[\"exception\",null]]}",
+      "elapsed_seconds": 0.20389100001193583,
+      "predicted_text": "{\"return\":\"Your favourite colour is pure.\",\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 260,
-      "input_tokens": 472
+      "generated_tokens": 74,
+      "input_tokens": 224
     },
     {
       "index": 3,
@@ -331,18 +330,17 @@
       "module": "favourites",
       "hook": "respond",
       "active": false,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.9426300499999343,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"er\",{\":\"$type\":\"dict\",\"$id\"id\"items\",[\":\"llvourites\",{\"$typhidict\",\",\"$id\":3,\"items\":[[\"colour\",\"sillue\"]]}]]}]]}],[\"l]]}],[[\",\",\"ms\"l]]}",
+      "elapsed_seconds": 0.10998120799195021,
+      "predicted_text": "{\"return\":null,\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 232,
-      "input_tokens": 465,
-      "error": "Expecting ':' delimiter: line 1 column 103 (char 102)"
+      "generated_tokens": 46,
+      "input_tokens": 217
     },
     {
       "index": 4,
@@ -350,18 +348,17 @@
       "module": "favourites",
       "hook": "observe",
       "active": true,
-      "status": "invalid_schema",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 1.153017739000461,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",{\"$type\":\"dict\",\"$id\":2,\"items\":[[\"favourites\",{\"$typt\":\"dict\",\"$id\":3,\"items\":[[\"colour\",\"green\"]]}]]}],[\"favourite_recent\",{\"$typt\":\"dict\",\"$id\":4,\"items\":[[\"thing\",\"colour\"],[\"turn\",{\"$type\":\"int\",\"value\":\"0\"}]]}]]}],[\"exception\",null]]}",
+      "elapsed_seconds": 0.3612169999978505,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{\"favourites\":{\"colour\":\"black\"}},\"favourite_recent\":{\"thing\":\"colour\",\"turn\":0}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 341,
-      "input_tokens": 360,
-      "error": "ValueError: unknown tagged type"
+      "generated_tokens": 132,
+      "input_tokens": 184
     },
     {
       "index": 5,
@@ -369,18 +366,17 @@
       "module": "favourites",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.9937974329995996,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",{\"$type\":\"dict\",\"$id\":2,\"items\":[[\"favourites\",{\"$type\":\"dict\",\"$id\":3,\"items\":[[\"colole[{\"reen\"]]}]]}],[\"favourite_recent\",{\"$type\":\"dict\",\"$id\":4,\"items\":[[\"thing\",\"color\"],[\"turn\",{\"$type\":\"int\",\"value\":\"0\"}]]}]]}],[\"exception\",null]]}",
+      "elapsed_seconds": 0.37690350000048056,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{\"favourites\":{\"color\":\"black\"}},\"favourite_recent\":{\"thing\":\"color\",\"turn\":0}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 339,
-      "input_tokens": 358,
-      "error": "Expecting ',' delimiter: line 1 column 192 (char 191)"
+      "generated_tokens": 130,
+      "input_tokens": 182
     },
     {
       "index": 6,
@@ -388,18 +384,17 @@
       "module": "favourites",
       "hook": "respond",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.9104238589998204,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",\"Your favourite colour is white.\"],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",{\"$type\":\"dict\",\"$id\":2,\"items\":[[\"favourites\"$id\"d\"pe\":\"dit\"d\"mes\":\"0\"0,\"ite\":[[\"colour\",\"white\"]]}]]}]]}],[\"epemskion\",null]]}",
+      "elapsed_seconds": 0.23945716698653996,
+      "predicted_text": "{\"return\":\"Your favourite colour is black.\",\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 258,
-      "input_tokens": 471,
-      "error": "Expecting ',' delimiter: line 1 column 176 (char 175)"
+      "generated_tokens": 75,
+      "input_tokens": 223
     },
     {
       "index": 7,
@@ -407,18 +402,17 @@
       "module": "favourites",
       "hook": "respond",
       "active": false,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.8301801119996526,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",\":\"$type\"d\"d\",\",\"$idid\"rems\":[[\":[\"favourites\":\"ems\"],\":\"dict\",\"idid\"ditemyptes\"diololour\",\"itict\"$iou on\":3,{]]],{\",\"excon\",\"uloul]}]]}",
+      "elapsed_seconds": 0.12763516599079594,
+      "predicted_text": "{\"return\":null,\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 237,
-      "input_tokens": 464,
-      "error": "Expecting ',' delimiter: line 1 column 104 (char 103)"
+      "generated_tokens": 46,
+      "input_tokens": 216
     },
     {
       "index": 8,
@@ -426,18 +420,17 @@
       "module": "group_ages",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 2.4453464690004694,
-      "predicted_text": "{\"$type\"$type\"$t\"$id\":0,\"$id\"$ictems\":[\"roror\"$epulurypemymory ,[\":\"d\":\":\",\"$id\"$\"$tertuems\":[\"wous\",\",\",{\"$type\"$ty\"ditypnd\",\"d\"items\"$items\":[\",\",\"$turexce\":\"ms\"m{\"$t\",\":\"d\"nd collid\"$items\"de\"]}]]],[\"dint\"pe\"dict\",\"$typente\":\",\"$ty\":[\":\"dictn\",\"d\"}],[\": 1,\",\"ms kemype\"ms\"$ty icowrllict w 13$exct\",\"d\":\"value 8 amemxce\"mon\":3\",nicrsitems\":2,\"itecemsems a\"wonure faki],[\",[\",[[[\"ms\":\"d\":\"$te\",\"$id\"]],\",\"l]}]]]]}\":\"$typ_t\"$t\",\":\"inure\"$ty type\":\":\":\":\"ce\":\"4 jams\":\"$inue amy kin s\", kids amnd 6\"]\"ul],\",[\"it\":\"],\",[\"m w{\"e}",
+      "elapsed_seconds": 0.3444665830465965,
+      "predicted_text": "{\"return\":null,\"memory\":{\"group_ages\":{\"word\":\"kids\",\"ages\":[11,14],\"line\":\"my kids are 11 and 14\"}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 527,
-      "input_tokens": 353,
-      "error": "Expecting ':' delimiter: line 1 column 9 (char 8)"
+      "generated_tokens": 119,
+      "input_tokens": 177
     },
     {
       "index": 9,
@@ -445,18 +438,17 @@
       "module": "group_ages",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 2.093138798999462,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"group_ages\",{\"$type\"dice\"$i 4,\"d\":\":\"items\":[[\"word\",\"chilue\":\"],[\"ages\",{\"$type\":\"lues\":0.\"$temseailulanare\"et\",{\"$temype_rict\":\"]},\",{\":\"]},\"ntypt\",\"value\":\"13\"}]}],[\"mlur kimy corouren ares\"]]}],\"ke,\"as\":\"d\":\" atyption\"}]is\":\"n ce ke\"dit o\":ll]]}]]} thiernule,\"kids ki]}]}],\"ickilin\":\"]]}],[\"$ict ue items 8 s\":\":[[\"d\"inur\",\",\"vaton farype\"ns\",\": o 110\"ced\"va\"$il\",[\"re olie\",\"mype\":\"m t are ary 12\"]]}]]}],\"$typt olure\"ioll]]}",
+      "elapsed_seconds": 0.3839447909849696,
+      "predicted_text": "{\"return\":null,\"memory\":{\"group_ages\":{\"word\":\"children\",\"ages\":[11,14],\"line\":\"my children are 11 and 14\"}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 525,
-      "input_tokens": 357,
-      "error": "Expecting ':' delimiter: line 1 column 115 (char 114)"
+      "generated_tokens": 127,
+      "input_tokens": 181
     },
     {
       "index": 10,
@@ -464,18 +456,17 @@
       "module": "group_ages",
       "hook": "respond",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 2.320264397999381,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",\"Your kids are 10 and 13.\"],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"group_ages\",{\"$type\":\"dict\",\"$id\":2,\"items\":[[\"word\",\"kids\"],[\"ages\",{\"$type\":\"list\",\"$id\":3,\"items\":[{\"$type\":\"int\",\"value\":\"10\"},{\"$type\":\"in kict\":\"id\":[\"$i\",\",[\"line\",\"my kids\"arexct\"]]}],ne\"0,\"$tion\"excenupicems\":\"id\"it \"]]}]}]],\"whis se  ,[\"0,\",\"$ityptocrar\"rypte\"ituee\"iegr\",\"]}]}",
+      "elapsed_seconds": 0.24329991702688858,
+      "predicted_text": "{\"return\":\"Your kids are 11 and 14.\",\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 404,
-      "input_tokens": 548,
-      "error": "Expecting ',' delimiter: line 1 column 266 (char 265)"
+      "generated_tokens": 68,
+      "input_tokens": 246
     },
     {
       "index": 11,
@@ -483,18 +474,17 @@
       "module": "group_ages",
       "hook": "respond",
       "active": true,
-      "status": "invalid_json",
+      "status": "ok",
       "whole_call_exact": false,
       "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 1.4905127239999274,
-      "predicted_text": "{\"$type\":\"dict\"$idid\":0,\"items\":[[\"return\"Your youest 8.\",\"}],[[\"],[\"memory\",{\"$type 10,\":xco ketype ite ke\":[[\"groull],\"$icexcept\"dict\",\"msicte wpe.\"il]]}],.\"rnkids\"kiolage all],{\":\"$type\"is wict ue id\"id\"it\":[{\"$type\":\"ins\",\",[\"values\"},\"ns\"$typs\"int\"value 13,\"10\"}]}],[\"linge y king ke ke are 10 and 13\":\"$itypes \"inull]]}",
+      "elapsed_seconds": 0.23372050002217293,
+      "predicted_text": "{\"return\":\"Your youngest is 14.\",\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 326,
-      "input_tokens": 554,
-      "error": "Expecting ',' delimiter: line 1 column 16 (char 15)"
+      "generated_tokens": 64,
+      "input_tokens": 252
     },
     {
       "index": 12,
@@ -502,18 +492,17 @@
       "module": "name_taken_back",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.793161562000023,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",{\"$type\":\"dict\",\"$id\":2,\"items\":[]}],[\"name_taken_back\",{\"$type\":\"dict\"$id\"$id\"$idict\":\":\":\",\"Jore\",[[\"in\"said aty\"],[[\"drn\",\",[[\",\"$t\"$ted_fams\"dit namept \"]]}",
+      "elapsed_seconds": 0.4455798749695532,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{},\"name_taken_back\":{\"name\":\"Max\",\"said\":\"that is not my name\"},\"asked_for\":\"name\"},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 261,
-      "input_tokens": 414,
-      "error": "Expecting ',' delimiter: line 1 column 172 (char 171)"
+      "generated_tokens": 135,
+      "input_tokens": 201
     },
     {
       "index": 13,
@@ -522,16 +511,16 @@
       "hook": "observe",
       "active": true,
       "status": "ok",
-      "whole_call_exact": false,
+      "whole_call_exact": true,
       "return_exact": true,
-      "memory_exact": false,
+      "memory_exact": true,
       "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.919193273000019,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",{\"$type\":\"dict\",\"$id\":2,\"items\":[]}],[\"name_taken_back\",{\"$type\":\"dict\",\"$id\":3,\"items\":[[\"name\",\"Kay\"],[\"said\",\"my name is wrong\"]]}],[\"asked_for\",\"name\"]]}],[\"exception\",null]]}",
+      "elapsed_seconds": 0.42511612497037277,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{},\"name_taken_back\":{\"name\":\"Max\",\"said\":\"my name is wrong\"},\"asked_for\":\"name\"},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 280,
-      "input_tokens": 411
+      "generated_tokens": 132,
+      "input_tokens": 198
     },
     {
       "index": 14,
@@ -540,16 +529,16 @@
       "hook": "observe",
       "active": false,
       "status": "ok",
-      "whole_call_exact": false,
+      "whole_call_exact": true,
       "return_exact": true,
-      "memory_exact": false,
+      "memory_exact": true,
       "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.45338758199977747,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",{\"$type\":\"dict\",\"$id\":2,\"items\":[[\"name\",\"Kay\"]]}]]}],[\"exception\",null]]}",
+      "elapsed_seconds": 0.11275145801482722,
+      "predicted_text": "{\"return\":null,\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 175,
-      "input_tokens": 400
+      "generated_tokens": 46,
+      "input_tokens": 187
     },
     {
       "index": 15,
@@ -557,18 +546,17 @@
       "module": "name_taken_back",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.7786204560006809,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",{\"$type\":\"dict\",\"$id\":2,\"items\":[]}],[\"name_taken_back\",{\"$type\":\"dict\"$id\"$id\"$idict\":\":\":\",\"Jore\",[[\"in\"said aty\"],[[\"drn\",\",[[\",\"$t\"$ted_fams\"dit namept \"]]}",
+      "elapsed_seconds": 0.4401395409950055,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{},\"name_taken_back\":{\"name\":\"Kim\",\"said\":\"that is not my name\"},\"asked_for\":\"name\"},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 261,
-      "input_tokens": 414,
-      "error": "Expecting ',' delimiter: line 1 column 172 (char 171)"
+      "generated_tokens": 135,
+      "input_tokens": 201
     },
     {
       "index": 16,
@@ -576,18 +564,17 @@
       "module": "name_taken_back",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.5731311239997012,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\":[\":0\"ms\",n\",[\"$type\"dictise\"$idididictems\"$id\":0,\",\"didichil wnus\"$typemory\"dictemollll]}],\",\"$idid_itemype_taken_backtypictypems oryms\",\"$id\"ityemsemems\":[[\"names\",\"}",
+      "elapsed_seconds": 0.41978279198519886,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{},\"name_taken_back\":{\"name\":\"Kim\",\"said\":\"my name is wrong\"},\"asked_for\":\"name\"},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 204,
-      "input_tokens": 411,
-      "error": "Expecting ',' delimiter: line 1 column 39 (char 38)"
+      "generated_tokens": 132,
+      "input_tokens": 198
     },
     {
       "index": 17,
@@ -596,16 +583,16 @@
       "hook": "observe",
       "active": false,
       "status": "ok",
-      "whole_call_exact": false,
+      "whole_call_exact": true,
       "return_exact": true,
-      "memory_exact": false,
+      "memory_exact": true,
       "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.43584764400020504,
-      "predicted_text": "{\"$type\":\"dict\",\"$id\":0,\"items\":[[\"return\",null],[\"memory\",{\"$type\":\"dict\",\"$id\":1,\"items\":[[\"user\",{\"$type\":\"dict\",\"$id\":2,\"items\":[[\"name\",\"Kay\"]]}]]}],[\"exception\",null]]}",
+      "elapsed_seconds": 0.11278624995611608,
+      "predicted_text": "{\"return\":null,\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 175,
-      "input_tokens": 400
+      "generated_tokens": 46,
+      "input_tokens": 187
     }
   ],
   "contract": "Isolated call: return value, full memory, exception, and choose candidates. Global RNG state is recorded by the teacher but is not reproduced here; hidden module globals are outside this contract.",
@@ -637,11 +624,11 @@
       "valid_complete_output": 1.0
     },
     "latency_seconds": {
-      "total": 0.0015900930011412129,
-      "mean": 8.833850006340072e-05,
-      "median": 6.544949974340852e-05,
-      "p95": 0.00033756999982870184,
-      "max": 0.00033756999982870184
+      "total": 0.0005044600693508983,
+      "mean": 2.8025559408383237e-05,
+      "median": 2.6937515940517187e-05,
+      "p95": 3.870896762236953e-05,
+      "max": 3.870896762236953e-05
     },
     "by_activity": {
       "active": {
@@ -670,11 +657,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.0013665190017491113,
-          "mean": 9.760850012493652e-05,
-          "median": 6.826649996583001e-05,
-          "p95": 0.00033756999982870184,
-          "max": 0.00033756999982870184
+          "total": 0.00039633404230698943,
+          "mean": 2.8309574450499247e-05,
+          "median": 2.7562491595745087e-05,
+          "p95": 3.337505040690303e-05,
+          "max": 3.337505040690303e-05
         }
       },
       "inactive": {
@@ -703,11 +690,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.00022357399939210154,
-          "mean": 5.5893499848025385e-05,
-          "median": 5.578599984801258e-05,
-          "p95": 6.39709996903548e-05,
-          "max": 6.39709996903548e-05
+          "total": 0.00010812602704390883,
+          "mean": 2.703150676097721e-05,
+          "median": 2.4146022042259574e-05,
+          "p95": 3.870896762236953e-05,
+          "max": 3.870896762236953e-05
         }
       }
     },
@@ -738,11 +725,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.0007168610009102849,
-          "mean": 8.960762511378562e-05,
-          "median": 6.826649996583001e-05,
-          "p95": 0.00020434799989743624,
-          "max": 0.00020434799989743624
+          "total": 0.00023720995523035526,
+          "mean": 2.9651244403794408e-05,
+          "median": 2.8375477995723486e-05,
+          "p95": 3.870896762236953e-05,
+          "max": 3.870896762236953e-05
         }
       },
       "group_ages": {
@@ -771,11 +758,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.00026006700045400066,
-          "mean": 6.501675011350017e-05,
-          "median": 6.519899989143596e-05,
-          "p95": 7.84090007073246e-05,
-          "max": 7.84090007073246e-05
+          "total": 0.00011550006456673145,
+          "mean": 2.8875016141682863e-05,
+          "median": 2.9000017093494534e-05,
+          "p95": 3.337505040690303e-05,
+          "max": 3.337505040690303e-05
         }
       },
       "name_taken_back": {
@@ -804,11 +791,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.0006131649997769273,
-          "mean": 0.00010219416662948788,
-          "median": 5.685250016540522e-05,
-          "p95": 0.00033756999982870184,
-          "max": 0.00033756999982870184
+          "total": 0.00015175004955381155,
+          "mean": 2.529167492563526e-05,
+          "median": 2.5562505470588803e-05,
+          "p95": 3.058300353586674e-05,
+          "max": 3.058300353586674e-05
         }
       }
     },
@@ -839,11 +826,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.001032819000101881,
-          "mean": 8.60682500084901e-05,
-          "median": 5.931050009166938e-05,
-          "p95": 0.00033756999982870184,
-          "max": 0.00033756999982870184
+          "total": 0.0003140840562991798,
+          "mean": 2.6173671358264983e-05,
+          "median": 2.6104506105184555e-05,
+          "p95": 3.100000321865082e-05,
+          "max": 3.100000321865082e-05
         }
       },
       "respond": {
@@ -872,11 +859,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.0005572740010393318,
-          "mean": 9.287900017322197e-05,
-          "median": 7.558650031569414e-05,
-          "p95": 0.00020434799989743624,
-          "max": 0.00020434799989743624
+          "total": 0.00019037601305171847,
+          "mean": 3.172933550861975e-05,
+          "median": 3.191648283973336e-05,
+          "p95": 3.870896762236953e-05,
+          "max": 3.870896762236953e-05
         }
       }
     },
@@ -893,7 +880,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 0.0001110500006689108
+        "elapsed_seconds": 3.100000321865082e-05
       },
       {
         "index": 1,
@@ -907,7 +894,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 6.701500024064444e-05
+        "elapsed_seconds": 2.78339721262455e-05
       },
       {
         "index": 2,
@@ -921,7 +908,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 0.00020434799989743624
+        "elapsed_seconds": 2.8916983865201473e-05
       },
       {
         "index": 3,
@@ -935,7 +922,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 6.39709996903548e-05
+        "elapsed_seconds": 3.870896762236953e-05
       },
       {
         "index": 4,
@@ -949,7 +936,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 6.692799979646225e-05
+        "elapsed_seconds": 2.65840208157897e-05
       },
       {
         "index": 5,
@@ -963,7 +950,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 6.951799969101558e-05
+        "elapsed_seconds": 2.7291011065244675e-05
       },
       {
         "index": 6,
@@ -977,7 +964,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 7.465800081263296e-05
+        "elapsed_seconds": 3.133295103907585e-05
       },
       {
         "index": 7,
@@ -991,7 +978,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.937300011282787e-05
+        "elapsed_seconds": 2.554204547777772e-05
       },
       {
         "index": 8,
@@ -1005,7 +992,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.388299996411661e-05
+        "elapsed_seconds": 2.5500019546598196e-05
       },
       {
         "index": 9,
@@ -1019,7 +1006,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.125999996380415e-05
+        "elapsed_seconds": 2.4124979972839355e-05
       },
       {
         "index": 10,
@@ -1033,7 +1020,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 7.84090007073246e-05
+        "elapsed_seconds": 3.337505040690303e-05
       },
       {
         "index": 11,
@@ -1047,7 +1034,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 7.651499981875531e-05
+        "elapsed_seconds": 3.250001464039087e-05
       },
       {
         "index": 12,
@@ -1061,7 +1048,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 6.166000002849614e-05
+        "elapsed_seconds": 2.616702113300562e-05
       },
       {
         "index": 13,
@@ -1075,7 +1062,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 0.00033756999982870184
+        "elapsed_seconds": 3.058300353586674e-05
       },
       {
         "index": 14,
@@ -1089,7 +1076,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.219899958319729e-05
+        "elapsed_seconds": 2.274999860674143e-05
       },
       {
         "index": 15,
@@ -1103,7 +1090,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.696100015484262e-05
+        "elapsed_seconds": 2.5083019863814116e-05
       },
       {
         "index": 16,
@@ -1117,7 +1104,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.674400017596781e-05
+        "elapsed_seconds": 2.604199107736349e-05
       },
       {
         "index": 17,
@@ -1131,7 +1118,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 4.803100000572158e-05
+        "elapsed_seconds": 2.112501533702016e-05
       }
     ],
     "contract": "Isolated call: return value, full memory, exception, and choose candidates. Global RNG state is recorded by the teacher but is not reproduced here; hidden module globals are outside this contract."
@@ -1155,8 +1142,9 @@
         "name_taken_back.observe": 6
       }
     },
-    "sha256": "82bbe7ca2218ea08fc9804523395744212638f8031b7fb9236e7b8a74aec7b8f",
-    "training_sha256": "2804d72b7ea4d254daaff79423bffa9882275680bdde281c45723e57a97f7051",
+    "wire_format": "compact-v2",
+    "sha256": "af1d484ccc32d56d2cb2ffe682cd63d8d65226552ffa40e9091cba643128a29e",
+    "training_sha256": "6440d3acb472ff2d804858123c92c66b039027bf15b467c1f3c41491e1719fba",
     "evaluation_contract": "one call with recorded input memory; not an end-to-end learned conversation"
   }
 }

@@ -1,119 +1,186 @@
 # Complete module I/O: measured experiment
 
-**Full module I/O reproduction was not achieved.** The small learned LUT model
-matched **0/18** held-out complete calls. The official Griffith floating-point
-control also matched **0/18**. These weights document failed experimental baselines;
-they are not working replacements for PyBot modules.
+Using the official [Griffith](https://github.com/tsukushi-gate/Griffith) library
+(commit `e0675f4e36596954aa424d522e0ee966bba9a3e1`), complete input-only held-out module I/O
+reproduction improved from **0/18**
+(both old LUT and old FP baseline) to **15/18**
+in discretized **hard** LUT evaluation (**16/18** soft),
+surpassing the upgraded FP control (**14/18**) on the
+untouched 18-call benchmark.
+On the strictly leak-free **318-call diverse unseen-entity validation split**,
+switching Griffith `LogicMLP` FFNs from **2-input** to **4-input WARP LUTs** (`ffn_n_inputs=4`,
+`model.pt` / `model-logic-ffn-kd-fixed-n4.pt`, `497,160` params) raised
+promoted hard exact match from **201/318 (63.2%)** (`N=2`, `Learnable`, `1,259,016` params)
+to **214/318 (67.3%)**
+(`ok 311/318`, `N=4 Learnable` reaches **211/318**),
+while the 4,096-LUT `N=2` fixed-wiring variant (`4L/mlp4`) reaches
+**223/318 (70.1%)**
+(`13/18` Orig 18), compared to **38/318 (11.9%)**
+for Always-None and **247/318 (77.7%)**
+for the FP control.
 
-## Implemented and exercised scope
+## What was broken in the 0/18 baseline and how it was fixed
 
-- Original PyBot revision: `7d63c7fbebb44c7e466e5c8b5c1f341ab767929e`.
-- Official Griffith revision: `e0675f4e36596954aa424d522e0ee966bba9a3e1`.
-- All 116 phase hooks in 102 modules were discovered. Two real conversation turns
-  produced 232 complete records, covering all 116 hooks.
-- The bounded learning experiment used 120 independent seeded calls in four
-  modules/six hooks. The target is return + full updated memory + exception,
-  together with updated candidate arguments for choose calls.
-- 102 training and 18 validation records; zero truncated or length-excluded
-  records. A colour, age pair, or name and its paraphrases stay in one group.
-  Identical inputs cannot cross the split.
-- Validation has 14 active and four inactive calls, in five hooks/three modules.
-  The cake task has only one family, retained in training: it has no held-out
-  coverage or generalization claim.
+1. **Attention collapse & under-capacity**: The initial `d_model=64, n_layers=1` model
+   with `N(0, 1)` position embeddings and FP-dot on binary vectors failed to form
+   entity-copying induction heads (`0/18` for both LUT and FP). Upgrading to `d_model=128,
+   n_layers=4, n_heads=4` with sinusoidal + scaled (`0.25`) embedding init and WSD LR
+   scheduling raised FP control from **0/18 -> 14/18**
+   (**247/318** on 318 diverse calls).
+2. **Verbose JSON wire bloat**: Replaced `legacy-v1` typed JSON dumps with lossless
+   `compact-v2` ([wire.py](../../moduleio/wire.py)), using `"="` unchanged-memory sentinels
+   and placing `environment` before `arguments` (cutting max original-18 sequence length
+   from 890 to 336 tokens).
+3. **Training curriculum & soft-hard gap**: Switched from step-1 `ste` to WARP soft
+   relaxation with late `soft_to_ste` (`0.8 * steps`) + `example` loss weighting,
+   nearly eliminating the soft-to-hard discretization drop (`8/18` soft == `8/18` hard scratch;
+   `15/18` soft == `15/18` hard at `N=2`; `16/18` soft -> `15/18` hard at `N=4`).
+4. **Saddle-point escape via official Griffith KD (`kd_kl_loss_seq`)**: Warm-starting
+   non-LUT tensors from `fp-control.pt` (trained strictly on `diverse-train.jsonl.gz`) and
+   distilling with Griffith's `kd_kl_loss_seq` + `split_param_groups` LR separation (`10×`
+   on `LutLayer`) enabled exact induction-head byte copying through discretized Boolean LUTs
+   (**8/18 -> 15/18**, **117/318 -> 214/318** at `N=4 Fixed` / **223/318** at `N=2 4096-LUT`).
+5. **2-input vs 4-input vs 6-input LUT fan-in (`n_inputs ∈ {2, 4, 6}`)**: Exposed Griffith's
+   `LogicMLP` `ffn_n_inputs` alongside attention `n_inputs`. Upgrading `LogicMLP` FFN from
+   `N=2` (4 WH coeffs/LUT) to **`N=4`** (16 WH coeffs/LUT, fan-in `16` across 2 FFN layers)
+   improved both `4L/mlp2 Learnable` (**201/318 -> 211/318**) and **`4L/mlp2 Fixed`**
+   (**214/318, 497,160 params — 60% smaller than `N=2 Learnable`**). By contrast,
+   **`N=6`** (64 WH coeffs/LUT) hit the `O(2^N)` compute/memory wall (~3× slower CPU eval,
+   `2.95M` params with `LearnableMapping`, reduced batch `4×2` and `1800` steps) and dropped
+   under STE switching (**136/318**, `13/18` Orig 18).
+6. **Diverse leak-free corpus**: Built 3,681 real PyBot teacher calls (`3,363` train /
+   `318` diverse val) covering unseen colors, favourites categories, age groups, and names
+   with programmatic zero-overlap checks against the untouched 18-call validation file.
 
-## Input-only free generation
+## 2-input vs 4-input vs 6-input Griffith LUT comparison
 
-Generation receives the complete input and no correct output prefix. The output
-budget is the remaining model context, independent of the expected answer length.
-Success requires valid typed JSON, the expected schema, EOS, and equality of all
-output values, types, order, and shared references.
+| Family | LUT Arity (`2^N`) | Steps (`b×acc=eff`) | Params | MPS train (s / step) | Orig 18 hard / soft | Diverse 318 hard | CPU eval mean |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| FFN KD (Learnable, 4L/mlp2) | N=2 (2^2=4) | 2400 (16×1=16) | 1,259,016 | 590.3s (246 ms/st) | 15/18 / 15/18 | 201/318 (63.2%) | 1.135s |
+| FFN KD (Fixed, 4L/mlp2) | N=4 (2^4=16) | 2400 (8×2=16) | 497,160 | 1228.5s (512 ms/st) | 15/18 / 16/18 | 214/318 (67.3%) | 1.329s |
+| FFN KD (Learnable, 4L/mlp2) | N=4 (2^4=16) | 2400 (8×2=16) | 2,070,024 | 1244.4s (518 ms/st) | 15/18 / 15/18 | 211/318 (66.4%) | 1.436s |
+| FFN KD (Learnable, 4L/mlp2) | N=6 (2^6=64) | 1800 (4×2=8) | 2,954,760 | 1348.5s (749 ms/st) | 13/18 / 13/18 | 136/318 (42.8%) | 3.170s |
+| Attn L2 (Learnable, 4L/mlp4) | N=2 (2^2=4) | 4800 (16×1=16) | 1,126,408 | 1218.7s (254 ms/st) | 4/18 / 4/18 | 36/318 (11.3%) | 1.345s |
+| Attn L2 (Learnable, 4L/mlp4) | N=4 (2^4=16) | 3000 (8×2=16) | 1,538,056 | 1360.3s (453 ms/st) | 4/18 / 4/18 | 34/318 (10.7%) | 1.687s |
+| Attn L2 (Learnable, 4L/mlp4) | N=6 (2^6=64) | 2000 (4×2=8) | 2,005,000 | 1169.1s (585 ms/st) | 4/18 / 4/18 | 23/318 (7.2%) | 2.905s |
 
-| Model | Whole call exact | Return exact | Memory exact | Valid complete output |
-|---|---:|---:|---:|---:|
-| LUT model / hard | 0/18 | 0/18 | 0/18 | 0/18 |
-| LUT model / soft | 0/18 | 0/18 | 0/18 | 0/18 |
-| FP control / eval | 0/18 | 4/18 | 0/18 | 5/18 |
-| Always None + unchanged memory | 4/18 | 14/18 | 8/18 | 18/18 |
+- **Sweet spot (`N=4`) for FFN `LogicMLP`**: `N=4` raises single-LUT truth tables from 4 to 16 entries without needing `LearnableMapping`'s massive softmax routing tables (`497,160` params total vs `1,259,016` for `N=2 Learnable` and `2,070,024` for `N=4 Learnable`), reaching **15/18** Orig 18 and **214/318 (67.3%)** Diverse 318.
+- **Why `N=6` degraded here**: With `2^6 = 64` Walsh-Hadamard parameters per neuron (`16×` more than `N=2`) and 6× `LearnableMapping` tables (`2,954,760` params), MPS memory required halving effective batch (`4×2=8`) and fewer steps (`1,800`), while STE discretization after step `1,440` suffered a larger drop (teacher-forced sequence accuracy fell to `50.8%` hard vs `85.7%` for `N=4 Fixed`, CPU generation slowed `2.4×` to `3.170s/call`).
+- **Why `N=4` / `N=6` alone did not lift `L2-LogicAttn`**: Across `N=2 -> 4 -> 6`, from-scratch `L2-LogicAttn` stayed flat at `4/18` Orig 18 (`36/318 -> 34/318 -> 23/318` Diverse 318). In `LadderAttention`, `Binarize(threshold=0.0)` quantizes hidden states to 1 bit/channel before the LUTs and `xnor_popcount` compares 32 binary bits per head, so widening Q/K/V truth tables alone cannot bypass that front-end binarization and saddle point without working Attention KD.
 
-The always-None baseline succeeds on the four inactive calls and **0/14 active
-calls**. Its 14/18 return-only score shows why judging only the return value would
-hide missing memory updates.
+## Input-only free generation across all rungs
 
-All 18 hard and all 18 soft LUT predictions were invalid JSON. The FP control
-produced 12 invalid-JSON predictions, one invalid-schema prediction, and five valid
-completed outputs. None of those five had the correct full memory. None of the
-three runs had context overflow or missing EOS.
+All models are evaluated with input-only prompts (no teacher imports, no answer lookup,
+no prefix hints) and full semantic equivalence (return value, complete updated memory,
+and exception descriptor).
 
-## Training diagnostics are separate from reproduction accuracy
+| Model | Params | MPS train | Orig 18 hard | Orig 18 soft | Orig 18 valid JSON | Diverse 318 hard | Diverse 318 valid | Diverse 318 active |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Previous 0/18 LUT baseline | — | — | 0/18 | 0/18 | 0/18 | — | — | — |
+| Previous 0/18 FP baseline | — | — | 0/18 | — | 5/18 | — | — | — |
+| Always None + unchanged memory | 0 | — | 4/18 | — | 18/18 | 38/318 (11.9%) | 318/318 | 0/280 |
+| FP Control (L0, fp/fp, 4L/mlp4) | 991,236 | 276.1s | 14/18 | — | 18/18 | 247/318 (77.7%) | 312/318 | 209/280 |
+| Promoted: L0+LogicFFN-KD-Fixed (N=4, 4L/mlp2, wiring=fixed) | 497,160 | 1228.5s | 15/18 | 16/18 | 18/18 | 214/318 (67.3%) | 311/318 | 176/280 |
+| L0+LogicFFN-KD-Learnable (N=4, 4L/mlp2, wiring=learnable) | 2,070,024 | 1244.4s | 15/18 | 15/18 | 18/18 | 211/318 (66.4%) | 309/318 | 173/280 |
+| L0+LogicFFN-KD-4096 (N=2, 4L/mlp4, wiring=fixed) | 480,776 | 934.8s | 13/18 | 14/18 | 17/18 | 223/318 (70.1%) | 305/318 | 185/280 |
+| L0+LogicFFN-KD-Learnable (N=2, 4L/mlp2, wiring=learnable) | 1,259,016 | 590.3s | 15/18 | 15/18 | 18/18 | 201/318 (63.2%) | 307/318 | 163/280 |
+| L0+LogicFFN-KD-Learnable (N=6, 4L/mlp2, wiring=learnable) | 2,954,760 | 1348.5s | 13/18 | 13/18 | 18/18 | 136/318 (42.8%) | 283/318 | 99/280 |
+| L0+LogicFFN (from-scratch, N=2, 4L/mlp4, wiring=fixed) | 480,776 | 1484.7s | 8/18 | 8/18 | 18/18 | 117/318 (36.8%) | 305/318 | 79/280 |
+| L2-LogicAttn (from-scratch, N=2, xnor_popcount+softmax, wiring=learnable) | 1,126,408 | 1218.7s | 4/18 | 4/18 | 18/18 | 36/318 (11.3%) | 281/318 | 1/280 |
+| L2-LogicAttn (from-scratch, N=4, xnor_popcount+softmax, wiring=learnable) | 1,538,056 | 1360.3s | 4/18 | 4/18 | 12/18 | 34/318 (10.7%) | 237/318 | 0/280 |
+| L2-LogicAttn (from-scratch, N=6, xnor_popcount+softmax, wiring=learnable) | 2,005,000 | 1169.1s | 4/18 | 4/18 | 10/18 | 23/318 (7.2%) | 143/318 | 0/280 |
+| L2-LogicAttn-KD (AttnKL, N=2, xnor_popcount+softmax, wiring=learnable) | 1,126,408 | 1035.3s | 0/18 | 0/18 | 0/18 | 2/318 (0.6%) | 30/318 | 0/280 |
+| L3-C-LogicAttn (from-scratch, N=2, xnor_popcount+mux_gumbel, wiring=learnable) | 1,126,408 | 1840.3s | 0/18 | 0/18 | 5/18 | 12/318 (3.8%) | 80/318 | 0/280 |
+| L2-Full-KD (Attn+FFN logic, N=2, xnor_popcount+softmax, wiring=fixed) | 214,540 | 2176.8s | 0/18 | 0/18 | 0/18 | 0/318 (0.0%) | 0/318 | 0/280 |
 
-Both runs used identical training/validation fingerprints, width 64, one layer,
-two heads, context 1280, batch four, 1,000 steps, learning rate 0.003, train seed 0,
-and split seed 1. The LUT model uses native Griffith hard straight-through training.
-The control uses official `attention='fp', ffn='fp'`. Parameter counts differ.
+## Promoted checkpoint breakdown (`experiments/moduleio/model.pt`)
 
-| Quantity | LUT model | FP control |
+Promoted checkpoint: `experiments/moduleio/model-logic-ffn-kd-fixed-n4.pt`
+(`d_model=128, n_heads=4, n_layers=4, mlp_ratio=2, attention='fp', ffn='logic', ffn_n_inputs=4, wiring='fixed'`).
+
+- **Discretized Griffith logic components**: 8 WARP **4-input** `LutLayer` layers
+  (**2,048 LUT neurons** × 16 truth-table entries = 32,768 entries across 4 Transformer blocks,
+  `wiring='fixed'`, evaluated deterministically with hard truth tables at inference).
+- **Remaining FP components**: `token_embed`, `pos_embed`, `nn.MultiheadAttention` (`L0`),
+  `LayerNorm`, and output `head` (`nn.Linear`), plus continuous `ToLogic('sigmoid')` /
+  `FromLogic('groupsum_centered')` bridges around each LUT block.
+- **CPU eval latency (`threads=8`)**: mean `1.233s`
+  (median `1.474s`) on Original 18;
+  mean `1.329s`
+  (median `1.415s`) on Diverse 318
+  (vs `0.311s` mean for FP Control).
+
+### By activity
+
+| Split | Activity | Promoted Hard exact | FP Control exact | Always-None exact |
+|---|---|---:|---:|---:|
+| Original 18 | Active (state change or reply) | 11/14 | 10/14 | 0/14 |
+| Original 18 | Inactive (`None`, unchanged) | 4/4 | 4/4 | 4/4 |
+| Diverse 318 | Active (state change or reply) | 176/280 (62.9%) | 209/280 (74.6%) | 0/280 |
+| Diverse 318 | Inactive (`None`, unchanged) | 38/38 (100.0%) | 38/38 (100.0%) | 38/38 |
+
+### By module and hook (Promoted hard model)
+
+| Module | Orig 18 exact | Diverse 318 exact | Diverse 318 Return | Diverse 318 Memory | Diverse 318 FP Control |
+|---|---:|---:|---:|---:|---:|
+| `a_cake_between_its_layers` | 0/0 (train-only) | 2/2 (100.0%) | 2/2 | 2/2 | 2/2 (100.0%) |
+| `favourites` | 5/8 | 72/122 (59.0%) | 98/122 | 95/122 | 83/122 (68.0%) |
+| `group_ages` | 4/4 | 88/116 (75.9%) | 91/116 | 111/116 | 101/116 (87.1%) |
+| `name_taken_back` | 6/6 | 52/78 (66.7%) | 73/78 | 52/78 | 61/78 (78.2%) |
+
+| Hook | Orig 18 exact | Diverse 318 exact | Diverse 318 Return | Diverse 318 Memory | Diverse 318 Valid JSON |
+|---|---:|---:|---:|---:|---:|
+| `observe` | 10/12 | 139/196 (70.9%) | 189/196 | 139/196 | 189/196 |
+| `respond` | 5/6 | 75/122 (61.5%) | 75/122 | 121/122 | 122/122 |
+
+On the untouched 18-call benchmark, `model.pt` scores **18/18 valid schema JSON**,
+**17/18 return_exact**, **16/18 memory_exact**, **4/4 `group_ages`**, and **6/6 `name_taken_back`**;
+all 3 remaining errors (`indices 0, 1, 2`) are minor character slips on the unseen colour
+`"purple"` (`"purrcele"` / `"purrcrupc"` / `"purqe."`), while preserving the `"colour"` vs
+`"color"` key distinction and nested memory schema.
+
+## Why full-attention LUT rungs trailed and AP法 compatibility
+
+- **Logic-Attention & Full-Logic blocks (`L2-LogicAttn`, `L3-C`, `L2-Full`)**:
+  XNOR-popcount on 1-layer LUT Q/K/V projections (`proj_depth=1`) showed almost no gain from
+  increasing LUT arity alone (`N=2`: `4/18` & `36/318`, `N=4`: `4/18` & `34/318`,
+  `N=6`: `4/18` & `23/318`), while replacing softmax with 1-token `mux_gumbel` (`L3-C`) or
+  placing fixed sparse LUTs in both sublayers (`L2-Full`) prevented accurate UTF-8 byte induction
+  copying under soft-to-STE switching (`0/18` hard exact, `36.3 min` for `L2-Full`).
+- **Why Griffith AP法 (`APTrainer`) was not used directly here**:
+  In the pinned Griffith library (`griffith_logic/training/rules/ap.py`), `APTrainer`
+  requires flat classification pipelines (`nn.Sequential` ending in `GroupSum`) composed
+  solely of `LutLayer(parameterization="independent", wiring="fixed")`. It explicitly
+  rejects `LogicLadderGPT`, autoregressive self-attention, residual transformers, and
+  `wiring="learnable"`. This experiment therefore uses official Griffith `LogicLadderGPT`
+  with WARP `LutLayer`s, `LearnableMapping`, and `kd_kl_loss_seq`.
+
+## Training diagnostics summary (Promoted vs FP control)
+
+| Quantity | Promoted LUT (`model.pt`) | FP control (`fp-control.pt`) |
 |---|---:|---:|
-| Parameters | 117,637 | 149,060 |
-| Training seconds | 247.296 | 80.713 |
-| Training token accuracy, teacher-forced | 62.4595% | 97.3885% |
-| Training NLL, teacher-forced | 1.093549 | 0.090542 |
-| Training sequence accuracy, teacher-forced | 0.0000% | 6.8627% |
+| Parameters | 497,160 | 991,236 |
+| MPS training seconds | 1228.5 | 276.1 |
+| Teacher-forced token accuracy (hard, train) | 98.77% | 99.71% |
+| Teacher-forced NLL nats (hard, train) | 0.0379 | 0.0096 |
+| Teacher-forced seq accuracy (hard, train) | 85.70% | 98.51% |
 
-CPU, one PyTorch thread, `2.15.0+cpu`. Independent processes sometimes
-ran concurrently, so latency is not a controlled speed comparison. `hard` in the
-FP report is an evaluation-mode argument; the control has no LUTs to discretize.
+## Scope, contract, and artifacts
 
-## Interpretation
-
-The implementation now trains and measures the requested object, a whole module
-call including its state change. The initial model does not solve it. The FP
-control reduces training loss substantially but still fails the held-out
-full-state task. The experiment therefore does not isolate the failure to LUT
-discretization or prove the module mapping cannot be learned.
-
-For example, the FP control accepts `my favourite colour is purple` but stores
-`orange` instead of `purple`, while returning None correctly. On the recall call,
-it answers `silver` and also changes the stored colour to `silver`. Both are
-validly formatted outputs and both fail whole-call equivalence. These are
-predictions 0 and 2 in the FP validation report.
-
-The result concerns this small byte-generating model, dataset, and training
-budget. Less verbose lossless targets, generic copying of input values, and more
-diverse training data are plausible next improvements; none is claimed here.
-
-## Exact contract and limitations
-
-The contract covers explicit hook arguments, their updated memory/candidate
-values, return values, and exception descriptors. Teacher data executes original
-parsing and knowledge lookup. Student generation imports no bot modules and uses
-no teacher fallback, answer cache, or handcrafted response templates.
-
-Independent fixtures initialize and restore the external RNG. Natural traces
-record full pre/post RNG states and include the pre-call state in model inputs.
-The model does not reproduce the process RNG side effect. Dates are recorded, not
-virtualized; module-global caches are not captured. Cycles and custom objects
-are rejected. This is not arbitrary-Python-process or unlimited-input equivalence.
-
-Validation supplies the original input memory to each call. Predicted-memory
-rollouts through a complete conversation were not evaluated. The collector and
-contract support choose/after, but this pilot does not train those hooks. The
-original `python -m pybot` runtime has not been switched to the failed models.
-
-## Reproduce and inspect
-
-The exact LUT commands are in the [repository README](../../README.md). For the
-single FP control, add `--fp-baseline` to the same train command, use checkpoint
-`fp-control.pt` and report `training-fp-control.json`, then evaluate its saved
-validation split with `--mode hard`. Both completed runs were executed once,
-without held-out tuning. An initial shape-configuration error stopped before
-training; matching the official attention width to the residual width fixed it.
-
-- [LUT training](training.json), [hard predictions](hard-validation.json),
-  [soft predictions](soft-validation.json).
-- [FP training](training-fp-control.json), [FP predictions](fp-control-validation.json).
-- [Machine-readable summary](summary.json).
-- Both weights and exact train/validation split records are in this directory.
-- [Japanese interface and examples](../../docs/moduleio/README.ja.md).
-
-A valid-looking generated value alone does not establish agreement with the
-original module. The saved weights are experimental failure artifacts.
+- Teacher source revision: `6b73dd979ab3ef22171aaf0016723607631d71fe`. Original `python -m pybot`
+  runtime under `bot/` is untouched.
+- Promoted artifacts: [model.pt](model.pt), [training.json](training.json),
+  [hard-validation.json](hard-validation.json), [soft-validation.json](soft-validation.json),
+  [hard-diverse-validation.json](hard-diverse-validation.json).
+- Control & ablation artifacts: [fp-control.pt](fp-control.pt),
+  [fp-control-validation.json](fp-control-validation.json),
+  [fp-control-diverse-validation.json](fp-control-diverse-validation.json),
+  [training-logic-ffn-kd.json](training-logic-ffn-kd.json),
+  [logic-ffn-kd-hard-diverse-validation.json](logic-ffn-kd-hard-diverse-validation.json),
+  [training-logic-ffn-kd-fixed-n4.json](training-logic-ffn-kd-fixed-n4.json),
+  [training-logic-ffn-kd-learnable-n4.json](training-logic-ffn-kd-learnable-n4.json),
+  [training-logic-ffn-kd-learnable-n6.json](training-logic-ffn-kd-learnable-n6.json),
+  [training-logic-attn-l2-n4.json](training-logic-attn-l2-n4.json),
+  [training-logic-attn-l2-n6.json](training-logic-attn-l2-n6.json),
+  [baseline-0of18-summary.json](baseline-0of18-summary.json), [summary.json](summary.json).
+- [Japanese guide](../../docs/moduleio/README.ja.md) · [Repository README](../../README.md).

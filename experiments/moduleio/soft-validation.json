@@ -2,13 +2,13 @@
   "method": "free_generation",
   "mode": "soft",
   "counts": {
-    "whole_call_exact": 0,
-    "return_exact": 0,
-    "memory_exact": 0,
-    "exception_exact": 0,
+    "whole_call_exact": 16,
+    "return_exact": 17,
+    "memory_exact": 17,
+    "exception_exact": 18,
     "candidates_exact": 0,
-    "ok": 0,
-    "invalid_json": 18,
+    "ok": 18,
+    "invalid_json": 0,
     "invalid_schema": 0,
     "invalid_utf8": 0,
     "eos_missing": 0,
@@ -18,30 +18,30 @@
     "choose_examples": 0
   },
   "rates": {
-    "whole_call_exact": 0.0,
-    "return_exact": 0.0,
-    "memory_exact": 0.0,
-    "exception_exact": 0.0,
+    "whole_call_exact": 0.8888888888888888,
+    "return_exact": 0.9444444444444444,
+    "memory_exact": 0.9444444444444444,
+    "exception_exact": 1.0,
     "candidates_exact": null,
-    "valid_complete_output": 0.0
+    "valid_complete_output": 1.0
   },
   "latency_seconds": {
-    "total": 54.89058853700135,
-    "mean": 3.0494771409445196,
-    "median": 3.4752672780000466,
-    "p95": 4.484389590999854,
-    "max": 4.484389590999854
+    "total": 22.14339612587355,
+    "mean": 1.2301886736596417,
+    "median": 1.473637395480182,
+    "p95": 1.7685940000228584,
+    "max": 1.7685940000228584
   },
   "by_activity": {
     "active": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 0,
-        "memory_exact": 0,
-        "exception_exact": 0,
+        "whole_call_exact": 12,
+        "return_exact": 13,
+        "memory_exact": 13,
+        "exception_exact": 14,
         "candidates_exact": 0,
-        "ok": 0,
-        "invalid_json": 14,
+        "ok": 14,
+        "invalid_json": 0,
         "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
@@ -51,30 +51,30 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.0,
-        "memory_exact": 0.0,
-        "exception_exact": 0.0,
+        "whole_call_exact": 0.8571428571428571,
+        "return_exact": 0.9285714285714286,
+        "memory_exact": 0.9285714285714286,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.0
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 44.56009049400109,
-        "mean": 3.1828636067143634,
-        "median": 3.4752672780000466,
-        "p95": 4.484389590999854,
-        "max": 4.484389590999854
+        "total": 20.036310915951617,
+        "mean": 1.4311650654251156,
+        "median": 1.5772357085370459,
+        "p95": 1.7685940000228584,
+        "max": 1.7685940000228584
       }
     },
     "inactive": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 0,
-        "memory_exact": 0,
-        "exception_exact": 0,
+        "whole_call_exact": 4,
+        "return_exact": 4,
+        "memory_exact": 4,
+        "exception_exact": 4,
         "candidates_exact": 0,
-        "ok": 0,
-        "invalid_json": 4,
+        "ok": 4,
+        "invalid_json": 0,
         "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
@@ -84,32 +84,32 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.0,
-        "memory_exact": 0.0,
-        "exception_exact": 0.0,
+        "whole_call_exact": 1.0,
+        "return_exact": 1.0,
+        "memory_exact": 1.0,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.0
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 10.330498043000262,
-        "mean": 2.5826245107500654,
-        "median": 3.2480626840001605,
-        "p95": 3.636424700000134,
-        "max": 3.636424700000134
+        "total": 2.1070852099219337,
+        "mean": 0.5267713024804834,
+        "median": 0.5294992504641414,
+        "p95": 0.5561805419856682,
+        "max": 0.5561805419856682
       }
     }
   },
   "by_module": {
     "favourites": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 0,
-        "memory_exact": 0,
-        "exception_exact": 0,
+        "whole_call_exact": 6,
+        "return_exact": 7,
+        "memory_exact": 7,
+        "exception_exact": 8,
         "candidates_exact": 0,
-        "ok": 0,
-        "invalid_json": 8,
+        "ok": 8,
+        "invalid_json": 0,
         "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
@@ -119,30 +119,30 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.0,
-        "memory_exact": 0.0,
-        "exception_exact": 0.0,
+        "whole_call_exact": 0.75,
+        "return_exact": 0.875,
+        "memory_exact": 0.875,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.0
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 22.469306707000214,
-        "mean": 2.808663338375027,
-        "median": 3.3926022949999606,
-        "p95": 4.484389590999854,
-        "max": 4.484389590999854
+        "total": 9.474981125909835,
+        "mean": 1.1843726407387294,
+        "median": 1.2802118544932455,
+        "p95": 1.6344832089962438,
+        "max": 1.6344832089962438
       }
     },
     "group_ages": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 0,
-        "memory_exact": 0,
-        "exception_exact": 0,
+        "whole_call_exact": 4,
+        "return_exact": 4,
+        "memory_exact": 4,
+        "exception_exact": 4,
         "candidates_exact": 0,
-        "ok": 0,
-        "invalid_json": 4,
+        "ok": 4,
+        "invalid_json": 0,
         "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
@@ -152,30 +152,30 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.0,
-        "memory_exact": 0.0,
-        "exception_exact": 0.0,
+        "whole_call_exact": 1.0,
+        "return_exact": 1.0,
+        "memory_exact": 1.0,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.0
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 11.569384725001328,
-        "mean": 2.892346181250332,
-        "median": 2.8711845530001483,
-        "p95": 4.040397471000688,
-        "max": 4.040397471000688
+        "total": 4.71112762496341,
+        "mean": 1.1777819062408525,
+        "median": 1.1660644999938086,
+        "p95": 1.5189849579473957,
+        "max": 1.5189849579473957
       }
     },
     "name_taken_back": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 0,
-        "memory_exact": 0,
-        "exception_exact": 0,
+        "whole_call_exact": 6,
+        "return_exact": 6,
+        "memory_exact": 6,
+        "exception_exact": 6,
         "candidates_exact": 0,
-        "ok": 0,
-        "invalid_json": 6,
+        "ok": 6,
+        "invalid_json": 0,
         "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
@@ -185,32 +185,32 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.0,
-        "memory_exact": 0.0,
-        "exception_exact": 0.0,
+        "whole_call_exact": 1.0,
+        "return_exact": 1.0,
+        "memory_exact": 1.0,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.0
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 20.851897104999807,
-        "mean": 3.4753161841666347,
-        "median": 3.4752672780000466,
-        "p95": 3.636424700000134,
-        "max": 3.636424700000134
+        "total": 7.9572873750003055,
+        "mean": 1.326214562500051,
+        "median": 1.7067486664745957,
+        "p95": 1.7685940000228584,
+        "max": 1.7685940000228584
       }
     }
   },
   "by_hook": {
     "observe": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 0,
-        "memory_exact": 0,
-        "exception_exact": 0,
+        "whole_call_exact": 11,
+        "return_exact": 12,
+        "memory_exact": 11,
+        "exception_exact": 12,
         "candidates_exact": 0,
-        "ok": 0,
-        "invalid_json": 12,
+        "ok": 12,
+        "invalid_json": 0,
         "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
@@ -220,30 +220,30 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.0,
-        "memory_exact": 0.0,
-        "exception_exact": 0.0,
+        "whole_call_exact": 0.9166666666666666,
+        "return_exact": 1.0,
+        "memory_exact": 0.9166666666666666,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.0
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 45.0964384480003,
-        "mean": 3.7580365373333584,
-        "median": 3.7399033199999394,
-        "p95": 4.484389590999854,
-        "max": 4.484389590999854
+        "total": 17.32499920798,
+        "mean": 1.4437499339983333,
+        "median": 1.6113741869921796,
+        "p95": 1.7685940000228584,
+        "max": 1.7685940000228584
       }
     },
     "respond": {
       "counts": {
-        "whole_call_exact": 0,
-        "return_exact": 0,
-        "memory_exact": 0,
-        "exception_exact": 0,
+        "whole_call_exact": 5,
+        "return_exact": 5,
+        "memory_exact": 6,
+        "exception_exact": 6,
         "candidates_exact": 0,
-        "ok": 0,
-        "invalid_json": 6,
+        "ok": 6,
+        "invalid_json": 0,
         "invalid_schema": 0,
         "invalid_utf8": 0,
         "eos_missing": 0,
@@ -253,19 +253,19 @@
         "choose_examples": 0
       },
       "rates": {
-        "whole_call_exact": 0.0,
-        "return_exact": 0.0,
-        "memory_exact": 0.0,
-        "exception_exact": 0.0,
+        "whole_call_exact": 0.8333333333333334,
+        "return_exact": 0.8333333333333334,
+        "memory_exact": 1.0,
+        "exception_exact": 1.0,
         "candidates_exact": null,
-        "valid_complete_output": 0.0
+        "valid_complete_output": 1.0
       },
       "latency_seconds": {
-        "total": 9.79415008900105,
-        "mean": 1.6323583481668418,
-        "median": 1.8031484675002503,
-        "p95": 2.9418226500001765,
-        "max": 2.9418226500001765
+        "total": 4.818396917893551,
+        "mean": 0.8030661529822586,
+        "median": 0.8819264170015231,
+        "p95": 0.997218249947764,
+        "max": 0.997218249947764
       }
     }
   },
@@ -276,18 +276,17 @@
       "module": "favourites",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 4.484389590999854,
-      "predicted_text": "{\":\":\":\"$ict\"$idid\":0,\"items\":[[\"rnurnurnul],[\":[[\"$ty\"$type\":\":\":0,{\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictems\":[\":[[[[[[\":[{\"$type\"$ictypte_r\",{\":\",{\",{\"$items\":[\":[[\",{\"$idididice.\"],[\":[\",\",\",{\"$types wr\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 1.563205459038727,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{\"favourites\":{\"colour\":\"purple\"}},\"favourite_recent\":{\"thing\":\"colour\",\"turn\":0}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 303,
-      "input_tokens": 361,
-      "error": "Expecting ',' delimiter: line 1 column 9 (char 8)"
+      "generated_tokens": 133,
+      "input_tokens": 185
     },
     {
       "index": 1,
@@ -295,18 +294,17 @@
       "module": "favourites",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
+      "status": "ok",
       "whole_call_exact": false,
-      "return_exact": false,
+      "return_exact": true,
       "memory_exact": false,
-      "exception_exact": false,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 4.096339810000245,
-      "predicted_text": "{\"dict\",\"$id\":0,\"$id\":0,\"items\":[[\"rnurnurnul],[\"mememory\"$id\":0,\",\"$id\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictemorory\":[\",name\":[\",{\"$ickict\":\":0,{\",\":1,\",{\"$items\":[\":[[\",{\"$idididice.\"],[\"mems\",\",{\"$types ar\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 1.6344832089962438,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{\"favourites\":{\"color\":\"purprle\"}},\"favourite_recent\":{\"thing\":\"color\",\"turn\":0}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 305,
-      "input_tokens": 359,
-      "error": "Expecting ':' delimiter: line 1 column 8 (char 7)"
+      "generated_tokens": 132,
+      "input_tokens": 183
     },
     {
       "index": 2,
@@ -314,18 +312,17 @@
       "module": "favourites",
       "hook": "respond",
       "active": true,
-      "status": "invalid_json",
+      "status": "ok",
       "whole_call_exact": false,
       "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 2.9267976060000365,
-      "predicted_text": "{\"$ict\":2,\":2,\",\":[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictems\":[\":[[\",name\":[\",{\"$id\":0,\":\":0,{\",\":1,\",{\"$items\":[\":[[\",{\"$idididice.\"],[\":[\",\",\",{\"$types wr\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 0.9587805829942226,
+      "predicted_text": "{\"return\":\"Your favourite colour is purpel.\",\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 192,
-      "input_tokens": 472,
-      "error": "Expecting ':' delimiter: line 1 column 16 (char 15)"
+      "generated_tokens": 76,
+      "input_tokens": 224
     },
     {
       "index": 3,
@@ -333,18 +330,17 @@
       "module": "favourites",
       "hook": "respond",
       "active": false,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 2.9418226500001765,
-      "predicted_text": "{\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictemorory\":[\",name\":[\",{\"$ickict\":\":0,{\",\":1,\",{\"$items\":[\":[[\",{\"$idididice.\"],[\":[\",\",\",{\"$types wr\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 0.5423647089628503,
+      "predicted_text": "{\"return\":null,\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 199,
-      "input_tokens": 465,
-      "error": "Expecting ',' delimiter: line 1 column 12 (char 11)"
+      "generated_tokens": 46,
+      "input_tokens": 217
     },
     {
       "index": 4,
@@ -352,18 +348,17 @@
       "module": "favourites",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 3.8573422119998213,
-      "predicted_text": "{\"$ict\":\"$ict\"$idid\":0,\"items\":[[\"rnurnurnul],[\":[[\"$ty\"$type\":\":\":0,{\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictemorory\":[\",name\":[\",{\"$ickict\":\":0,{\",\":1,\",{\"$items\":[\":[[\",{\"$idididice.\"],[\"mems\",\",{\"$types wr\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 1.5912659580353647,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{\"favourites\":{\"colour\":\"black\"}},\"favourite_recent\":{\"thing\":\"colour\",\"turn\":0}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 304,
-      "input_tokens": 360,
-      "error": "Expecting ',' delimiter: line 1 column 15 (char 14)"
+      "generated_tokens": 132,
+      "input_tokens": 184
     },
     {
       "index": 5,
@@ -371,18 +366,17 @@
       "module": "favourites",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 3.8433819399997446,
-      "predicted_text": "{\":\"$ict\":\"$ict\"$idid\":0,\"items\":[[\"rnurnurnul],[\":[[\"$ty\"$type\":\":\":0,{\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictemorory\":[[[[[\":[{\"$type\"$ictypte_r\",{\":\",{\",{\"$items\":[\":[[\",{\"$idididice.\"],[\"mems\",\",{\"$types wr\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 1.6314824159489945,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{\"favourites\":{\"color\":\"black\"}},\"favourite_recent\":{\"thing\":\"color\",\"turn\":0}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 306,
-      "input_tokens": 358,
-      "error": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+      "generated_tokens": 130,
+      "input_tokens": 182
     },
     {
       "index": 6,
@@ -390,18 +384,17 @@
       "module": "favourites",
       "hook": "respond",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.1212849230005304,
-      "predicted_text": "{\",nul]}]}",
+      "elapsed_seconds": 0.997218249947764,
+      "predicted_text": "{\"return\":\"Your favourite colour is black.\",\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 11,
-      "input_tokens": 471,
-      "error": "Unterminated string starting at: line 1 column 2 (char 1)"
+      "generated_tokens": 75,
+      "input_tokens": 223
     },
     {
       "index": 7,
@@ -409,18 +402,17 @@
       "module": "favourites",
       "hook": "respond",
       "active": false,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 0.19794797499980632,
-      "predicted_text": "{\":\"dict\",nul]}]}",
+      "elapsed_seconds": 0.5561805419856682,
+      "predicted_text": "{\"return\":null,\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 18,
-      "input_tokens": 464,
-      "error": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+      "generated_tokens": 46,
+      "input_tokens": 216
     },
     {
       "index": 8,
@@ -428,18 +420,17 @@
       "module": "group_ages",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 3.9226903190001394,
-      "predicted_text": "{\"$type\"dict\",\"$id\":0,\"$id\":0,\"items\":[[\"rnurnurnul],[\":[[\"$ty\"$type\":\":\":0,{\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictems\":[\":[[[[[[\":[{\"$type\"$ictypte_r\",{\":\",{\",{\"$items\":[\":[[\",{\"$idididice.\"],[\"mems\",\",{\"$types wr\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 1.4282898330129683,
+      "predicted_text": "{\"return\":null,\"memory\":{\"group_ages\":{\"word\":\"kids\",\"ages\":[11,14],\"line\":\"my kids are 11 and 14\"}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 311,
-      "input_tokens": 353,
-      "error": "Expecting ':' delimiter: line 1 column 9 (char 8)"
+      "generated_tokens": 119,
+      "input_tokens": 177
     },
     {
       "index": 9,
@@ -447,18 +438,17 @@
       "module": "group_ages",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 4.040397471000688,
-      "predicted_text": "{\":\"dict\",\"$id\":0,\"$id\":0,\"items\":[[\"rnurnurnul],[\":[[\"$ty\"$type\":\":\":0,{\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictems\":[\":[[[[[[\":[{\"$type\"$ictypte_r\",{\":\",{\",{\"$items\":[\":[[\",{\"$idididice.\"],[\"mems\",\",{\"$types wr\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 1.5189849579473957,
+      "predicted_text": "{\"return\":null,\"memory\":{\"group_ages\":{\"word\":\"children\",\"ages\":[11,14],\"line\":\"my children are 11 and 14\"}},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 307,
-      "input_tokens": 357,
-      "error": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+      "generated_tokens": 127,
+      "input_tokens": 181
     },
     {
       "index": 10,
@@ -466,18 +456,17 @@
       "module": "group_ages",
       "hook": "respond",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 1.8196787870001572,
-      "predicted_text": "{\"$typemory\",{\"$ictypte_r\",{\":\",{\",{\"$items\":[\":[[\",{\"$idididice.\"],[\":[\",\":2,{\"$types ar\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 0.9038391669746488,
+      "predicted_text": "{\"return\":\"Your kids are 11 and 14.\",\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 116,
-      "input_tokens": 548,
-      "error": "Expecting ':' delimiter: line 1 column 13 (char 12)"
+      "generated_tokens": 68,
+      "input_tokens": 246
     },
     {
       "index": 11,
@@ -485,18 +474,17 @@
       "module": "group_ages",
       "hook": "respond",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 1.7866181480003434,
-      "predicted_text": "{\":\",{\"$id\":0,\":\":0,{\",\":1,\",{\"$items\":[\":[[\",{\"$idididice.\"],[\":[\",\":2,{\"$types wr\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 0.8600136670283973,
+      "predicted_text": "{\"return\":\"Your youngest is 11.\",\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 110,
-      "input_tokens": 554,
-      "error": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+      "generated_tokens": 64,
+      "input_tokens": 252
     },
     {
       "index": 12,
@@ -504,18 +492,17 @@
       "module": "name_taken_back",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 3.424380272000235,
-      "predicted_text": "{\"$type\":\":\":0,{\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictemorory\":[[[[[\":[{\"$type\"$ictypte_r\",{\":\",{\",{\"$items\":[\":[[\",{\"$idididice.\"],[\"mems\",\",{\"$types wr\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 1.7266510829795152,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{},\"name_taken_back\":{\"name\":\"Max\",\"said\":\"that is not my name\"},\"asked_for\":\"name\"},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 250,
-      "input_tokens": 414,
-      "error": "Expecting ',' delimiter: line 1 column 13 (char 12)"
+      "generated_tokens": 135,
+      "input_tokens": 201
     },
     {
       "index": 13,
@@ -523,18 +510,17 @@
       "module": "name_taken_back",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 3.5261542839998583,
-      "predicted_text": "{\"$ty\"$id\":0,\",\"$id\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictemorory\":[[[[[\":[{\"$type\"$ictypte_r\",{\":\",{\",{\"$items\":[\":[[\",{\"$idididice.\"],[\"mems\",\",{\"$types wr\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 1.7685940000228584,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{},\"name_taken_back\":{\"name\":\"Max\",\"said\":\"my name is wrong\"},\"asked_for\":\"name\"},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 253,
-      "input_tokens": 411,
-      "error": "Expecting ':' delimiter: line 1 column 7 (char 6)"
+      "generated_tokens": 132,
+      "input_tokens": 198
     },
     {
       "index": 14,
@@ -542,18 +528,17 @@
       "module": "name_taken_back",
       "hook": "observe",
       "active": false,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 3.636424700000134,
-      "predicted_text": "{\"memory\",{\"$ty\"$type\":\":\":0,{\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictemorory\":[\",name\":[\",{\"$ickict\":\":0,{\",\":1,\",{\"$items\":[\":[[\",{\"$idididice.\"],[\"mems\",\",{\"$types ar\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 0.5166337919654325,
+      "predicted_text": "{\"return\":null,\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 264,
-      "input_tokens": 400,
-      "error": "Expecting ':' delimiter: line 1 column 10 (char 9)"
+      "generated_tokens": 46,
+      "input_tokens": 187
     },
     {
       "index": 15,
@@ -561,18 +546,17 @@
       "module": "name_taken_back",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 3.3506174459998874,
-      "predicted_text": "{\"$type\":\":\":0,{\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictemorory\":[[[[[\":[{\"$type\"$ictypte_r\",{\":\",{\",{\"$items\":[\":[[\",{\"$idididice.\"],[\"mems\",\",{\"$types ar\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 1.7666560830548406,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{},\"name_taken_back\":{\"name\":\"Kim\",\"said\":\"that is not my name\"},\"asked_for\":\"name\"},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 250,
-      "input_tokens": 414,
-      "error": "Expecting ',' delimiter: line 1 column 13 (char 12)"
+      "generated_tokens": 135,
+      "input_tokens": 201
     },
     {
       "index": 16,
@@ -580,18 +564,17 @@
       "module": "name_taken_back",
       "hook": "observe",
       "active": true,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 3.360017684999548,
-      "predicted_text": "{\"$ty\"$id\":0,\",\"$id\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictemorory\":[\",name\":[\",{\"$ickict\":\":0,{\",\":1,\",{\"$items\":[\":[[\",{\"$idididice.\"],[\"mems\",\",{\"$types ar\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 1.6868462499696761,
+      "predicted_text": "{\"return\":null,\"memory\":{\"user\":{},\"name_taken_back\":{\"name\":\"Kim\",\"said\":\"my name is wrong\"},\"asked_for\":\"name\"},\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 253,
-      "input_tokens": 411,
-      "error": "Expecting ':' delimiter: line 1 column 7 (char 6)"
+      "generated_tokens": 132,
+      "input_tokens": 198
     },
     {
       "index": 17,
@@ -599,18 +582,17 @@
       "module": "name_taken_back",
       "hook": "observe",
       "active": false,
-      "status": "invalid_json",
-      "whole_call_exact": false,
-      "return_exact": false,
-      "memory_exact": false,
-      "exception_exact": false,
+      "status": "ok",
+      "whole_call_exact": true,
+      "return_exact": true,
+      "memory_exact": true,
+      "exception_exact": true,
       "candidates_exact": null,
-      "elapsed_seconds": 3.5543027180001445,
-      "predicted_text": "{\"memory\",{\"$ty\"$type\":\":\":0,{\":[\":0,\":1,\":[[\":[[[[[[[\",{\",{\"$type\":\":\"dict\"$id\":2,\":0,\":[[[[[\":[[\",{\"$typeremes\",{\"$type\",{\"$it\":3,\"idictemorory\":[\",name\":[\",{\"$ickict\":\":0,{\",\":1,\",{\"$items\":[\":[[\",{\"$idididice.\"],[\"mems\",\",{\"$types ar\",{\",nd\"$type\":\"int\":[[\"]}",
+      "elapsed_seconds": 0.49190616700798273,
+      "predicted_text": "{\"return\":null,\"memory\":\"=\",\"exception\":null}",
       "stop_reason": "eos",
-      "generated_tokens": 264,
-      "input_tokens": 400,
-      "error": "Expecting ':' delimiter: line 1 column 10 (char 9)"
+      "generated_tokens": 46,
+      "input_tokens": 187
     }
   ],
   "contract": "Isolated call: return value, full memory, exception, and choose candidates. Global RNG state is recorded by the teacher but is not reproduced here; hidden module globals are outside this contract.",
@@ -642,11 +624,11 @@
       "valid_complete_output": 1.0
     },
     "latency_seconds": {
-      "total": 0.001617953000277339,
-      "mean": 8.98862777931855e-05,
-      "median": 7.743049991404405e-05,
-      "p95": 0.00021365399970818544,
-      "max": 0.00021365399970818544
+      "total": 0.0006414998788386583,
+      "mean": 3.563888215770324e-05,
+      "median": 3.3104035537689924e-05,
+      "p95": 8.770800195634365e-05,
+      "max": 8.770800195634365e-05
     },
     "by_activity": {
       "active": {
@@ -675,11 +657,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.0013182140010030707,
-          "mean": 9.415814292879077e-05,
-          "median": 8.187299999917741e-05,
-          "p95": 0.00021365399970818544,
-          "max": 0.00021365399970818544
+          "total": 0.0005247499793767929,
+          "mean": 3.7482141384056634e-05,
+          "median": 3.333349013701081e-05,
+          "p95": 8.770800195634365e-05,
+          "max": 8.770800195634365e-05
         }
       },
       "inactive": {
@@ -708,11 +690,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.0002997389992742683,
-          "mean": 7.493474981856707e-05,
-          "median": 5.9552499806159176e-05,
-          "p95": 0.00012991499988856958,
-          "max": 0.00012991499988856958
+          "total": 0.00011674989946186543,
+          "mean": 2.9187474865466356e-05,
+          "median": 2.8624956030398607e-05,
+          "p95": 3.4207943826913834e-05,
+          "max": 3.4207943826913834e-05
         }
       }
     },
@@ -743,11 +725,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.0008051539989537559,
-          "mean": 0.00010064424986921949,
-          "median": 7.917549964986392e-05,
-          "p95": 0.00021365399970818544,
-          "max": 0.00021365399970818544
+          "total": 0.0003298739902675152,
+          "mean": 4.12342487834394e-05,
+          "median": 3.483297768980265e-05,
+          "p95": 8.770800195634365e-05,
+          "max": 8.770800195634365e-05
         }
       },
       "group_ages": {
@@ -776,11 +758,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.0003832100001091021,
-          "mean": 9.580250002727553e-05,
-          "median": 8.399349962928682e-05,
-          "p95": 0.0001391750001857872,
-          "max": 0.0001391750001857872
+          "total": 0.00013491790741682053,
+          "mean": 3.372947685420513e-05,
+          "median": 3.3770978916436434e-05,
+          "p95": 3.858399577438831e-05,
+          "max": 3.858399577438831e-05
         }
       },
       "name_taken_back": {
@@ -809,11 +791,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.00042958900121448096,
-          "mean": 7.159816686908016e-05,
-          "median": 5.49800001863332e-05,
-          "p95": 0.00012991499988856958,
-          "max": 0.00012991499988856958
+          "total": 0.00017670798115432262,
+          "mean": 2.9451330192387104e-05,
+          "median": 2.9937014915049076e-05,
+          "p95": 3.3458927646279335e-05,
+          "max": 3.3458927646279335e-05
         }
       }
     },
@@ -844,11 +826,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.0010223590006717131,
-          "mean": 8.519658338930942e-05,
-          "median": 6.706049953209003e-05,
-          "p95": 0.00014672100041934755,
-          "max": 0.00014672100041934755
+          "total": 0.0004318749997764826,
+          "mean": 3.5989583314706884e-05,
+          "median": 3.058300353586674e-05,
+          "p95": 8.770800195634365e-05,
+          "max": 8.770800195634365e-05
         }
       },
       "respond": {
@@ -877,11 +859,11 @@
           "valid_complete_output": 1.0
         },
         "latency_seconds": {
-          "total": 0.0005955939996056259,
-          "mean": 9.926566660093765e-05,
-          "median": 8.261100037998403e-05,
-          "p95": 0.00021365399970818544,
-          "max": 0.00021365399970818544
+          "total": 0.00020962487906217575,
+          "mean": 3.493747984369596e-05,
+          "median": 3.483297768980265e-05,
+          "p95": 3.858399577438831e-05,
+          "max": 3.858399577438831e-05
         }
       }
     },
@@ -898,7 +880,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 0.00014672100041934755
+        "elapsed_seconds": 3.941706381738186e-05
       },
       {
         "index": 1,
@@ -912,7 +894,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 0.00012456300009944243
+        "elapsed_seconds": 3.320805262774229e-05
       },
       {
         "index": 2,
@@ -926,7 +908,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 0.00021365399970818544
+        "elapsed_seconds": 3.545801155269146e-05
       },
       {
         "index": 3,
@@ -940,7 +922,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.8366999837744515e-05
+        "elapsed_seconds": 3.4207943826913834e-05
       },
       {
         "index": 4,
@@ -954,7 +936,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.16439995408291e-05
+        "elapsed_seconds": 3.6624958738684654e-05
       },
       {
         "index": 5,
@@ -968,7 +950,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.1854000048479065e-05
+        "elapsed_seconds": 8.770800195634365e-05
       },
       {
         "index": 6,
@@ -982,7 +964,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 9.761299952515401e-05
+        "elapsed_seconds": 3.300001844763756e-05
       },
       {
         "index": 7,
@@ -996,7 +978,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 6.0737999774573836e-05
+        "elapsed_seconds": 3.0249939300119877e-05
       },
       {
         "index": 8,
@@ -1010,7 +992,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 7.881299916334683e-05
+        "elapsed_seconds": 2.9416987672448158e-05
       },
       {
         "index": 9,
@@ -1024,7 +1006,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 0.0001391750001857872
+        "elapsed_seconds": 2.8791953809559345e-05
       },
       {
         "index": 10,
@@ -1038,7 +1020,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 8.91740000952268e-05
+        "elapsed_seconds": 3.858399577438831e-05
       },
       {
         "index": 11,
@@ -1052,7 +1034,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 7.604800066474127e-05
+        "elapsed_seconds": 3.812497016042471e-05
       },
       {
         "index": 12,
@@ -1066,7 +1048,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.530799990083324e-05
+        "elapsed_seconds": 3.108300734311342e-05
       },
       {
         "index": 13,
@@ -1080,7 +1062,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.465200047183316e-05
+        "elapsed_seconds": 3.3458927646279335e-05
       },
       {
         "index": 14,
@@ -1094,7 +1076,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 0.00012991499988856958
+        "elapsed_seconds": 2.6999972760677338e-05
       },
       {
         "index": 15,
@@ -1108,7 +1090,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.406200034485664e-05
+        "elapsed_seconds": 2.97910301014781e-05
       },
       {
         "index": 16,
@@ -1122,7 +1104,7 @@
         "memory_exact": false,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 8.493300083500799e-05
+        "elapsed_seconds": 3.0082999728620052e-05
       },
       {
         "index": 17,
@@ -1136,7 +1118,7 @@
         "memory_exact": true,
         "exception_exact": true,
         "candidates_exact": null,
-        "elapsed_seconds": 5.0718999773380347e-05
+        "elapsed_seconds": 2.5292043574154377e-05
       }
     ],
     "contract": "Isolated call: return value, full memory, exception, and choose candidates. Global RNG state is recorded by the teacher but is not reproduced here; hidden module globals are outside this contract."
@@ -1160,8 +1142,9 @@
         "name_taken_back.observe": 6
       }
     },
-    "sha256": "82bbe7ca2218ea08fc9804523395744212638f8031b7fb9236e7b8a74aec7b8f",
-    "training_sha256": "2804d72b7ea4d254daaff79423bffa9882275680bdde281c45723e57a97f7051",
+    "wire_format": "compact-v2",
+    "sha256": "af1d484ccc32d56d2cb2ffe682cd63d8d65226552ffa40e9091cba643128a29e",
+    "training_sha256": "6440d3acb472ff2d804858123c92c66b039027bf15b467c1f3c41491e1719fba",
     "evaluation_contract": "one call with recorded input memory; not an end-to-end learned conversation"
   }
 }

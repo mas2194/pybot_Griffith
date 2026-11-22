@@ -1,0 +1,124 @@
+{
+  "status": "complete-I/O reproduction not achieved",
+  "teacher_revision": [
+    "7d63c7fbebb44c7e466e5c8b5c1f341ab767929e"
+  ],
+  "griffith_revision": "e0675f4e36596954aa424d522e0ee966bba9a3e1",
+  "train_records": 102,
+  "validation_records": 18,
+  "coverage": {
+    "teacher_modules": 102,
+    "teacher_hooks": 116,
+    "natural_trace_records": 232,
+    "independent_records": 120,
+    "trained_modules": 4,
+    "trained_hooks": 6
+  },
+  "metrics": {
+    "LUT model / hard": {
+      "counts": {
+        "whole_call_exact": 0,
+        "return_exact": 0,
+        "memory_exact": 0,
+        "exception_exact": 0,
+        "candidates_exact": 0,
+        "ok": 0,
+        "invalid_json": 18,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.0,
+        "return_exact": 0.0,
+        "memory_exact": 0.0,
+        "exception_exact": 0.0,
+        "candidates_exact": null,
+        "valid_complete_output": 0.0
+      }
+    },
+    "LUT model / soft": {
+      "counts": {
+        "whole_call_exact": 0,
+        "return_exact": 0,
+        "memory_exact": 0,
+        "exception_exact": 0,
+        "candidates_exact": 0,
+        "ok": 0,
+        "invalid_json": 18,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.0,
+        "return_exact": 0.0,
+        "memory_exact": 0.0,
+        "exception_exact": 0.0,
+        "candidates_exact": null,
+        "valid_complete_output": 0.0
+      }
+    },
+    "FP control / eval": {
+      "counts": {
+        "whole_call_exact": 0,
+        "return_exact": 4,
+        "memory_exact": 0,
+        "exception_exact": 5,
+        "candidates_exact": 0,
+        "ok": 5,
+        "invalid_json": 12,
+        "invalid_schema": 1,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.0,
+        "return_exact": 0.2222222222222222,
+        "memory_exact": 0.0,
+        "exception_exact": 0.2777777777777778,
+        "candidates_exact": null,
+        "valid_complete_output": 0.2777777777777778
+      }
+    },
+    "Always None + unchanged memory": {
+      "counts": {
+        "whole_call_exact": 4,
+        "return_exact": 14,
+        "memory_exact": 8,
+        "exception_exact": 18,
+        "candidates_exact": 0,
+        "ok": 18,
+        "invalid_json": 0,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.2222222222222222,
+        "return_exact": 0.7777777777777778,
+        "memory_exact": 0.4444444444444444,
+        "exception_exact": 1.0,
+        "candidates_exact": null,
+        "valid_complete_output": 1.0
+      }
+    }
+  },
+  "scope": "One-call evaluation with recorded input memory; no learned full-chat rollout."
+}
