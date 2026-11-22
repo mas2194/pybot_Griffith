@@ -1,0 +1,271 @@
+{
+  "contract": "pybot-module-call-v1",
+  "wire_format": "compact-v2",
+  "trained_hooks": [
+    "a_cake_between_its_layers.respond",
+    "favourites.observe",
+    "favourites.respond",
+    "group_ages.observe",
+    "group_ages.respond",
+    "name_taken_back.observe"
+  ],
+  "training_fixtures": [
+    "isolated_seeded_call"
+  ],
+  "training_data_sha256": "6440d3acb472ff2d804858123c92c66b039027bf15b467c1f3c41491e1719fba",
+  "validation_data_sha256": "1eb1fd1fd5cab0f48490d32aab5e7506374dfd1d25de73edf6f19b946074a330",
+  "coverage": {
+    "input_records": 3363,
+    "included_records": 3363,
+    "active_records": 2830,
+    "excluded_records": 0,
+    "exclusion_reasons": {},
+    "excluded": [],
+    "hooks": {
+      "favourites.observe": 690,
+      "favourites.respond": 651,
+      "group_ages.observe": 380,
+      "group_ages.respond": 478,
+      "name_taken_back.observe": 1134,
+      "a_cake_between_its_layers.respond": 30
+    }
+  },
+  "split": {
+    "method": "explicit external validation file",
+    "train_records": 3363,
+    "validation_records": 318,
+    "validation_coverage": {
+      "input_records": 318,
+      "included_records": 318,
+      "active_records": 280,
+      "excluded_records": 0,
+      "exclusion_reasons": {},
+      "excluded": [],
+      "hooks": {
+        "favourites.observe": 64,
+        "favourites.respond": 58,
+        "group_ages.observe": 54,
+        "group_ages.respond": 62,
+        "name_taken_back.observe": 78,
+        "a_cake_between_its_layers.respond": 2
+      }
+    }
+  },
+  "training_log": {
+    "format": "moduleio-training-report-v1",
+    "model": {
+      "max_seq_len": 1024,
+      "d_model": 128,
+      "n_heads": 4,
+      "n_layers": 4,
+      "mlp_ratio": 2,
+      "qk_bits": 128,
+      "v_bits": 128,
+      "logic": true,
+      "attention": "fp",
+      "ffn": "logic",
+      "attention_score": "xnor_popcount",
+      "attention_norm": "softmax",
+      "n_inputs": 2,
+      "ffn_n_inputs": 4,
+      "parameterization": "warp",
+      "proj_depth": 1,
+      "wiring": "fixed",
+      "lm_tau": 0.05,
+      "gumbel_noise": false,
+      "gumbel_tau": 1.0,
+      "warp_gumbel": false,
+      "weight_tying": false,
+      "pos_init": "sinusoidal",
+      "embed_init_std": 0.25,
+      "wire_format": "compact-v2"
+    },
+    "training": {
+      "steps": 2400,
+      "batch_size": 8,
+      "grad_accum": 2,
+      "seed": 0,
+      "learning_rate": 0.001,
+      "lut_lr_scale": 10.0,
+      "wire_lr_scale": 3.0,
+      "lr_schedule": "wsd",
+      "warmup_steps": 100,
+      "weight_decay": 0.01,
+      "loss_weighting": "example",
+      "temp_start": 2.0,
+      "temp_end": 0.5,
+      "aux_lambda": 0.01,
+      "sampling": "epoch_bucketed",
+      "init_from": "experiments/moduleio/fp-control.pt",
+      "teacher_checkpoint": "experiments/moduleio/fp-control.pt",
+      "kd_alpha": 0.5,
+      "kd_temp": 2.0,
+      "attn_kd_weight": 0.0,
+      "threads": 8,
+      "train_mode": "soft_to_ste",
+      "device": "mps"
+    },
+    "training_examples": 3363,
+    "dataset_sha256": "95e81d3bd87e1a2252810032076d38fb0dc6f6d76a9ef0a2a78d65a389c14f84",
+    "parameters": 497160,
+    "max_input_tokens": 262,
+    "max_output_tokens_including_eos": 636,
+    "max_total_tokens": 865,
+    "truncated_examples": 0,
+    "training_seconds": 1228.4905903750332,
+    "seconds_per_step": 0.5118710793229305,
+    "teacher_forced_before": {
+      "soft": {
+        "conditioning": "correct output prefix (teacher forcing); not free generation",
+        "mode": "soft",
+        "examples": 3363,
+        "output_tokens_including_eos": 349980,
+        "output_nll_nats": 6.147213138044272,
+        "output_bits_per_token": 8.868553909543953,
+        "teacher_forced_token_accuracy": 0.020781187496428367,
+        "teacher_forced_sequence_accuracy": 0.0
+      },
+      "hard": {
+        "conditioning": "correct output prefix (teacher forcing); not free generation",
+        "mode": "hard",
+        "examples": 3363,
+        "output_tokens_including_eos": 349980,
+        "output_nll_nats": 6.192114374309113,
+        "output_bits_per_token": 8.933332700433024,
+        "teacher_forced_token_accuracy": 0.01487513572204126,
+        "teacher_forced_sequence_accuracy": 0.0
+      }
+    },
+    "teacher_forced_after": {
+      "soft": {
+        "conditioning": "correct output prefix (teacher forcing); not free generation",
+        "mode": "soft",
+        "examples": 3363,
+        "output_tokens_including_eos": 349980,
+        "output_nll_nats": 0.03435155936362532,
+        "output_bits_per_token": 0.04955882434070509,
+        "teacher_forced_token_accuracy": 0.9886736384936282,
+        "teacher_forced_sequence_accuracy": 0.872435325602141
+      },
+      "hard": {
+        "conditioning": "correct output prefix (teacher forcing); not free generation",
+        "mode": "hard",
+        "examples": 3363,
+        "output_tokens_including_eos": 349980,
+        "output_nll_nats": 0.03789497493313387,
+        "output_bits_per_token": 0.05467089241064381,
+        "teacher_forced_token_accuracy": 0.9877221555517458,
+        "teacher_forced_sequence_accuracy": 0.8569729408266429
+      }
+    },
+    "curve": [
+      {
+        "step": 1,
+        "output_nll_nats": 6.227570056915283,
+        "total_loss": 12.398565292358398,
+        "lr": 1e-05,
+        "mode": "train_soft",
+        "gradient_norm_before_clipping": 17.915895462036133,
+        "elapsed_seconds": 0.47787425003480166
+      },
+      {
+        "step": 240,
+        "output_nll_nats": 0.03382993023842573,
+        "total_loss": 0.1244874820113182,
+        "lr": 0.001,
+        "mode": "train_soft",
+        "gradient_norm_before_clipping": 0.71728515625,
+        "elapsed_seconds": 111.21595983300358
+      },
+      {
+        "step": 480,
+        "output_nll_nats": 0.01420730259269476,
+        "total_loss": 0.05444755032658577,
+        "lr": 0.001,
+        "mode": "train_soft",
+        "gradient_norm_before_clipping": 0.28412896394729614,
+        "elapsed_seconds": 228.08576833305415
+      },
+      {
+        "step": 720,
+        "output_nll_nats": 0.004967466287780553,
+        "total_loss": 0.03919046185910702,
+        "lr": 0.001,
+        "mode": "train_soft",
+        "gradient_norm_before_clipping": 0.32549938559532166,
+        "elapsed_seconds": 347.7627765000798
+      },
+      {
+        "step": 960,
+        "output_nll_nats": 0.00607840234079049,
+        "total_loss": 0.02351956255733967,
+        "lr": 0.001,
+        "mode": "train_soft",
+        "gradient_norm_before_clipping": 0.10118349641561508,
+        "elapsed_seconds": 471.9152941250941
+      },
+      {
+        "step": 1200,
+        "output_nll_nats": 0.0001968942269741092,
+        "total_loss": 0.01803619973361492,
+        "lr": 0.001,
+        "mode": "train_soft",
+        "gradient_norm_before_clipping": 0.11785563081502914,
+        "elapsed_seconds": 601.409180458053
+      },
+      {
+        "step": 1440,
+        "output_nll_nats": 0.0015309813315980136,
+        "total_loss": 0.020886986516416073,
+        "lr": 0.001,
+        "mode": "train_soft",
+        "gradient_norm_before_clipping": 0.1619967222213745,
+        "elapsed_seconds": 727.5890499170637
+      },
+      {
+        "step": 1680,
+        "output_nll_nats": 0.000788744269812014,
+        "total_loss": 0.010898678563535213,
+        "lr": 0.001,
+        "mode": "train_soft",
+        "gradient_norm_before_clipping": 0.051283854991197586,
+        "elapsed_seconds": 855.3596321670339
+      },
+      {
+        "step": 1920,
+        "output_nll_nats": 0.002439931617118418,
+        "total_loss": 0.010676716454327106,
+        "lr": 0.0007624999999999999,
+        "mode": "train_soft",
+        "gradient_norm_before_clipping": 0.06226816028356552,
+        "elapsed_seconds": 979.5839345830027
+      },
+      {
+        "step": 2160,
+        "output_nll_nats": 0.18180255685001612,
+        "total_loss": 0.4021746441721916,
+        "lr": 0.0002875000000000001,
+        "mode": "ste",
+        "gradient_norm_before_clipping": 0.4488253593444824,
+        "elapsed_seconds": 1100.8134688750142
+      },
+      {
+        "step": 2400,
+        "output_nll_nats": 0.007439140579663217,
+        "total_loss": 0.042677879333496094,
+        "lr": 5e-05,
+        "mode": "ste",
+        "gradient_norm_before_clipping": 0.15923146903514862,
+        "elapsed_seconds": 1228.4849931669887
+      }
+    ],
+    "torch_version": "2.15.0",
+    "implementation": "official Griffith LogicLadderGPT (attention=fp, ffn=logic, n_inputs=2, ffn_n_inputs=4, wiring=fixed); FP embedding/head/normalization remain (and softmax unless mux_gumbel/selector norm)",
+    "limitations": "Teacher-forced diagnostics do not establish complete free-generation I/O agreement."
+  },
+  "griffith_revision": "e0675f4e36596954aa424d522e0ee966bba9a3e1",
+  "scope": "return, full memory, mutable candidates, and exception; isolated fixture RNG is external, not a learned global side effect",
+  "source_commits": [
+    "6b73dd979ab3ef22171aaf0016723607631d71fe"
+  ]
+}

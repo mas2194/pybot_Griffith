@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-22",
+  "moduleio_tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests/moduleio -v",
+    "passed": 65,
+    "failed": 0,
+    "skipped": 0
+  },
+  "original_cli_tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0
+  },
+  "end_to_end_unseen_predict": "passed on favourites.observe/respond (unseen 'crimson' and held-out 'black'), group_ages.respond, and name_taken_back.observe (unseen 'Zara')",
+  "diff_check": "passed",
+  "scope": "Promoted model (L0+LogicFFN-KD-Fixed N=4, 497,160 params) reaches 15/18 hard exact (16/18 soft) on the canonical 18 held-out calls and 214/318 (67.3%) on 318 diverse unseen calls across 4 trained modules / 6 hooks; compares N in {2, 4, 6} across both FFN and L2-LogicAttn. Remaining modules (116 total hooks) and full-attention LUTs are not replacements for PyBot."
+}

@@ -1,0 +1,120 @@
+{"conversation_id": "favourite-colour-red", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is red", "memory": {}}}
+{"conversation_id": "favourite-colour-red", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is red", "memory": {}}}
+{"conversation_id": "favourite-colour-red", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "red"}}}}}
+{"conversation_id": "favourite-colour-red", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "red"}}}}}
+{"conversation_id": "favourite-colour-blue", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is blue", "memory": {}}}
+{"conversation_id": "favourite-colour-blue", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is blue", "memory": {}}}
+{"conversation_id": "favourite-colour-blue", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "blue"}}}}}
+{"conversation_id": "favourite-colour-blue", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "blue"}}}}}
+{"conversation_id": "favourite-colour-green", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is green", "memory": {}}}
+{"conversation_id": "favourite-colour-green", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is green", "memory": {}}}
+{"conversation_id": "favourite-colour-green", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "green"}}}}}
+{"conversation_id": "favourite-colour-green", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "green"}}}}}
+{"conversation_id": "favourite-colour-purple", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is purple", "memory": {}}}
+{"conversation_id": "favourite-colour-purple", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is purple", "memory": {}}}
+{"conversation_id": "favourite-colour-purple", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "purple"}}}}}
+{"conversation_id": "favourite-colour-purple", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "purple"}}}}}
+{"conversation_id": "favourite-colour-orange", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is orange", "memory": {}}}
+{"conversation_id": "favourite-colour-orange", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is orange", "memory": {}}}
+{"conversation_id": "favourite-colour-orange", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "orange"}}}}}
+{"conversation_id": "favourite-colour-orange", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "orange"}}}}}
+{"conversation_id": "favourite-colour-silver", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is silver", "memory": {}}}
+{"conversation_id": "favourite-colour-silver", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is silver", "memory": {}}}
+{"conversation_id": "favourite-colour-silver", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "silver"}}}}}
+{"conversation_id": "favourite-colour-silver", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "silver"}}}}}
+{"conversation_id": "favourite-colour-black", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is black", "memory": {}}}
+{"conversation_id": "favourite-colour-black", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is black", "memory": {}}}
+{"conversation_id": "favourite-colour-black", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "black"}}}}}
+{"conversation_id": "favourite-colour-black", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "black"}}}}}
+{"conversation_id": "favourite-colour-white", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is white", "memory": {}}}
+{"conversation_id": "favourite-colour-white", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is white", "memory": {}}}
+{"conversation_id": "favourite-colour-white", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "white"}}}}}
+{"conversation_id": "favourite-colour-white", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "white"}}}}}
+{"conversation_id": "favourite-colour-pink", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is pink", "memory": {}}}
+{"conversation_id": "favourite-colour-pink", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is pink", "memory": {}}}
+{"conversation_id": "favourite-colour-pink", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "pink"}}}}}
+{"conversation_id": "favourite-colour-pink", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "pink"}}}}}
+{"conversation_id": "favourite-colour-yellow", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is yellow", "memory": {}}}
+{"conversation_id": "favourite-colour-yellow", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is yellow", "memory": {}}}
+{"conversation_id": "favourite-colour-yellow", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "yellow"}}}}}
+{"conversation_id": "favourite-colour-yellow", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "yellow"}}}}}
+{"conversation_id": "favourite-colour-teal", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is teal", "memory": {}}}
+{"conversation_id": "favourite-colour-teal", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is teal", "memory": {}}}
+{"conversation_id": "favourite-colour-teal", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "teal"}}}}}
+{"conversation_id": "favourite-colour-teal", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "teal"}}}}}
+{"conversation_id": "favourite-colour-brown", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favourite colour is brown", "memory": {}}}
+{"conversation_id": "favourite-colour-brown", "module": "favourites", "hook": "observe", "seed": 0, "arguments": {"text": "my favorite color is brown", "memory": {}}}
+{"conversation_id": "favourite-colour-brown", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "what is my favourite colour", "memory": {"user": {"favourites": {"colour": "brown"}}}}}
+{"conversation_id": "favourite-colour-brown", "module": "favourites", "hook": "respond", "seed": 0, "arguments": {"text": "how do i bake a cake", "memory": {"user": {"favourites": {"colour": "brown"}}}}}
+{"conversation_id": "ages-2-4", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my kids are 2 and 4", "memory": {}}}
+{"conversation_id": "ages-2-4", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my children are 2 and 4", "memory": {}}}
+{"conversation_id": "ages-2-4", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old are they", "memory": {"group_ages": {"word": "kids", "ages": [2, 4], "line": "my kids are 2 and 4"}}}}
+{"conversation_id": "ages-2-4", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old is my youngest", "memory": {"group_ages": {"word": "kids", "ages": [2, 4], "line": "my kids are 2 and 4"}}}}
+{"conversation_id": "ages-3-6", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my kids are 3 and 6", "memory": {}}}
+{"conversation_id": "ages-3-6", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my children are 3 and 6", "memory": {}}}
+{"conversation_id": "ages-3-6", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old are they", "memory": {"group_ages": {"word": "kids", "ages": [3, 6], "line": "my kids are 3 and 6"}}}}
+{"conversation_id": "ages-3-6", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old is my youngest", "memory": {"group_ages": {"word": "kids", "ages": [3, 6], "line": "my kids are 3 and 6"}}}}
+{"conversation_id": "ages-4-7", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my kids are 4 and 7", "memory": {}}}
+{"conversation_id": "ages-4-7", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my children are 4 and 7", "memory": {}}}
+{"conversation_id": "ages-4-7", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old are they", "memory": {"group_ages": {"word": "kids", "ages": [4, 7], "line": "my kids are 4 and 7"}}}}
+{"conversation_id": "ages-4-7", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old is my youngest", "memory": {"group_ages": {"word": "kids", "ages": [4, 7], "line": "my kids are 4 and 7"}}}}
+{"conversation_id": "ages-5-8", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my kids are 5 and 8", "memory": {}}}
+{"conversation_id": "ages-5-8", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my children are 5 and 8", "memory": {}}}
+{"conversation_id": "ages-5-8", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old are they", "memory": {"group_ages": {"word": "kids", "ages": [5, 8], "line": "my kids are 5 and 8"}}}}
+{"conversation_id": "ages-5-8", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old is my youngest", "memory": {"group_ages": {"word": "kids", "ages": [5, 8], "line": "my kids are 5 and 8"}}}}
+{"conversation_id": "ages-6-9", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my kids are 6 and 9", "memory": {}}}
+{"conversation_id": "ages-6-9", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my children are 6 and 9", "memory": {}}}
+{"conversation_id": "ages-6-9", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old are they", "memory": {"group_ages": {"word": "kids", "ages": [6, 9], "line": "my kids are 6 and 9"}}}}
+{"conversation_id": "ages-6-9", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old is my youngest", "memory": {"group_ages": {"word": "kids", "ages": [6, 9], "line": "my kids are 6 and 9"}}}}
+{"conversation_id": "ages-7-10", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my kids are 7 and 10", "memory": {}}}
+{"conversation_id": "ages-7-10", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my children are 7 and 10", "memory": {}}}
+{"conversation_id": "ages-7-10", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old are they", "memory": {"group_ages": {"word": "kids", "ages": [7, 10], "line": "my kids are 7 and 10"}}}}
+{"conversation_id": "ages-7-10", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old is my youngest", "memory": {"group_ages": {"word": "kids", "ages": [7, 10], "line": "my kids are 7 and 10"}}}}
+{"conversation_id": "ages-8-11", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my kids are 8 and 11", "memory": {}}}
+{"conversation_id": "ages-8-11", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my children are 8 and 11", "memory": {}}}
+{"conversation_id": "ages-8-11", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old are they", "memory": {"group_ages": {"word": "kids", "ages": [8, 11], "line": "my kids are 8 and 11"}}}}
+{"conversation_id": "ages-8-11", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old is my youngest", "memory": {"group_ages": {"word": "kids", "ages": [8, 11], "line": "my kids are 8 and 11"}}}}
+{"conversation_id": "ages-9-12", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my kids are 9 and 12", "memory": {}}}
+{"conversation_id": "ages-9-12", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my children are 9 and 12", "memory": {}}}
+{"conversation_id": "ages-9-12", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old are they", "memory": {"group_ages": {"word": "kids", "ages": [9, 12], "line": "my kids are 9 and 12"}}}}
+{"conversation_id": "ages-9-12", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old is my youngest", "memory": {"group_ages": {"word": "kids", "ages": [9, 12], "line": "my kids are 9 and 12"}}}}
+{"conversation_id": "ages-10-13", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my kids are 10 and 13", "memory": {}}}
+{"conversation_id": "ages-10-13", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my children are 10 and 13", "memory": {}}}
+{"conversation_id": "ages-10-13", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old are they", "memory": {"group_ages": {"word": "kids", "ages": [10, 13], "line": "my kids are 10 and 13"}}}}
+{"conversation_id": "ages-10-13", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old is my youngest", "memory": {"group_ages": {"word": "kids", "ages": [10, 13], "line": "my kids are 10 and 13"}}}}
+{"conversation_id": "ages-11-14", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my kids are 11 and 14", "memory": {}}}
+{"conversation_id": "ages-11-14", "module": "group_ages", "hook": "observe", "seed": 0, "arguments": {"text": "my children are 11 and 14", "memory": {}}}
+{"conversation_id": "ages-11-14", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old are they", "memory": {"group_ages": {"word": "kids", "ages": [11, 14], "line": "my kids are 11 and 14"}}}}
+{"conversation_id": "ages-11-14", "module": "group_ages", "hook": "respond", "seed": 0, "arguments": {"text": "how old is my youngest", "memory": {"group_ages": {"word": "kids", "ages": [11, 14], "line": "my kids are 11 and 14"}}}}
+{"conversation_id": "name-correction-sam", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "that is not my name", "memory": {"user": {"name": "Sam"}}}}
+{"conversation_id": "name-correction-sam", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "my name is wrong", "memory": {"user": {"name": "Sam"}}}}
+{"conversation_id": "name-correction-sam", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "hello", "memory": {"user": {"name": "Sam"}}}}
+{"conversation_id": "name-correction-kay", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "that is not my name", "memory": {"user": {"name": "Kay"}}}}
+{"conversation_id": "name-correction-kay", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "my name is wrong", "memory": {"user": {"name": "Kay"}}}}
+{"conversation_id": "name-correction-kay", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "hello", "memory": {"user": {"name": "Kay"}}}}
+{"conversation_id": "name-correction-alex", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "that is not my name", "memory": {"user": {"name": "Alex"}}}}
+{"conversation_id": "name-correction-alex", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "my name is wrong", "memory": {"user": {"name": "Alex"}}}}
+{"conversation_id": "name-correction-alex", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "hello", "memory": {"user": {"name": "Alex"}}}}
+{"conversation_id": "name-correction-jo", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "that is not my name", "memory": {"user": {"name": "Jo"}}}}
+{"conversation_id": "name-correction-jo", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "my name is wrong", "memory": {"user": {"name": "Jo"}}}}
+{"conversation_id": "name-correction-jo", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "hello", "memory": {"user": {"name": "Jo"}}}}
+{"conversation_id": "name-correction-lee", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "that is not my name", "memory": {"user": {"name": "Lee"}}}}
+{"conversation_id": "name-correction-lee", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "my name is wrong", "memory": {"user": {"name": "Lee"}}}}
+{"conversation_id": "name-correction-lee", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "hello", "memory": {"user": {"name": "Lee"}}}}
+{"conversation_id": "name-correction-max", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "that is not my name", "memory": {"user": {"name": "Max"}}}}
+{"conversation_id": "name-correction-max", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "my name is wrong", "memory": {"user": {"name": "Max"}}}}
+{"conversation_id": "name-correction-max", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "hello", "memory": {"user": {"name": "Max"}}}}
+{"conversation_id": "name-correction-robin", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "that is not my name", "memory": {"user": {"name": "Robin"}}}}
+{"conversation_id": "name-correction-robin", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "my name is wrong", "memory": {"user": {"name": "Robin"}}}}
+{"conversation_id": "name-correction-robin", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "hello", "memory": {"user": {"name": "Robin"}}}}
+{"conversation_id": "name-correction-kim", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "that is not my name", "memory": {"user": {"name": "Kim"}}}}
+{"conversation_id": "name-correction-kim", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "my name is wrong", "memory": {"user": {"name": "Kim"}}}}
+{"conversation_id": "name-correction-kim", "module": "name_taken_back", "hook": "observe", "seed": 0, "arguments": {"text": "hello", "memory": {"user": {"name": "Kim"}}}}
+{"conversation_id": "cake-boundary", "module": "a_cake_between_its_layers", "hook": "respond", "seed": 0, "arguments": {"text": "what filling for a coffee cake", "memory": {}}}
+{"conversation_id": "cake-boundary", "module": "a_cake_between_its_layers", "hook": "respond", "seed": 0, "arguments": {"text": "how do i fill a cake", "memory": {}}}
+{"conversation_id": "cake-boundary", "module": "a_cake_between_its_layers", "hook": "respond", "seed": 0, "arguments": {"text": "what goes between cake layers", "memory": {}}}
+{"conversation_id": "cake-boundary", "module": "a_cake_between_its_layers", "hook": "respond", "seed": 0, "arguments": {"text": "what cream goes in a victoria sponge", "memory": {}}}
+{"conversation_id": "cake-boundary", "module": "a_cake_between_its_layers", "hook": "respond", "seed": 0, "arguments": {"text": "why is my cake dry", "memory": {}}}
+{"conversation_id": "cake-boundary", "module": "a_cake_between_its_layers", "hook": "respond", "seed": 0, "arguments": {"text": "how long does cake keep", "memory": {}}}
+{"conversation_id": "cake-boundary", "module": "a_cake_between_its_layers", "hook": "respond", "seed": 0, "arguments": {"text": "how do i cut my hair", "memory": {}}}
+{"conversation_id": "cake-boundary", "module": "a_cake_between_its_layers", "hook": "respond", "seed": 0, "arguments": {"text": "what is half of 46", "memory": {}}}

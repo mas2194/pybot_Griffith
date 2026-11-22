@@ -1,0 +1,1942 @@
+{
+  "conversations": [
+    {
+      "conversation_id": "runtime-colour-memory",
+      "seed": 0,
+      "turn_count": 2,
+      "record_count": 232,
+      "selected_hooks": [
+        "a_cake_between_its_layers.respond",
+        "a_check_with_you.respond",
+        "a_count_of_packets.respond",
+        "a_count_said.observe",
+        "a_count_said.respond",
+        "a_day_somebody_else_keeps.respond",
+        "a_debt_said_flat.observe",
+        "a_debt_said_flat.respond",
+        "a_fact_asked_again.respond",
+        "a_figure_beside_the_state.respond",
+        "a_figure_of_a_dish.respond",
+        "a_first_time.respond",
+        "a_habit_is_raised.respond",
+        "a_job_that_is_not_a_diy_job.respond",
+        "a_letter_about_money.respond",
+        "a_limit_over_the_answer.observe",
+        "a_limit_over_the_answer.respond",
+        "a_measure_asked_again.respond",
+        "a_number_the_bot_knows.respond",
+        "a_plan_the_thread_holds.respond",
+        "a_question_about_somebody.respond",
+        "a_return_brings_back_the_advice.respond",
+        "a_shock_at_a_bill.respond",
+        "a_thing_being_weighed.respond",
+        "a_thing_wants_doing.respond",
+        "a_will_it_work.respond",
+        "aboutachild.respond",
+        "after_a_lead_in.respond",
+        "already.respond",
+        "an_age_ahead.respond",
+        "answers.observe",
+        "answers.respond",
+        "arbiter.choose",
+        "attribute_said_again.respond",
+        "bulky.respond",
+        "callback_about.respond",
+        "carers_turn.respond",
+        "chasing_a_body.respond",
+        "chat.after",
+        "chat.observe",
+        "chat.respond",
+        "colour_on_the_body.respond",
+        "confusing.respond",
+        "detail_question.respond",
+        "done_ask.observe",
+        "doubt.respond",
+        "dreams.respond",
+        "familyask.respond",
+        "favourites.observe",
+        "favourites.respond",
+        "figure_asked_again.respond",
+        "first_line_open.respond",
+        "greeting.respond",
+        "grief.observe",
+        "grief.respond",
+        "group_ages.observe",
+        "group_ages.respond",
+        "hardpast.respond",
+        "household.observe",
+        "household.respond",
+        "how_long_a_stay.respond",
+        "intent.observe",
+        "invitation.respond",
+        "judge_ask.respond",
+        "keeping.respond",
+        "kid_tally.respond",
+        "live_source.respond",
+        "live_times.respond",
+        "loss.respond",
+        "memory_store.after",
+        "memory_store.observe",
+        "memory_store.respond",
+        "my_work.respond",
+        "name_taken_back.observe",
+        "name_taken_back.respond",
+        "near_me.respond",
+        "night.respond",
+        "no_advice.respond",
+        "nudge.respond",
+        "onsubject.respond",
+        "pace.respond",
+        "recap.respond",
+        "receiving_end.respond",
+        "record_due.respond",
+        "ruled_out.respond",
+        "safety.respond",
+        "said_back.respond",
+        "said_fact_back.observe",
+        "said_fact_back.respond",
+        "saving_followup.respond",
+        "since_it_began.respond",
+        "steps.respond",
+        "taking_asked_again.respond",
+        "talkto.respond",
+        "the_detail_the_thread_adds.respond",
+        "the_kind_one_line_up.respond",
+        "the_month_they_have.respond",
+        "the_shape_of_the_answer.respond",
+        "the_trouble_it_has.respond",
+        "the_trouble_named.respond",
+        "the_wait_about_a_body.respond",
+        "their_life.respond",
+        "their_pastime.respond",
+        "their_taste.respond",
+        "theirperson.respond",
+        "thing_i_did_with.respond",
+        "trip_date_said_again.observe",
+        "understand.observe",
+        "urgent.respond",
+        "ward.respond",
+        "what_decides_it.respond",
+        "what_they_said.respond",
+        "where_it_answers.respond",
+        "who_to_see.respond",
+        "words.respond",
+        "years_in.respond"
+      ],
+      "inventory": [
+        {
+          "module": "understand",
+          "hook": "observe",
+          "priority": 10000,
+          "id": "understand.observe"
+        },
+        {
+          "module": "intent",
+          "hook": "observe",
+          "priority": 9500,
+          "id": "intent.observe"
+        },
+        {
+          "module": "group_ages",
+          "hook": "observe",
+          "priority": 7050,
+          "id": "group_ages.observe"
+        },
+        {
+          "module": "household",
+          "hook": "observe",
+          "priority": 7050,
+          "id": "household.observe"
+        },
+        {
+          "module": "said_fact_back",
+          "hook": "observe",
+          "priority": 7050,
+          "id": "said_fact_back.observe"
+        },
+        {
+          "module": "a_count_said",
+          "hook": "observe",
+          "priority": 7000,
+          "id": "a_count_said.observe"
+        },
+        {
+          "module": "favourites",
+          "hook": "observe",
+          "priority": 7000,
+          "id": "favourites.observe"
+        },
+        {
+          "module": "memory_store",
+          "hook": "observe",
+          "priority": 7000,
+          "id": "memory_store.observe"
+        },
+        {
+          "module": "done_ask",
+          "hook": "observe",
+          "priority": 6900,
+          "id": "done_ask.observe"
+        },
+        {
+          "module": "trip_date_said_again",
+          "hook": "observe",
+          "priority": 6900,
+          "id": "trip_date_said_again.observe"
+        },
+        {
+          "module": "name_taken_back",
+          "hook": "observe",
+          "priority": 6600,
+          "id": "name_taken_back.observe"
+        },
+        {
+          "module": "grief",
+          "hook": "observe",
+          "priority": 2100,
+          "id": "grief.observe"
+        },
+        {
+          "module": "a_limit_over_the_answer",
+          "hook": "observe",
+          "priority": 500,
+          "id": "a_limit_over_the_answer.observe"
+        },
+        {
+          "module": "chat",
+          "hook": "observe",
+          "priority": 300,
+          "id": "chat.observe"
+        },
+        {
+          "module": "answers",
+          "hook": "observe",
+          "priority": 0,
+          "id": "answers.observe"
+        },
+        {
+          "module": "a_debt_said_flat",
+          "hook": "observe",
+          "priority": -500,
+          "id": "a_debt_said_flat.observe"
+        },
+        {
+          "module": "a_count_of_packets",
+          "hook": "respond",
+          "priority": 9000,
+          "id": "a_count_of_packets.respond"
+        },
+        {
+          "module": "safety",
+          "hook": "respond",
+          "priority": 9000,
+          "id": "safety.respond"
+        },
+        {
+          "module": "the_month_they_have",
+          "hook": "respond",
+          "priority": 8000,
+          "id": "the_month_they_have.respond"
+        },
+        {
+          "module": "since_it_began",
+          "hook": "respond",
+          "priority": 7500,
+          "id": "since_it_began.respond"
+        },
+        {
+          "module": "keeping",
+          "hook": "respond",
+          "priority": 7400,
+          "id": "keeping.respond"
+        },
+        {
+          "module": "a_question_about_somebody",
+          "hook": "respond",
+          "priority": 7300,
+          "id": "a_question_about_somebody.respond"
+        },
+        {
+          "module": "an_age_ahead",
+          "hook": "respond",
+          "priority": 7150,
+          "id": "an_age_ahead.respond"
+        },
+        {
+          "module": "steps",
+          "hook": "respond",
+          "priority": 7100,
+          "id": "steps.respond"
+        },
+        {
+          "module": "what_they_said",
+          "hook": "respond",
+          "priority": 7060,
+          "id": "what_they_said.respond"
+        },
+        {
+          "module": "a_fact_asked_again",
+          "hook": "respond",
+          "priority": 7050,
+          "id": "a_fact_asked_again.respond"
+        },
+        {
+          "module": "a_return_brings_back_the_advice",
+          "hook": "respond",
+          "priority": 7050,
+          "id": "a_return_brings_back_the_advice.respond"
+        },
+        {
+          "module": "group_ages",
+          "hook": "respond",
+          "priority": 7050,
+          "id": "group_ages.respond"
+        },
+        {
+          "module": "household",
+          "hook": "respond",
+          "priority": 7050,
+          "id": "household.respond"
+        },
+        {
+          "module": "kid_tally",
+          "hook": "respond",
+          "priority": 7050,
+          "id": "kid_tally.respond"
+        },
+        {
+          "module": "said_fact_back",
+          "hook": "respond",
+          "priority": 7050,
+          "id": "said_fact_back.respond"
+        },
+        {
+          "module": "live_times",
+          "hook": "respond",
+          "priority": 7001,
+          "id": "live_times.respond"
+        },
+        {
+          "module": "a_count_said",
+          "hook": "respond",
+          "priority": 7000,
+          "id": "a_count_said.respond"
+        },
+        {
+          "module": "favourites",
+          "hook": "respond",
+          "priority": 7000,
+          "id": "favourites.respond"
+        },
+        {
+          "module": "memory_store",
+          "hook": "respond",
+          "priority": 7000,
+          "id": "memory_store.respond"
+        },
+        {
+          "module": "recap",
+          "hook": "respond",
+          "priority": 7000,
+          "id": "recap.respond"
+        },
+        {
+          "module": "attribute_said_again",
+          "hook": "respond",
+          "priority": 6900,
+          "id": "attribute_said_again.respond"
+        },
+        {
+          "module": "thing_i_did_with",
+          "hook": "respond",
+          "priority": 6900,
+          "id": "thing_i_did_with.respond"
+        },
+        {
+          "module": "name_taken_back",
+          "hook": "respond",
+          "priority": 6600,
+          "id": "name_taken_back.respond"
+        },
+        {
+          "module": "dreams",
+          "hook": "respond",
+          "priority": 3000,
+          "id": "dreams.respond"
+        },
+        {
+          "module": "grief",
+          "hook": "respond",
+          "priority": 2100,
+          "id": "grief.respond"
+        },
+        {
+          "module": "loss",
+          "hook": "respond",
+          "priority": 2000,
+          "id": "loss.respond"
+        },
+        {
+          "module": "who_to_see",
+          "hook": "respond",
+          "priority": 1500,
+          "id": "who_to_see.respond"
+        },
+        {
+          "module": "pace",
+          "hook": "respond",
+          "priority": 1300,
+          "id": "pace.respond"
+        },
+        {
+          "module": "a_cake_between_its_layers",
+          "hook": "respond",
+          "priority": 1200,
+          "id": "a_cake_between_its_layers.respond"
+        },
+        {
+          "module": "words",
+          "hook": "respond",
+          "priority": 1200,
+          "id": "words.respond"
+        },
+        {
+          "module": "my_work",
+          "hook": "respond",
+          "priority": 1150,
+          "id": "my_work.respond"
+        },
+        {
+          "module": "years_in",
+          "hook": "respond",
+          "priority": 1150,
+          "id": "years_in.respond"
+        },
+        {
+          "module": "aboutachild",
+          "hook": "respond",
+          "priority": 1100,
+          "id": "aboutachild.respond"
+        },
+        {
+          "module": "familyask",
+          "hook": "respond",
+          "priority": 1100,
+          "id": "familyask.respond"
+        },
+        {
+          "module": "night",
+          "hook": "respond",
+          "priority": 1100,
+          "id": "night.respond"
+        },
+        {
+          "module": "saving_followup",
+          "hook": "respond",
+          "priority": 1100,
+          "id": "saving_followup.respond"
+        },
+        {
+          "module": "how_long_a_stay",
+          "hook": "respond",
+          "priority": 1050,
+          "id": "how_long_a_stay.respond"
+        },
+        {
+          "module": "no_advice",
+          "hook": "respond",
+          "priority": 1050,
+          "id": "no_advice.respond"
+        },
+        {
+          "module": "a_figure_beside_the_state",
+          "hook": "respond",
+          "priority": 1000,
+          "id": "a_figure_beside_the_state.respond"
+        },
+        {
+          "module": "a_measure_asked_again",
+          "hook": "respond",
+          "priority": 1000,
+          "id": "a_measure_asked_again.respond"
+        },
+        {
+          "module": "a_shock_at_a_bill",
+          "hook": "respond",
+          "priority": 1000,
+          "id": "a_shock_at_a_bill.respond"
+        },
+        {
+          "module": "a_will_it_work",
+          "hook": "respond",
+          "priority": 1000,
+          "id": "a_will_it_work.respond"
+        },
+        {
+          "module": "figure_asked_again",
+          "hook": "respond",
+          "priority": 1000,
+          "id": "figure_asked_again.respond"
+        },
+        {
+          "module": "taking_asked_again",
+          "hook": "respond",
+          "priority": 1000,
+          "id": "taking_asked_again.respond"
+        },
+        {
+          "module": "a_limit_over_the_answer",
+          "hook": "respond",
+          "priority": 500,
+          "id": "a_limit_over_the_answer.respond"
+        },
+        {
+          "module": "already",
+          "hook": "respond",
+          "priority": 400,
+          "id": "already.respond"
+        },
+        {
+          "module": "doubt",
+          "hook": "respond",
+          "priority": 400,
+          "id": "doubt.respond"
+        },
+        {
+          "module": "colour_on_the_body",
+          "hook": "respond",
+          "priority": 350,
+          "id": "colour_on_the_body.respond"
+        },
+        {
+          "module": "said_back",
+          "hook": "respond",
+          "priority": 350,
+          "id": "said_back.respond"
+        },
+        {
+          "module": "after_a_lead_in",
+          "hook": "respond",
+          "priority": 320,
+          "id": "after_a_lead_in.respond"
+        },
+        {
+          "module": "chat",
+          "hook": "respond",
+          "priority": 300,
+          "id": "chat.respond"
+        },
+        {
+          "module": "their_pastime",
+          "hook": "respond",
+          "priority": 300,
+          "id": "their_pastime.respond"
+        },
+        {
+          "module": "callback_about",
+          "hook": "respond",
+          "priority": 260,
+          "id": "callback_about.respond"
+        },
+        {
+          "module": "theirperson",
+          "hook": "respond",
+          "priority": 250,
+          "id": "theirperson.respond"
+        },
+        {
+          "module": "their_life",
+          "hook": "respond",
+          "priority": 100,
+          "id": "their_life.respond"
+        },
+        {
+          "module": "answers",
+          "hook": "respond",
+          "priority": 0,
+          "id": "answers.respond"
+        },
+        {
+          "module": "ruled_out",
+          "hook": "respond",
+          "priority": -450,
+          "id": "ruled_out.respond"
+        },
+        {
+          "module": "a_debt_said_flat",
+          "hook": "respond",
+          "priority": -500,
+          "id": "a_debt_said_flat.respond"
+        },
+        {
+          "module": "invitation",
+          "hook": "respond",
+          "priority": -500,
+          "id": "invitation.respond"
+        },
+        {
+          "module": "judge_ask",
+          "hook": "respond",
+          "priority": -500,
+          "id": "judge_ask.respond"
+        },
+        {
+          "module": "record_due",
+          "hook": "respond",
+          "priority": -500,
+          "id": "record_due.respond"
+        },
+        {
+          "module": "talkto",
+          "hook": "respond",
+          "priority": -500,
+          "id": "talkto.respond"
+        },
+        {
+          "module": "a_letter_about_money",
+          "hook": "respond",
+          "priority": -600,
+          "id": "a_letter_about_money.respond"
+        },
+        {
+          "module": "confusing",
+          "hook": "respond",
+          "priority": -900,
+          "id": "confusing.respond"
+        },
+        {
+          "module": "urgent",
+          "hook": "respond",
+          "priority": -900,
+          "id": "urgent.respond"
+        },
+        {
+          "module": "nudge",
+          "hook": "respond",
+          "priority": -950,
+          "id": "nudge.respond"
+        },
+        {
+          "module": "their_taste",
+          "hook": "respond",
+          "priority": -960,
+          "id": "their_taste.respond"
+        },
+        {
+          "module": "hardpast",
+          "hook": "respond",
+          "priority": -980,
+          "id": "hardpast.respond"
+        },
+        {
+          "module": "receiving_end",
+          "hook": "respond",
+          "priority": -980,
+          "id": "receiving_end.respond"
+        },
+        {
+          "module": "ward",
+          "hook": "respond",
+          "priority": -985,
+          "id": "ward.respond"
+        },
+        {
+          "module": "near_me",
+          "hook": "respond",
+          "priority": -995,
+          "id": "near_me.respond"
+        },
+        {
+          "module": "a_first_time",
+          "hook": "respond",
+          "priority": -996,
+          "id": "a_first_time.respond"
+        },
+        {
+          "module": "a_figure_of_a_dish",
+          "hook": "respond",
+          "priority": -997,
+          "id": "a_figure_of_a_dish.respond"
+        },
+        {
+          "module": "chasing_a_body",
+          "hook": "respond",
+          "priority": -997,
+          "id": "chasing_a_body.respond"
+        },
+        {
+          "module": "detail_question",
+          "hook": "respond",
+          "priority": -997,
+          "id": "detail_question.respond"
+        },
+        {
+          "module": "the_trouble_named",
+          "hook": "respond",
+          "priority": -997,
+          "id": "the_trouble_named.respond"
+        },
+        {
+          "module": "carers_turn",
+          "hook": "respond",
+          "priority": -998,
+          "id": "carers_turn.respond"
+        },
+        {
+          "module": "live_source",
+          "hook": "respond",
+          "priority": -998,
+          "id": "live_source.respond"
+        },
+        {
+          "module": "onsubject",
+          "hook": "respond",
+          "priority": -998,
+          "id": "onsubject.respond"
+        },
+        {
+          "module": "what_decides_it",
+          "hook": "respond",
+          "priority": -998,
+          "id": "what_decides_it.respond"
+        },
+        {
+          "module": "a_check_with_you",
+          "hook": "respond",
+          "priority": -999,
+          "id": "a_check_with_you.respond"
+        },
+        {
+          "module": "a_day_somebody_else_keeps",
+          "hook": "respond",
+          "priority": -999,
+          "id": "a_day_somebody_else_keeps.respond"
+        },
+        {
+          "module": "a_habit_is_raised",
+          "hook": "respond",
+          "priority": -999,
+          "id": "a_habit_is_raised.respond"
+        },
+        {
+          "module": "a_job_that_is_not_a_diy_job",
+          "hook": "respond",
+          "priority": -999,
+          "id": "a_job_that_is_not_a_diy_job.respond"
+        },
+        {
+          "module": "a_number_the_bot_knows",
+          "hook": "respond",
+          "priority": -999,
+          "id": "a_number_the_bot_knows.respond"
+        },
+        {
+          "module": "a_plan_the_thread_holds",
+          "hook": "respond",
+          "priority": -999,
+          "id": "a_plan_the_thread_holds.respond"
+        },
+        {
+          "module": "a_thing_being_weighed",
+          "hook": "respond",
+          "priority": -999,
+          "id": "a_thing_being_weighed.respond"
+        },
+        {
+          "module": "a_thing_wants_doing",
+          "hook": "respond",
+          "priority": -999,
+          "id": "a_thing_wants_doing.respond"
+        },
+        {
+          "module": "bulky",
+          "hook": "respond",
+          "priority": -999,
+          "id": "bulky.respond"
+        },
+        {
+          "module": "the_detail_the_thread_adds",
+          "hook": "respond",
+          "priority": -999,
+          "id": "the_detail_the_thread_adds.respond"
+        },
+        {
+          "module": "the_kind_one_line_up",
+          "hook": "respond",
+          "priority": -999,
+          "id": "the_kind_one_line_up.respond"
+        },
+        {
+          "module": "the_trouble_it_has",
+          "hook": "respond",
+          "priority": -999,
+          "id": "the_trouble_it_has.respond"
+        },
+        {
+          "module": "the_wait_about_a_body",
+          "hook": "respond",
+          "priority": -999,
+          "id": "the_wait_about_a_body.respond"
+        },
+        {
+          "module": "where_it_answers",
+          "hook": "respond",
+          "priority": -999,
+          "id": "where_it_answers.respond"
+        },
+        {
+          "module": "first_line_open",
+          "hook": "respond",
+          "priority": -999.5,
+          "id": "first_line_open.respond"
+        },
+        {
+          "module": "the_shape_of_the_answer",
+          "hook": "respond",
+          "priority": -999.5,
+          "id": "the_shape_of_the_answer.respond"
+        },
+        {
+          "module": "greeting",
+          "hook": "respond",
+          "priority": -1000,
+          "id": "greeting.respond"
+        },
+        {
+          "module": "arbiter",
+          "hook": "choose",
+          "priority": 0,
+          "id": "arbiter.choose"
+        },
+        {
+          "module": "memory_store",
+          "hook": "after",
+          "priority": 7000,
+          "id": "memory_store.after"
+        },
+        {
+          "module": "chat",
+          "hook": "after",
+          "priority": 300,
+          "id": "chat.after"
+        }
+      ],
+      "turn_results": [
+        {
+          "$type": "dict",
+          "$id": 0,
+          "items": [
+            [
+              "reply",
+              "Small amounts, with a lot of white or black: a red sofa wants pale walls and no second colour. Sample it before you buy with a patch on the wall or a cushion taken home, because red changes with the light, and keep the rest of the room quiet so the one colour has somewhere to sit."
+            ],
+            [
+              "module",
+              "answers"
+            ],
+            [
+              "candidates",
+              {
+                "$type": "list",
+                "$id": 1,
+                "items": [
+                  {
+                    "$type": "dict",
+                    "$id": 2,
+                    "items": [
+                      [
+                        "module",
+                        "answers"
+                      ],
+                      [
+                        "priority",
+                        {
+                          "$type": "int",
+                          "value": "0"
+                        }
+                      ],
+                      [
+                        "reply",
+                        "Small amounts, with a lot of white or black: a red sofa wants pale walls and no second colour. Sample it before you buy with a patch on the wall or a cushion taken home, because red changes with the light, and keep the rest of the room quiet so the one colour has somewhere to sit."
+                      ]
+                    ]
+                  },
+                  {
+                    "$type": "dict",
+                    "$id": 3,
+                    "items": [
+                      [
+                        "module",
+                        "greeting"
+                      ],
+                      [
+                        "priority",
+                        {
+                          "$type": "int",
+                          "value": "-1000"
+                        }
+                      ],
+                      [
+                        "reply",
+                        "I'm listening — say more if it helps."
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          ]
+        },
+        {
+          "$type": "dict",
+          "$id": 0,
+          "items": [
+            [
+              "reply",
+              "You said red — that is your favourite colour."
+            ],
+            [
+              "module",
+              "favourites"
+            ],
+            [
+              "candidates",
+              {
+                "$type": "list",
+                "$id": 1,
+                "items": [
+                  {
+                    "$type": "dict",
+                    "$id": 2,
+                    "items": [
+                      [
+                        "module",
+                        "favourites"
+                      ],
+                      [
+                        "priority",
+                        {
+                          "$type": "int",
+                          "value": "7000"
+                        }
+                      ],
+                      [
+                        "reply",
+                        "You said red — that is your favourite colour."
+                      ]
+                    ]
+                  },
+                  {
+                    "$type": "dict",
+                    "$id": 3,
+                    "items": [
+                      [
+                        "module",
+                        "greeting"
+                      ],
+                      [
+                        "priority",
+                        {
+                          "$type": "int",
+                          "value": "-1000"
+                        }
+                      ],
+                      [
+                        "reply",
+                        "Red, as far as I have it. Has that changed?"
+                      ]
+                    ]
+                  }
+                ]
+              }
+            ]
+          ]
+        }
+      ],
+      "final_memory": {
+        "$type": "dict",
+        "$id": 0,
+        "items": [
+          [
+            "understood",
+            {
+              "$type": "dict",
+              "$id": 1,
+              "items": [
+                [
+                  "text",
+                  "what is my favourite colour"
+                ],
+                [
+                  "clean",
+                  "what is my favourite colour"
+                ],
+                [
+                  "words",
+                  {
+                    "$type": "list",
+                    "$id": 2,
+                    "items": [
+                      "what",
+                      "is",
+                      "my",
+                      "favourite",
+                      "colour"
+                    ]
+                  }
+                ],
+                [
+                  "plain",
+                  "what is my favourite colour"
+                ],
+                [
+                  "animal_in_hand",
+                  ""
+                ],
+                [
+                  "change_of_subject",
+                  false
+                ],
+                [
+                  "dropped_subject",
+                  false
+                ],
+                [
+                  "sense",
+                  {
+                    "$type": "dict",
+                    "$id": 3,
+                    "items": []
+                  }
+                ],
+                [
+                  "over_time",
+                  false
+                ],
+                [
+                  "over_time_what",
+                  null
+                ],
+                [
+                  "kept",
+                  null
+                ],
+                [
+                  "kind",
+                  "question"
+                ],
+                [
+                  "intent",
+                  "question"
+                ],
+                [
+                  "asks_how_i_am",
+                  false
+                ],
+                [
+                  "presence",
+                  false
+                ],
+                [
+                  "asks",
+                  {
+                    "$type": "list",
+                    "$id": 4,
+                    "items": [
+                      "what"
+                    ]
+                  }
+                ],
+                [
+                  "tag",
+                  false
+                ],
+                [
+                  "taking_up",
+                  null
+                ],
+                [
+                  "shift",
+                  null
+                ],
+                [
+                  "care_home",
+                  null
+                ],
+                [
+                  "setup",
+                  null
+                ],
+                [
+                  "help_ask",
+                  false
+                ],
+                [
+                  "asks_a_verdict",
+                  false
+                ],
+                [
+                  "emotion",
+                  null
+                ],
+                [
+                  "state_owner",
+                  null
+                ],
+                [
+                  "shortage",
+                  null
+                ],
+                [
+                  "polarity",
+                  {
+                    "$type": "int",
+                    "value": "0"
+                  }
+                ],
+                [
+                  "warmth",
+                  null
+                ],
+                [
+                  "body",
+                  null
+                ],
+                [
+                  "own_output",
+                  null
+                ],
+                [
+                  "short",
+                  false
+                ],
+                [
+                  "first_person",
+                  true
+                ],
+                [
+                  "about_bot",
+                  false
+                ],
+                [
+                  "about_bot_kind",
+                  null
+                ],
+                [
+                  "counts_the_bots_own_day",
+                  false
+                ],
+                [
+                  "replies_to_bot",
+                  false
+                ],
+                [
+                  "agrees_to_try",
+                  false
+                ],
+                [
+                  "wants_a_quiz",
+                  false
+                ],
+                [
+                  "agreement",
+                  null
+                ],
+                [
+                  "tight_on_money",
+                  false
+                ],
+                [
+                  "amount_left",
+                  false
+                ],
+                [
+                  "routine",
+                  false
+                ],
+                [
+                  "a_load_carried",
+                  false
+                ],
+                [
+                  "car_fault",
+                  false
+                ],
+                [
+                  "summons",
+                  null
+                ],
+                [
+                  "asks_back",
+                  false
+                ],
+                [
+                  "stand_in",
+                  null
+                ],
+                [
+                  "excludes",
+                  {
+                    "$type": "list",
+                    "$id": 5,
+                    "items": []
+                  }
+                ],
+                [
+                  "constraint",
+                  false
+                ],
+                [
+                  "confusion",
+                  null
+                ],
+                [
+                  "suggestion",
+                  null
+                ],
+                [
+                  "ruled_out",
+                  {
+                    "$type": "list",
+                    "$id": 6,
+                    "items": []
+                  }
+                ],
+                [
+                  "norm",
+                  {
+                    "$type": "list",
+                    "$id": 7,
+                    "items": [
+                      "what",
+                      "is",
+                      "my",
+                      "favourite",
+                      "colour"
+                    ]
+                  }
+                ],
+                [
+                  "norm_text",
+                  "what is my favourite colour"
+                ],
+                [
+                  "fixes",
+                  {
+                    "$type": "dict",
+                    "$id": 8,
+                    "items": []
+                  }
+                ],
+                [
+                  "clauses",
+                  {
+                    "$type": "list",
+                    "$id": 9,
+                    "items": [
+                      {
+                        "$type": "list",
+                        "$id": 10,
+                        "items": [
+                          "what",
+                          "is",
+                          "my",
+                          "favourite",
+                          "colour"
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                [
+                  "focus",
+                  {
+                    "$ref": 10
+                  }
+                ],
+                [
+                  "asking",
+                  {
+                    "$type": "list",
+                    "$id": 11,
+                    "items": [
+                      "what",
+                      "is",
+                      "my",
+                      "favourite",
+                      "colour"
+                    ]
+                  }
+                ],
+                [
+                  "signals",
+                  {
+                    "$type": "dict",
+                    "$id": 12,
+                    "items": [
+                      [
+                        "question_mark",
+                        false
+                      ],
+                      [
+                        "shout",
+                        false
+                      ],
+                      [
+                        "laughter",
+                        false
+                      ],
+                      [
+                        "ellipsis",
+                        false
+                      ],
+                      [
+                        "exclamation",
+                        false
+                      ],
+                      [
+                        "empty",
+                        false
+                      ]
+                    ]
+                  }
+                ],
+                [
+                  "topic",
+                  "opinions"
+                ],
+                [
+                  "topic_score",
+                  {
+                    "$type": "int",
+                    "value": "2"
+                  }
+                ],
+                [
+                  "topics",
+                  {
+                    "$type": "list",
+                    "$id": 13,
+                    "items": [
+                      "opinions"
+                    ]
+                  }
+                ],
+                [
+                  "topic_own",
+                  "opinions"
+                ],
+                [
+                  "topic_own_score",
+                  {
+                    "$type": "int",
+                    "value": "2"
+                  }
+                ],
+                [
+                  "topic_from",
+                  {
+                    "$type": "list",
+                    "$id": 14,
+                    "items": [
+                      {
+                        "$type": "tuple",
+                        "$id": 15,
+                        "items": [
+                          "favourite",
+                          {
+                            "$type": "int",
+                            "value": "2"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                [
+                  "topic_is_a_brush",
+                  false
+                ],
+                [
+                  "unsure",
+                  {
+                    "$type": "list",
+                    "$id": 16,
+                    "items": []
+                  }
+                ],
+                [
+                  "entities",
+                  {
+                    "$type": "list",
+                    "$id": 17,
+                    "items": []
+                  }
+                ],
+                [
+                  "person_names",
+                  {
+                    "$type": "list",
+                    "$id": 18,
+                    "items": []
+                  }
+                ],
+                [
+                  "background",
+                  {
+                    "$type": "list",
+                    "$id": 19,
+                    "items": []
+                  }
+                ],
+                [
+                  "intensifier",
+                  {
+                    "$type": "list",
+                    "$id": 20,
+                    "items": []
+                  }
+                ],
+                [
+                  "intensifier_left",
+                  {
+                    "$type": "list",
+                    "$id": 21,
+                    "items": []
+                  }
+                ],
+                [
+                  "subject",
+                  null
+                ],
+                [
+                  "subject_unclear",
+                  null
+                ],
+                [
+                  "ask_subject",
+                  null
+                ],
+                [
+                  "setting",
+                  null
+                ],
+                [
+                  "subject_from",
+                  null
+                ],
+                [
+                  "numbers",
+                  {
+                    "$type": "list",
+                    "$id": 22,
+                    "items": []
+                  }
+                ],
+                [
+                  "tried",
+                  {
+                    "$type": "list",
+                    "$id": 23,
+                    "items": []
+                  }
+                ],
+                [
+                  "keywords",
+                  {
+                    "$type": "list",
+                    "$id": 24,
+                    "items": [
+                      "favourite",
+                      "colour"
+                    ]
+                  }
+                ],
+                [
+                  "ref",
+                  {
+                    "$type": "dict",
+                    "$id": 25,
+                    "items": [
+                      [
+                        "it",
+                        null
+                      ],
+                      [
+                        "that",
+                        null
+                      ],
+                      [
+                        "they",
+                        null
+                      ],
+                      [
+                        "there",
+                        null
+                      ],
+                      [
+                        "he",
+                        null
+                      ],
+                      [
+                        "she",
+                        null
+                      ],
+                      [
+                        "kind",
+                        "topic"
+                      ],
+                      [
+                        "followup",
+                        false
+                      ]
+                    ]
+                  }
+                ],
+                [
+                  "followup",
+                  false
+                ],
+                [
+                  "someone_new",
+                  false
+                ],
+                [
+                  "asks_what_was_meant",
+                  false
+                ],
+                [
+                  "leans_on",
+                  null
+                ],
+                [
+                  "looks_back",
+                  {
+                    "$type": "dict",
+                    "$id": 26,
+                    "items": [
+                      [
+                        "cue",
+                        "what is my"
+                      ],
+                      [
+                        "thing",
+                        "favourite colour"
+                      ],
+                      [
+                        "said",
+                        {
+                          "$type": "list",
+                          "$id": 27,
+                          "items": [
+                            "my favourite colour is red"
+                          ]
+                        }
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "intent_wants",
+            null
+          ],
+          [
+            "user",
+            {
+              "$type": "dict",
+              "$id": 28,
+              "items": [
+                [
+                  "favourites",
+                  {
+                    "$type": "dict",
+                    "$id": 29,
+                    "items": [
+                      [
+                        "colour",
+                        "red"
+                      ]
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "favourite_recent",
+            {
+              "$type": "dict",
+              "$id": 30,
+              "items": [
+                [
+                  "thing",
+                  "colour"
+                ],
+                [
+                  "turn",
+                  {
+                    "$type": "int",
+                    "value": "0"
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "topic",
+            {
+              "$type": "dict",
+              "$id": 31,
+              "items": [
+                [
+                  "turn",
+                  {
+                    "$type": "int",
+                    "value": "0"
+                  }
+                ],
+                [
+                  "text",
+                  "my favourite colour is red"
+                ],
+                [
+                  "words",
+                  {
+                    "$type": "list",
+                    "$id": 32,
+                    "items": [
+                      "favourite",
+                      "colour",
+                      "red"
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "topics",
+            {
+              "$type": "list",
+              "$id": 33,
+              "items": [
+                {
+                  "$type": "dict",
+                  "$id": 34,
+                  "items": [
+                    [
+                      "turn",
+                      {
+                        "$type": "int",
+                        "value": "0"
+                      }
+                    ],
+                    [
+                      "text",
+                      "my favourite colour is red"
+                    ],
+                    [
+                      "words",
+                      {
+                        "$type": "list",
+                        "$id": 35,
+                        "items": [
+                          "favourite",
+                          "colour",
+                          "red"
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            "asked_now",
+            "my favourite colour is red"
+          ],
+          [
+            "entry_answer",
+            {
+              "$type": "dict",
+              "$id": 36,
+              "items": [
+                [
+                  "text",
+                  "Small amounts, with a lot of white or black: a red sofa wants pale walls and no second colour. Sample it before you buy with a patch on the wall or a cushion taken home, because red changes with the light, and keep the rest of the room quiet so the one colour has somewhere to sit."
+                ],
+                [
+                  "keys",
+                  {
+                    "$type": "list",
+                    "$id": 37,
+                    "items": [
+                      "beige",
+                      "black",
+                      "blue",
+                      "brown",
+                      "charcoal",
+                      "clash",
+                      "clashe",
+                      "color",
+                      "colour",
+                      "compliment",
+                      "cream",
+                      "go",
+                      "goe",
+                      "gold",
+                      "gray",
+                      "green",
+                      "grey",
+                      "match",
+                      "matche",
+                      "matching",
+                      "mustard",
+                      "navy",
+                      "orange",
+                      "pair",
+                      "pink",
+                      "purple",
+                      "red",
+                      "sage",
+                      "scheme",
+                      "silver",
+                      "teal",
+                      "terracotta",
+                      "together",
+                      "white",
+                      "with",
+                      "yellow"
+                    ]
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "entry_answers",
+            {
+              "$type": "list",
+              "$id": 38,
+              "items": [
+                {
+                  "$type": "dict",
+                  "$id": 39,
+                  "items": [
+                    [
+                      "text",
+                      "Small amounts, with a lot of white or black: a red sofa wants pale walls and no second colour. Sample it before you buy with a patch on the wall or a cushion taken home, because red changes with the light, and keep the rest of the room quiet so the one colour has somewhere to sit."
+                    ],
+                    [
+                      "keys",
+                      {
+                        "$type": "list",
+                        "$id": 40,
+                        "items": [
+                          "beige",
+                          "black",
+                          "blue",
+                          "brown",
+                          "charcoal",
+                          "clash",
+                          "clashe",
+                          "color",
+                          "colour",
+                          "compliment",
+                          "cream",
+                          "go",
+                          "goe",
+                          "gold",
+                          "gray",
+                          "green",
+                          "grey",
+                          "match",
+                          "matche",
+                          "matching",
+                          "mustard",
+                          "navy",
+                          "orange",
+                          "pair",
+                          "pink",
+                          "purple",
+                          "red",
+                          "sage",
+                          "scheme",
+                          "silver",
+                          "teal",
+                          "terracotta",
+                          "together",
+                          "white",
+                          "with",
+                          "yellow"
+                        ]
+                      }
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            "last_answer",
+            {
+              "$type": "dict",
+              "$id": 41,
+              "items": [
+                [
+                  "reply",
+                  "Small amounts, with a lot of white or black: a red sofa wants pale walls and no second colour. Sample it before you buy with a patch on the wall or a cushion taken home, because red changes with the light, and keep the rest of the room quiet so the one colour has somewhere to sit."
+                ],
+                [
+                  "keys",
+                  {
+                    "$type": "list",
+                    "$id": 42,
+                    "items": [
+                      "beige",
+                      "black",
+                      "blue",
+                      "brown",
+                      "charcoal",
+                      "clash",
+                      "clashe",
+                      "color",
+                      "colour",
+                      "compliment",
+                      "cream",
+                      "go",
+                      "goe",
+                      "gold",
+                      "gray",
+                      "green",
+                      "grey",
+                      "match",
+                      "matche",
+                      "matching",
+                      "mustard",
+                      "navy",
+                      "orange",
+                      "pair",
+                      "pink",
+                      "purple",
+                      "red",
+                      "sage",
+                      "scheme",
+                      "silver",
+                      "teal",
+                      "terracotta",
+                      "together",
+                      "white",
+                      "with",
+                      "yellow"
+                    ]
+                  }
+                ],
+                [
+                  "id",
+                  "colour-pairing"
+                ],
+                [
+                  "domain",
+                  "home"
+                ],
+                [
+                  "turn",
+                  {
+                    "$type": "int",
+                    "value": "0"
+                  }
+                ]
+              ]
+            }
+          ],
+          [
+            "frequency_reply",
+            false
+          ],
+          [
+            "frequency_answer",
+            ""
+          ],
+          [
+            "turns",
+            {
+              "$type": "list",
+              "$id": 43,
+              "items": [
+                {
+                  "$type": "dict",
+                  "$id": 44,
+                  "items": [
+                    [
+                      "user",
+                      "my favourite colour is red"
+                    ],
+                    [
+                      "bot",
+                      "Small amounts, with a lot of white or black: a red sofa wants pale walls and no second colour. Sample it before you buy with a patch on the wall or a cushion taken home, because red changes with the light, and keep the rest of the room quiet so the one colour has somewhere to sit."
+                    ],
+                    [
+                      "module",
+                      "answers"
+                    ]
+                  ]
+                },
+                {
+                  "$type": "dict",
+                  "$id": 45,
+                  "items": [
+                    [
+                      "user",
+                      "what is my favourite colour"
+                    ],
+                    [
+                      "bot",
+                      "You said red — that is your favourite colour."
+                    ],
+                    [
+                      "module",
+                      "favourites"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          [
+            "topic_this_turn",
+            {
+              "$type": "dict",
+              "$id": 46,
+              "items": [
+                [
+                  "text",
+                  "my favourite colour is red"
+                ],
+                [
+                  "of",
+                  ""
+                ],
+                [
+                  "was",
+                  "my favourite colour is red"
+                ]
+              ]
+            }
+          ]
+        ]
+      },
+      "environment_date": "2026-11-21",
+      "fixture": "runtime_conversation",
+      "limitations": [
+        "RNG states are metadata; stochastic calls require those states for replay.",
+        "Clock and module-global caches are not frozen or snapshotted.",
+        "Routing callbacks execute inside arbiter; they are not separate phase hooks."
+      ]
+    }
+  ]
+}

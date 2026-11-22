@@ -1,0 +1,698 @@
+[
+  {
+    "module": "understand",
+    "hook": "observe",
+    "priority": 10000,
+    "id": "understand.observe"
+  },
+  {
+    "module": "intent",
+    "hook": "observe",
+    "priority": 9500,
+    "id": "intent.observe"
+  },
+  {
+    "module": "group_ages",
+    "hook": "observe",
+    "priority": 7050,
+    "id": "group_ages.observe"
+  },
+  {
+    "module": "household",
+    "hook": "observe",
+    "priority": 7050,
+    "id": "household.observe"
+  },
+  {
+    "module": "said_fact_back",
+    "hook": "observe",
+    "priority": 7050,
+    "id": "said_fact_back.observe"
+  },
+  {
+    "module": "a_count_said",
+    "hook": "observe",
+    "priority": 7000,
+    "id": "a_count_said.observe"
+  },
+  {
+    "module": "favourites",
+    "hook": "observe",
+    "priority": 7000,
+    "id": "favourites.observe"
+  },
+  {
+    "module": "memory_store",
+    "hook": "observe",
+    "priority": 7000,
+    "id": "memory_store.observe"
+  },
+  {
+    "module": "done_ask",
+    "hook": "observe",
+    "priority": 6900,
+    "id": "done_ask.observe"
+  },
+  {
+    "module": "trip_date_said_again",
+    "hook": "observe",
+    "priority": 6900,
+    "id": "trip_date_said_again.observe"
+  },
+  {
+    "module": "name_taken_back",
+    "hook": "observe",
+    "priority": 6600,
+    "id": "name_taken_back.observe"
+  },
+  {
+    "module": "grief",
+    "hook": "observe",
+    "priority": 2100,
+    "id": "grief.observe"
+  },
+  {
+    "module": "a_limit_over_the_answer",
+    "hook": "observe",
+    "priority": 500,
+    "id": "a_limit_over_the_answer.observe"
+  },
+  {
+    "module": "chat",
+    "hook": "observe",
+    "priority": 300,
+    "id": "chat.observe"
+  },
+  {
+    "module": "answers",
+    "hook": "observe",
+    "priority": 0,
+    "id": "answers.observe"
+  },
+  {
+    "module": "a_debt_said_flat",
+    "hook": "observe",
+    "priority": -500,
+    "id": "a_debt_said_flat.observe"
+  },
+  {
+    "module": "a_count_of_packets",
+    "hook": "respond",
+    "priority": 9000,
+    "id": "a_count_of_packets.respond"
+  },
+  {
+    "module": "safety",
+    "hook": "respond",
+    "priority": 9000,
+    "id": "safety.respond"
+  },
+  {
+    "module": "the_month_they_have",
+    "hook": "respond",
+    "priority": 8000,
+    "id": "the_month_they_have.respond"
+  },
+  {
+    "module": "since_it_began",
+    "hook": "respond",
+    "priority": 7500,
+    "id": "since_it_began.respond"
+  },
+  {
+    "module": "keeping",
+    "hook": "respond",
+    "priority": 7400,
+    "id": "keeping.respond"
+  },
+  {
+    "module": "a_question_about_somebody",
+    "hook": "respond",
+    "priority": 7300,
+    "id": "a_question_about_somebody.respond"
+  },
+  {
+    "module": "an_age_ahead",
+    "hook": "respond",
+    "priority": 7150,
+    "id": "an_age_ahead.respond"
+  },
+  {
+    "module": "steps",
+    "hook": "respond",
+    "priority": 7100,
+    "id": "steps.respond"
+  },
+  {
+    "module": "what_they_said",
+    "hook": "respond",
+    "priority": 7060,
+    "id": "what_they_said.respond"
+  },
+  {
+    "module": "a_fact_asked_again",
+    "hook": "respond",
+    "priority": 7050,
+    "id": "a_fact_asked_again.respond"
+  },
+  {
+    "module": "a_return_brings_back_the_advice",
+    "hook": "respond",
+    "priority": 7050,
+    "id": "a_return_brings_back_the_advice.respond"
+  },
+  {
+    "module": "group_ages",
+    "hook": "respond",
+    "priority": 7050,
+    "id": "group_ages.respond"
+  },
+  {
+    "module": "household",
+    "hook": "respond",
+    "priority": 7050,
+    "id": "household.respond"
+  },
+  {
+    "module": "kid_tally",
+    "hook": "respond",
+    "priority": 7050,
+    "id": "kid_tally.respond"
+  },
+  {
+    "module": "said_fact_back",
+    "hook": "respond",
+    "priority": 7050,
+    "id": "said_fact_back.respond"
+  },
+  {
+    "module": "live_times",
+    "hook": "respond",
+    "priority": 7001,
+    "id": "live_times.respond"
+  },
+  {
+    "module": "a_count_said",
+    "hook": "respond",
+    "priority": 7000,
+    "id": "a_count_said.respond"
+  },
+  {
+    "module": "favourites",
+    "hook": "respond",
+    "priority": 7000,
+    "id": "favourites.respond"
+  },
+  {
+    "module": "memory_store",
+    "hook": "respond",
+    "priority": 7000,
+    "id": "memory_store.respond"
+  },
+  {
+    "module": "recap",
+    "hook": "respond",
+    "priority": 7000,
+    "id": "recap.respond"
+  },
+  {
+    "module": "attribute_said_again",
+    "hook": "respond",
+    "priority": 6900,
+    "id": "attribute_said_again.respond"
+  },
+  {
+    "module": "thing_i_did_with",
+    "hook": "respond",
+    "priority": 6900,
+    "id": "thing_i_did_with.respond"
+  },
+  {
+    "module": "name_taken_back",
+    "hook": "respond",
+    "priority": 6600,
+    "id": "name_taken_back.respond"
+  },
+  {
+    "module": "dreams",
+    "hook": "respond",
+    "priority": 3000,
+    "id": "dreams.respond"
+  },
+  {
+    "module": "grief",
+    "hook": "respond",
+    "priority": 2100,
+    "id": "grief.respond"
+  },
+  {
+    "module": "loss",
+    "hook": "respond",
+    "priority": 2000,
+    "id": "loss.respond"
+  },
+  {
+    "module": "who_to_see",
+    "hook": "respond",
+    "priority": 1500,
+    "id": "who_to_see.respond"
+  },
+  {
+    "module": "pace",
+    "hook": "respond",
+    "priority": 1300,
+    "id": "pace.respond"
+  },
+  {
+    "module": "a_cake_between_its_layers",
+    "hook": "respond",
+    "priority": 1200,
+    "id": "a_cake_between_its_layers.respond"
+  },
+  {
+    "module": "words",
+    "hook": "respond",
+    "priority": 1200,
+    "id": "words.respond"
+  },
+  {
+    "module": "my_work",
+    "hook": "respond",
+    "priority": 1150,
+    "id": "my_work.respond"
+  },
+  {
+    "module": "years_in",
+    "hook": "respond",
+    "priority": 1150,
+    "id": "years_in.respond"
+  },
+  {
+    "module": "aboutachild",
+    "hook": "respond",
+    "priority": 1100,
+    "id": "aboutachild.respond"
+  },
+  {
+    "module": "familyask",
+    "hook": "respond",
+    "priority": 1100,
+    "id": "familyask.respond"
+  },
+  {
+    "module": "night",
+    "hook": "respond",
+    "priority": 1100,
+    "id": "night.respond"
+  },
+  {
+    "module": "saving_followup",
+    "hook": "respond",
+    "priority": 1100,
+    "id": "saving_followup.respond"
+  },
+  {
+    "module": "how_long_a_stay",
+    "hook": "respond",
+    "priority": 1050,
+    "id": "how_long_a_stay.respond"
+  },
+  {
+    "module": "no_advice",
+    "hook": "respond",
+    "priority": 1050,
+    "id": "no_advice.respond"
+  },
+  {
+    "module": "a_figure_beside_the_state",
+    "hook": "respond",
+    "priority": 1000,
+    "id": "a_figure_beside_the_state.respond"
+  },
+  {
+    "module": "a_measure_asked_again",
+    "hook": "respond",
+    "priority": 1000,
+    "id": "a_measure_asked_again.respond"
+  },
+  {
+    "module": "a_shock_at_a_bill",
+    "hook": "respond",
+    "priority": 1000,
+    "id": "a_shock_at_a_bill.respond"
+  },
+  {
+    "module": "a_will_it_work",
+    "hook": "respond",
+    "priority": 1000,
+    "id": "a_will_it_work.respond"
+  },
+  {
+    "module": "figure_asked_again",
+    "hook": "respond",
+    "priority": 1000,
+    "id": "figure_asked_again.respond"
+  },
+  {
+    "module": "taking_asked_again",
+    "hook": "respond",
+    "priority": 1000,
+    "id": "taking_asked_again.respond"
+  },
+  {
+    "module": "a_limit_over_the_answer",
+    "hook": "respond",
+    "priority": 500,
+    "id": "a_limit_over_the_answer.respond"
+  },
+  {
+    "module": "already",
+    "hook": "respond",
+    "priority": 400,
+    "id": "already.respond"
+  },
+  {
+    "module": "doubt",
+    "hook": "respond",
+    "priority": 400,
+    "id": "doubt.respond"
+  },
+  {
+    "module": "colour_on_the_body",
+    "hook": "respond",
+    "priority": 350,
+    "id": "colour_on_the_body.respond"
+  },
+  {
+    "module": "said_back",
+    "hook": "respond",
+    "priority": 350,
+    "id": "said_back.respond"
+  },
+  {
+    "module": "after_a_lead_in",
+    "hook": "respond",
+    "priority": 320,
+    "id": "after_a_lead_in.respond"
+  },
+  {
+    "module": "chat",
+    "hook": "respond",
+    "priority": 300,
+    "id": "chat.respond"
+  },
+  {
+    "module": "their_pastime",
+    "hook": "respond",
+    "priority": 300,
+    "id": "their_pastime.respond"
+  },
+  {
+    "module": "callback_about",
+    "hook": "respond",
+    "priority": 260,
+    "id": "callback_about.respond"
+  },
+  {
+    "module": "theirperson",
+    "hook": "respond",
+    "priority": 250,
+    "id": "theirperson.respond"
+  },
+  {
+    "module": "their_life",
+    "hook": "respond",
+    "priority": 100,
+    "id": "their_life.respond"
+  },
+  {
+    "module": "answers",
+    "hook": "respond",
+    "priority": 0,
+    "id": "answers.respond"
+  },
+  {
+    "module": "ruled_out",
+    "hook": "respond",
+    "priority": -450,
+    "id": "ruled_out.respond"
+  },
+  {
+    "module": "a_debt_said_flat",
+    "hook": "respond",
+    "priority": -500,
+    "id": "a_debt_said_flat.respond"
+  },
+  {
+    "module": "invitation",
+    "hook": "respond",
+    "priority": -500,
+    "id": "invitation.respond"
+  },
+  {
+    "module": "judge_ask",
+    "hook": "respond",
+    "priority": -500,
+    "id": "judge_ask.respond"
+  },
+  {
+    "module": "record_due",
+    "hook": "respond",
+    "priority": -500,
+    "id": "record_due.respond"
+  },
+  {
+    "module": "talkto",
+    "hook": "respond",
+    "priority": -500,
+    "id": "talkto.respond"
+  },
+  {
+    "module": "a_letter_about_money",
+    "hook": "respond",
+    "priority": -600,
+    "id": "a_letter_about_money.respond"
+  },
+  {
+    "module": "confusing",
+    "hook": "respond",
+    "priority": -900,
+    "id": "confusing.respond"
+  },
+  {
+    "module": "urgent",
+    "hook": "respond",
+    "priority": -900,
+    "id": "urgent.respond"
+  },
+  {
+    "module": "nudge",
+    "hook": "respond",
+    "priority": -950,
+    "id": "nudge.respond"
+  },
+  {
+    "module": "their_taste",
+    "hook": "respond",
+    "priority": -960,
+    "id": "their_taste.respond"
+  },
+  {
+    "module": "hardpast",
+    "hook": "respond",
+    "priority": -980,
+    "id": "hardpast.respond"
+  },
+  {
+    "module": "receiving_end",
+    "hook": "respond",
+    "priority": -980,
+    "id": "receiving_end.respond"
+  },
+  {
+    "module": "ward",
+    "hook": "respond",
+    "priority": -985,
+    "id": "ward.respond"
+  },
+  {
+    "module": "near_me",
+    "hook": "respond",
+    "priority": -995,
+    "id": "near_me.respond"
+  },
+  {
+    "module": "a_first_time",
+    "hook": "respond",
+    "priority": -996,
+    "id": "a_first_time.respond"
+  },
+  {
+    "module": "a_figure_of_a_dish",
+    "hook": "respond",
+    "priority": -997,
+    "id": "a_figure_of_a_dish.respond"
+  },
+  {
+    "module": "chasing_a_body",
+    "hook": "respond",
+    "priority": -997,
+    "id": "chasing_a_body.respond"
+  },
+  {
+    "module": "detail_question",
+    "hook": "respond",
+    "priority": -997,
+    "id": "detail_question.respond"
+  },
+  {
+    "module": "the_trouble_named",
+    "hook": "respond",
+    "priority": -997,
+    "id": "the_trouble_named.respond"
+  },
+  {
+    "module": "carers_turn",
+    "hook": "respond",
+    "priority": -998,
+    "id": "carers_turn.respond"
+  },
+  {
+    "module": "live_source",
+    "hook": "respond",
+    "priority": -998,
+    "id": "live_source.respond"
+  },
+  {
+    "module": "onsubject",
+    "hook": "respond",
+    "priority": -998,
+    "id": "onsubject.respond"
+  },
+  {
+    "module": "what_decides_it",
+    "hook": "respond",
+    "priority": -998,
+    "id": "what_decides_it.respond"
+  },
+  {
+    "module": "a_check_with_you",
+    "hook": "respond",
+    "priority": -999,
+    "id": "a_check_with_you.respond"
+  },
+  {
+    "module": "a_day_somebody_else_keeps",
+    "hook": "respond",
+    "priority": -999,
+    "id": "a_day_somebody_else_keeps.respond"
+  },
+  {
+    "module": "a_habit_is_raised",
+    "hook": "respond",
+    "priority": -999,
+    "id": "a_habit_is_raised.respond"
+  },
+  {
+    "module": "a_job_that_is_not_a_diy_job",
+    "hook": "respond",
+    "priority": -999,
+    "id": "a_job_that_is_not_a_diy_job.respond"
+  },
+  {
+    "module": "a_number_the_bot_knows",
+    "hook": "respond",
+    "priority": -999,
+    "id": "a_number_the_bot_knows.respond"
+  },
+  {
+    "module": "a_plan_the_thread_holds",
+    "hook": "respond",
+    "priority": -999,
+    "id": "a_plan_the_thread_holds.respond"
+  },
+  {
+    "module": "a_thing_being_weighed",
+    "hook": "respond",
+    "priority": -999,
+    "id": "a_thing_being_weighed.respond"
+  },
+  {
+    "module": "a_thing_wants_doing",
+    "hook": "respond",
+    "priority": -999,
+    "id": "a_thing_wants_doing.respond"
+  },
+  {
+    "module": "bulky",
+    "hook": "respond",
+    "priority": -999,
+    "id": "bulky.respond"
+  },
+  {
+    "module": "the_detail_the_thread_adds",
+    "hook": "respond",
+    "priority": -999,
+    "id": "the_detail_the_thread_adds.respond"
+  },
+  {
+    "module": "the_kind_one_line_up",
+    "hook": "respond",
+    "priority": -999,
+    "id": "the_kind_one_line_up.respond"
+  },
+  {
+    "module": "the_trouble_it_has",
+    "hook": "respond",
+    "priority": -999,
+    "id": "the_trouble_it_has.respond"
+  },
+  {
+    "module": "the_wait_about_a_body",
+    "hook": "respond",
+    "priority": -999,
+    "id": "the_wait_about_a_body.respond"
+  },
+  {
+    "module": "where_it_answers",
+    "hook": "respond",
+    "priority": -999,
+    "id": "where_it_answers.respond"
+  },
+  {
+    "module": "first_line_open",
+    "hook": "respond",
+    "priority": -999.5,
+    "id": "first_line_open.respond"
+  },
+  {
+    "module": "the_shape_of_the_answer",
+    "hook": "respond",
+    "priority": -999.5,
+    "id": "the_shape_of_the_answer.respond"
+  },
+  {
+    "module": "greeting",
+    "hook": "respond",
+    "priority": -1000,
+    "id": "greeting.respond"
+  },
+  {
+    "module": "arbiter",
+    "hook": "choose",
+    "priority": 0,
+    "id": "arbiter.choose"
+  },
+  {
+    "module": "memory_store",
+    "hook": "after",
+    "priority": 7000,
+    "id": "memory_store.after"
+  },
+  {
+    "module": "chat",
+    "hook": "after",
+    "priority": 300,
+    "id": "chat.after"
+  }
+]

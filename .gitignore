@@ -5,3 +5,5 @@ __pycache__/
 build/
 dist/
 .DS_Store
+experiments/moduleio/model-*.pt
+experiments/moduleio/model-*.pt.train.jsonl.gz

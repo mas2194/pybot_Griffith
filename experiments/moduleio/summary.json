@@ -1,0 +1,2201 @@
+{
+  "status": "improved held-out complete-I/O conformance achieved with official Griffith 4-input WARP LUT FFNs",
+  "teacher_revision": [
+    "6b73dd979ab3ef22171aaf0016723607631d71fe"
+  ],
+  "griffith_revision": "e0675f4e36596954aa424d522e0ee966bba9a3e1",
+  "wire_format": "compact-v2",
+  "promoted_checkpoint": {
+    "path": "experiments/moduleio/model.pt",
+    "source": "experiments/moduleio/model-logic-ffn-kd-fixed-n4.pt",
+    "architecture": {
+      "max_seq_len": 1024,
+      "d_model": 128,
+      "n_heads": 4,
+      "n_layers": 4,
+      "mlp_ratio": 2,
+      "qk_bits": 128,
+      "v_bits": 128,
+      "logic": true,
+      "attention": "fp",
+      "ffn": "logic",
+      "attention_score": "xnor_popcount",
+      "attention_norm": "softmax",
+      "n_inputs": 2,
+      "ffn_n_inputs": 4,
+      "parameterization": "warp",
+      "proj_depth": 1,
+      "wiring": "fixed",
+      "lm_tau": 0.05,
+      "gumbel_noise": false,
+      "gumbel_tau": 1.0,
+      "warp_gumbel": false,
+      "weight_tying": false,
+      "pos_init": "sinusoidal",
+      "embed_init_std": 0.25,
+      "wire_format": "compact-v2"
+    },
+    "training": {
+      "steps": 2400,
+      "batch_size": 8,
+      "grad_accum": 2,
+      "seed": 0,
+      "learning_rate": 0.001,
+      "lut_lr_scale": 10.0,
+      "wire_lr_scale": 3.0,
+      "lr_schedule": "wsd",
+      "warmup_steps": 100,
+      "weight_decay": 0.01,
+      "loss_weighting": "example",
+      "temp_start": 2.0,
+      "temp_end": 0.5,
+      "aux_lambda": 0.01,
+      "sampling": "epoch_bucketed",
+      "init_from": "experiments/moduleio/fp-control.pt",
+      "teacher_checkpoint": "experiments/moduleio/fp-control.pt",
+      "kd_alpha": 0.5,
+      "kd_temp": 2.0,
+      "attn_kd_weight": 0.0,
+      "threads": 8,
+      "train_mode": "soft_to_ste",
+      "device": "mps"
+    },
+    "parameters": 497160,
+    "lut_layers": 8,
+    "lut_neurons": 2048,
+    "ffn_n_inputs": 4,
+    "lut_entries_per_neuron": 16,
+    "learnable_wiring_layers": 0
+  },
+  "datasets": {
+    "diverse_train_records": 3363,
+    "diverse_validation_records": 318,
+    "canonical_heldout_records": 18,
+    "teacher_modules": 102,
+    "teacher_hooks": 116,
+    "natural_trace_records": 232,
+    "trained_modules": 4,
+    "trained_hooks": 6
+  },
+  "previous_0of18_baseline": {
+    "LUT model / hard": {
+      "counts": {
+        "whole_call_exact": 0,
+        "return_exact": 0,
+        "memory_exact": 0,
+        "exception_exact": 0,
+        "candidates_exact": 0,
+        "ok": 0,
+        "invalid_json": 18,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.0,
+        "return_exact": 0.0,
+        "memory_exact": 0.0,
+        "exception_exact": 0.0,
+        "candidates_exact": null,
+        "valid_complete_output": 0.0
+      }
+    },
+    "LUT model / soft": {
+      "counts": {
+        "whole_call_exact": 0,
+        "return_exact": 0,
+        "memory_exact": 0,
+        "exception_exact": 0,
+        "candidates_exact": 0,
+        "ok": 0,
+        "invalid_json": 18,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.0,
+        "return_exact": 0.0,
+        "memory_exact": 0.0,
+        "exception_exact": 0.0,
+        "candidates_exact": null,
+        "valid_complete_output": 0.0
+      }
+    },
+    "FP control / eval": {
+      "counts": {
+        "whole_call_exact": 0,
+        "return_exact": 4,
+        "memory_exact": 0,
+        "exception_exact": 5,
+        "candidates_exact": 0,
+        "ok": 5,
+        "invalid_json": 12,
+        "invalid_schema": 1,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.0,
+        "return_exact": 0.2222222222222222,
+        "memory_exact": 0.0,
+        "exception_exact": 0.2777777777777778,
+        "candidates_exact": null,
+        "valid_complete_output": 0.2777777777777778
+      }
+    },
+    "Always None + unchanged memory": {
+      "counts": {
+        "whole_call_exact": 4,
+        "return_exact": 14,
+        "memory_exact": 8,
+        "exception_exact": 18,
+        "candidates_exact": 0,
+        "ok": 18,
+        "invalid_json": 0,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.2222222222222222,
+        "return_exact": 0.7777777777777778,
+        "memory_exact": 0.4444444444444444,
+        "exception_exact": 1.0,
+        "candidates_exact": null,
+        "valid_complete_output": 1.0
+      }
+    }
+  },
+  "metrics_original_18": {
+    "Promoted LUT model / hard": {
+      "counts": {
+        "whole_call_exact": 15,
+        "return_exact": 17,
+        "memory_exact": 16,
+        "exception_exact": 18,
+        "candidates_exact": 0,
+        "ok": 18,
+        "invalid_json": 0,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.8333333333333334,
+        "return_exact": 0.9444444444444444,
+        "memory_exact": 0.8888888888888888,
+        "exception_exact": 1.0,
+        "candidates_exact": null,
+        "valid_complete_output": 1.0
+      },
+      "latency_seconds": {
+        "total": 22.18992958171293,
+        "mean": 1.2327738656507183,
+        "median": 1.4741564374999143,
+        "p95": 1.772718415944837,
+        "max": 1.772718415944837
+      }
+    },
+    "Promoted LUT model / soft": {
+      "counts": {
+        "whole_call_exact": 16,
+        "return_exact": 17,
+        "memory_exact": 17,
+        "exception_exact": 18,
+        "candidates_exact": 0,
+        "ok": 18,
+        "invalid_json": 0,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.8888888888888888,
+        "return_exact": 0.9444444444444444,
+        "memory_exact": 0.9444444444444444,
+        "exception_exact": 1.0,
+        "candidates_exact": null,
+        "valid_complete_output": 1.0
+      },
+      "latency_seconds": {
+        "total": 22.14339612587355,
+        "mean": 1.2301886736596417,
+        "median": 1.473637395480182,
+        "p95": 1.7685940000228584,
+        "max": 1.7685940000228584
+      }
+    },
+    "FP control / eval": {
+      "counts": {
+        "whole_call_exact": 14,
+        "return_exact": 16,
+        "memory_exact": 16,
+        "exception_exact": 18,
+        "candidates_exact": 0,
+        "ok": 18,
+        "invalid_json": 0,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.7777777777777778,
+        "return_exact": 0.8888888888888888,
+        "memory_exact": 0.8888888888888888,
+        "exception_exact": 1.0,
+        "candidates_exact": null,
+        "valid_complete_output": 1.0
+      },
+      "latency_seconds": {
+        "total": 5.281891081947833,
+        "mean": 0.2934383934415463,
+        "median": 0.3433053335174918,
+        "p95": 0.4455798749695532,
+        "max": 0.4455798749695532
+      }
+    },
+    "Always None + unchanged memory": {
+      "counts": {
+        "whole_call_exact": 4,
+        "return_exact": 14,
+        "memory_exact": 8,
+        "exception_exact": 18,
+        "candidates_exact": 0,
+        "ok": 18,
+        "invalid_json": 0,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 18,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.2222222222222222,
+        "return_exact": 0.7777777777777778,
+        "memory_exact": 0.4444444444444444,
+        "exception_exact": 1.0,
+        "candidates_exact": null,
+        "valid_complete_output": 1.0
+      }
+    }
+  },
+  "metrics_diverse_318": {
+    "Promoted LUT model / hard": {
+      "counts": {
+        "whole_call_exact": 214,
+        "return_exact": 264,
+        "memory_exact": 260,
+        "exception_exact": 311,
+        "candidates_exact": 0,
+        "ok": 311,
+        "invalid_json": 7,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 318,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.6729559748427673,
+        "return_exact": 0.8301886792452831,
+        "memory_exact": 0.8176100628930818,
+        "exception_exact": 0.9779874213836478,
+        "candidates_exact": null,
+        "valid_complete_output": 0.9779874213836478
+      },
+      "latency_seconds": {
+        "total": 422.5371210752055,
+        "mean": 1.3287330851421557,
+        "median": 1.4153736250009388,
+        "p95": 2.07612866605632,
+        "max": 2.582067209063098
+      }
+    },
+    "FP control / eval": {
+      "counts": {
+        "whole_call_exact": 247,
+        "return_exact": 276,
+        "memory_exact": 282,
+        "exception_exact": 312,
+        "candidates_exact": 0,
+        "ok": 312,
+        "invalid_json": 6,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 318,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.7767295597484277,
+        "return_exact": 0.8679245283018868,
+        "memory_exact": 0.8867924528301887,
+        "exception_exact": 0.9811320754716981,
+        "candidates_exact": null,
+        "valid_complete_output": 0.9811320754716981
+      },
+      "latency_seconds": {
+        "total": 98.86608184041688,
+        "mean": 0.3108996284289839,
+        "median": 0.3361671250022482,
+        "p95": 0.43799445900367573,
+        "max": 0.6245890000136569
+      }
+    },
+    "Always None + unchanged memory": {
+      "counts": {
+        "whole_call_exact": 38,
+        "return_exact": 214,
+        "memory_exact": 138,
+        "exception_exact": 318,
+        "candidates_exact": 0,
+        "ok": 318,
+        "invalid_json": 0,
+        "invalid_schema": 0,
+        "invalid_utf8": 0,
+        "eos_missing": 0,
+        "overflow": 0,
+        "generation_error": 0,
+        "examples": 318,
+        "choose_examples": 0
+      },
+      "rates": {
+        "whole_call_exact": 0.11949685534591195,
+        "return_exact": 0.6729559748427673,
+        "memory_exact": 0.4339622641509434,
+        "exception_exact": 1.0,
+        "candidates_exact": null,
+        "valid_complete_output": 1.0
+      }
+    }
+  },
+  "n_inputs_comparison": [
+    {
+      "family": "FFN KD (Learnable, 4L/mlp2)",
+      "n_inputs": 2,
+      "entries_per_lut": 4,
+      "steps": 2400,
+      "batch_size": 16,
+      "grad_accum": 1,
+      "parameters": 1259016,
+      "training_seconds": 590.2613907919731,
+      "ms_per_step": 245.94224616332212,
+      "orig_18_hard": 15,
+      "orig_18_soft": 15,
+      "diverse_318_hard": 201,
+      "diverse_318_ok": 307,
+      "cpu_mean_seconds": 1.1347091630047756
+    },
+    {
+      "family": "FFN KD (Fixed, 4L/mlp2)",
+      "n_inputs": 4,
+      "entries_per_lut": 16,
+      "steps": 2400,
+      "batch_size": 8,
+      "grad_accum": 2,
+      "parameters": 497160,
+      "training_seconds": 1228.4905903750332,
+      "ms_per_step": 511.87107932293054,
+      "orig_18_hard": 15,
+      "orig_18_soft": 16,
+      "diverse_318_hard": 214,
+      "diverse_318_ok": 311,
+      "cpu_mean_seconds": 1.3287330851421557
+    },
+    {
+      "family": "FFN KD (Learnable, 4L/mlp2)",
+      "n_inputs": 4,
+      "entries_per_lut": 16,
+      "steps": 2400,
+      "batch_size": 8,
+      "grad_accum": 2,
+      "parameters": 2070024,
+      "training_seconds": 1244.377726583043,
+      "ms_per_step": 518.4907194096013,
+      "orig_18_hard": 15,
+      "orig_18_soft": 15,
+      "diverse_318_hard": 211,
+      "diverse_318_ok": 309,
+      "cpu_mean_seconds": 1.4355407815570094
+    },
+    {
+      "family": "FFN KD (Learnable, 4L/mlp2)",
+      "n_inputs": 6,
+      "entries_per_lut": 64,
+      "steps": 1800,
+      "batch_size": 4,
+      "grad_accum": 2,
+      "parameters": 2954760,
+      "training_seconds": 1348.4590793340467,
+      "ms_per_step": 749.1439329633592,
+      "orig_18_hard": 13,
+      "orig_18_soft": 13,
+      "diverse_318_hard": 136,
+      "diverse_318_ok": 283,
+      "cpu_mean_seconds": 3.1696466654897875
+    },
+    {
+      "family": "Attn L2 (Learnable, 4L/mlp4)",
+      "n_inputs": 2,
+      "entries_per_lut": 4,
+      "steps": 4800,
+      "batch_size": 16,
+      "grad_accum": 1,
+      "parameters": 1126408,
+      "training_seconds": 1218.7492737090215,
+      "ms_per_step": 253.90609868937946,
+      "orig_18_hard": 4,
+      "orig_18_soft": 4,
+      "diverse_318_hard": 36,
+      "diverse_318_ok": 281,
+      "cpu_mean_seconds": 1.3451189252012703
+    },
+    {
+      "family": "Attn L2 (Learnable, 4L/mlp4)",
+      "n_inputs": 4,
+      "entries_per_lut": 16,
+      "steps": 3000,
+      "batch_size": 8,
+      "grad_accum": 2,
+      "parameters": 1538056,
+      "training_seconds": 1360.346126624965,
+      "ms_per_step": 453.44870887498837,
+      "orig_18_hard": 4,
+      "orig_18_soft": 4,
+      "diverse_318_hard": 34,
+      "diverse_318_ok": 237,
+      "cpu_mean_seconds": 1.686909722610532
+    },
+    {
+      "family": "Attn L2 (Learnable, 4L/mlp4)",
+      "n_inputs": 6,
+      "entries_per_lut": 64,
+      "steps": 2000,
+      "batch_size": 4,
+      "grad_accum": 2,
+      "parameters": 2005000,
+      "training_seconds": 1169.1454106669407,
+      "ms_per_step": 584.5727053334704,
+      "orig_18_hard": 4,
+      "orig_18_soft": 4,
+      "diverse_318_hard": 23,
+      "diverse_318_ok": 143,
+      "cpu_mean_seconds": 2.9051123126307443
+    }
+  ],
+  "all_runs": {
+    "FP Control (L0, fp/fp, 4L/mlp4)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 4,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": false,
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 2,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 4000,
+        "training_seconds": 276.09821062500123,
+        "parameters": 991236,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.009615964008268169,
+          "output_bits_per_token": 0.013872903588095247,
+          "teacher_forced_token_accuracy": 0.9970712612149266,
+          "teacher_forced_sequence_accuracy": 0.9851323223312518
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.009615964008268169,
+          "output_bits_per_token": 0.013872903588095247,
+          "teacher_forced_token_accuracy": 0.9970712612149266,
+          "teacher_forced_sequence_accuracy": 0.9851323223312518
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 14,
+          "return_exact": 16,
+          "memory_exact": 16,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.7777777777777778,
+          "return_exact": 0.8888888888888888,
+          "memory_exact": 0.8888888888888888,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "original_18_soft": null,
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 247,
+          "return_exact": 276,
+          "memory_exact": 282,
+          "exception_exact": 312,
+          "candidates_exact": 0,
+          "ok": 312,
+          "invalid_json": 6,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.7767295597484277,
+          "return_exact": 0.8679245283018868,
+          "memory_exact": 0.8867924528301887,
+          "exception_exact": 0.9811320754716981,
+          "candidates_exact": null,
+          "valid_complete_output": 0.9811320754716981
+        }
+      }
+    },
+    "Promoted: L0+LogicFFN-KD-Fixed (N=4, 4L/mlp2, wiring=fixed)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 2,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "fp",
+        "ffn": "logic",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 2,
+        "ffn_n_inputs": 4,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "wiring": "fixed",
+        "lm_tau": 0.05,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 2400,
+        "training_seconds": 1228.4905903750332,
+        "parameters": 497160,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.03789497493313387,
+          "output_bits_per_token": 0.05467089241064381,
+          "teacher_forced_token_accuracy": 0.9877221555517458,
+          "teacher_forced_sequence_accuracy": 0.8569729408266429
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.03435155936362532,
+          "output_bits_per_token": 0.04955882434070509,
+          "teacher_forced_token_accuracy": 0.9886736384936282,
+          "teacher_forced_sequence_accuracy": 0.872435325602141
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 15,
+          "return_exact": 17,
+          "memory_exact": 16,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.8333333333333334,
+          "return_exact": 0.9444444444444444,
+          "memory_exact": 0.8888888888888888,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 16,
+          "return_exact": 17,
+          "memory_exact": 17,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.8888888888888888,
+          "return_exact": 0.9444444444444444,
+          "memory_exact": 0.9444444444444444,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 214,
+          "return_exact": 264,
+          "memory_exact": 260,
+          "exception_exact": 311,
+          "candidates_exact": 0,
+          "ok": 311,
+          "invalid_json": 7,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.6729559748427673,
+          "return_exact": 0.8301886792452831,
+          "memory_exact": 0.8176100628930818,
+          "exception_exact": 0.9779874213836478,
+          "candidates_exact": null,
+          "valid_complete_output": 0.9779874213836478
+        }
+      }
+    },
+    "L0+LogicFFN-KD-Learnable (N=4, 4L/mlp2, wiring=learnable)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 2,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "fp",
+        "ffn": "logic",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 2,
+        "ffn_n_inputs": 4,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "wiring": "learnable",
+        "lm_tau": 0.05,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 2400,
+        "training_seconds": 1244.377726583043,
+        "parameters": 2070024,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.05237128770376871,
+          "output_bits_per_token": 0.07555579705519627,
+          "teacher_forced_token_accuracy": 0.9841476655808903,
+          "teacher_forced_sequence_accuracy": 0.8138566755872733
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.046734494204896435,
+          "output_bits_per_token": 0.06742362302785809,
+          "teacher_forced_token_accuracy": 0.9856734670552603,
+          "teacher_forced_sequence_accuracy": 0.8736247398156408
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 15,
+          "return_exact": 17,
+          "memory_exact": 16,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.8333333333333334,
+          "return_exact": 0.9444444444444444,
+          "memory_exact": 0.8888888888888888,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 15,
+          "return_exact": 17,
+          "memory_exact": 16,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.8333333333333334,
+          "return_exact": 0.9444444444444444,
+          "memory_exact": 0.8888888888888888,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 211,
+          "return_exact": 262,
+          "memory_exact": 257,
+          "exception_exact": 309,
+          "candidates_exact": 0,
+          "ok": 309,
+          "invalid_json": 9,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.6635220125786163,
+          "return_exact": 0.8238993710691824,
+          "memory_exact": 0.8081761006289309,
+          "exception_exact": 0.9716981132075472,
+          "candidates_exact": null,
+          "valid_complete_output": 0.9716981132075472
+        }
+      }
+    },
+    "L0+LogicFFN-KD-4096 (N=2, 4L/mlp4, wiring=fixed)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 4,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "fp",
+        "ffn": "logic",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 2,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "wiring": "fixed",
+        "lm_tau": 0.05,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 2400,
+        "training_seconds": 934.7895451250952,
+        "parameters": 480776,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.03502989055272599,
+          "output_bits_per_token": 0.05053744938330094,
+          "teacher_forced_token_accuracy": 0.9885936339219384,
+          "teacher_forced_sequence_accuracy": 0.8950341956586381
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.03830862234173226,
+          "output_bits_per_token": 0.055267659475705284,
+          "teacher_forced_token_accuracy": 0.9873792788159323,
+          "teacher_forced_sequence_accuracy": 0.8055307760927743
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 13,
+          "return_exact": 15,
+          "memory_exact": 15,
+          "exception_exact": 17,
+          "candidates_exact": 0,
+          "ok": 17,
+          "invalid_json": 1,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.7222222222222222,
+          "return_exact": 0.8333333333333334,
+          "memory_exact": 0.8333333333333334,
+          "exception_exact": 0.9444444444444444,
+          "candidates_exact": null,
+          "valid_complete_output": 0.9444444444444444
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 14,
+          "return_exact": 16,
+          "memory_exact": 16,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.7777777777777778,
+          "return_exact": 0.8888888888888888,
+          "memory_exact": 0.8888888888888888,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 223,
+          "return_exact": 263,
+          "memory_exact": 264,
+          "exception_exact": 305,
+          "candidates_exact": 0,
+          "ok": 305,
+          "invalid_json": 12,
+          "invalid_schema": 1,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.7012578616352201,
+          "return_exact": 0.8270440251572327,
+          "memory_exact": 0.8301886792452831,
+          "exception_exact": 0.9591194968553459,
+          "candidates_exact": null,
+          "valid_complete_output": 0.9591194968553459
+        }
+      }
+    },
+    "L0+LogicFFN-KD-Learnable (N=2, 4L/mlp2, wiring=learnable)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 2,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "fp",
+        "ffn": "logic",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 2,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "wiring": "learnable",
+        "lm_tau": 0.05,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 2400,
+        "training_seconds": 590.2613907919731,
+        "parameters": 1259016,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.046705591771437634,
+          "output_bits_per_token": 0.06738192563043745,
+          "teacher_forced_token_accuracy": 0.9857563289330818,
+          "teacher_forced_sequence_accuracy": 0.8242640499553969
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.04178310391199412,
+          "output_bits_per_token": 0.06028027680678217,
+          "teacher_forced_token_accuracy": 0.9869163952225841,
+          "teacher_forced_sequence_accuracy": 0.8652988403211418
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 15,
+          "return_exact": 17,
+          "memory_exact": 16,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.8333333333333334,
+          "return_exact": 0.9444444444444444,
+          "memory_exact": 0.8888888888888888,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 15,
+          "return_exact": 17,
+          "memory_exact": 16,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.8333333333333334,
+          "return_exact": 0.9444444444444444,
+          "memory_exact": 0.8888888888888888,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 201,
+          "return_exact": 260,
+          "memory_exact": 246,
+          "exception_exact": 307,
+          "candidates_exact": 0,
+          "ok": 307,
+          "invalid_json": 11,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.6320754716981132,
+          "return_exact": 0.8176100628930818,
+          "memory_exact": 0.7735849056603774,
+          "exception_exact": 0.9654088050314465,
+          "candidates_exact": null,
+          "valid_complete_output": 0.9654088050314465
+        }
+      }
+    },
+    "L0+LogicFFN-KD-Learnable (N=6, 4L/mlp2, wiring=learnable)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 2,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "fp",
+        "ffn": "logic",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 2,
+        "ffn_n_inputs": 6,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "wiring": "learnable",
+        "lm_tau": 0.05,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 1800,
+        "training_seconds": 1348.4590793340467,
+        "parameters": 2954760,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.10510576174891065,
+          "output_bits_per_token": 0.1516355612440103,
+          "teacher_forced_token_accuracy": 0.9727727298702783,
+          "teacher_forced_sequence_accuracy": 0.5078798691644365
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.08013988303038586,
+          "output_bits_per_token": 0.11561741182535927,
+          "teacher_forced_token_accuracy": 0.9789187953597348,
+          "teacher_forced_sequence_accuracy": 0.6824264049955397
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 13,
+          "return_exact": 16,
+          "memory_exact": 15,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.7222222222222222,
+          "return_exact": 0.8888888888888888,
+          "memory_exact": 0.8333333333333334,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 13,
+          "return_exact": 16,
+          "memory_exact": 15,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.7222222222222222,
+          "return_exact": 0.8888888888888888,
+          "memory_exact": 0.8333333333333334,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 136,
+          "return_exact": 219,
+          "memory_exact": 196,
+          "exception_exact": 283,
+          "candidates_exact": 0,
+          "ok": 283,
+          "invalid_json": 34,
+          "invalid_schema": 1,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.4276729559748428,
+          "return_exact": 0.6886792452830188,
+          "memory_exact": 0.6163522012578616,
+          "exception_exact": 0.889937106918239,
+          "candidates_exact": null,
+          "valid_complete_output": 0.889937106918239
+        }
+      }
+    },
+    "L0+LogicFFN (from-scratch, N=2, 4L/mlp4, wiring=fixed)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 4,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "fp",
+        "ffn": "logic",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 2,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 3600,
+        "training_seconds": 1484.6811161250225,
+        "parameters": 480776,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.08868646645819817,
+          "output_bits_per_token": 0.12794752535320789,
+          "teacher_forced_token_accuracy": 0.9721955540316589,
+          "teacher_forced_sequence_accuracy": 0.42224204579244723
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.09019519450582908,
+          "output_bits_per_token": 0.1301241598255751,
+          "teacher_forced_token_accuracy": 0.9714497971312647,
+          "teacher_forced_sequence_accuracy": 0.415997621171573
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 8,
+          "return_exact": 16,
+          "memory_exact": 10,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.4444444444444444,
+          "return_exact": 0.8888888888888888,
+          "memory_exact": 0.5555555555555556,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 8,
+          "return_exact": 16,
+          "memory_exact": 10,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.4444444444444444,
+          "return_exact": 0.8888888888888888,
+          "memory_exact": 0.5555555555555556,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 117,
+          "return_exact": 243,
+          "memory_exact": 178,
+          "exception_exact": 305,
+          "candidates_exact": 0,
+          "ok": 305,
+          "invalid_json": 13,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.36792452830188677,
+          "return_exact": 0.7641509433962265,
+          "memory_exact": 0.559748427672956,
+          "exception_exact": 0.9591194968553459,
+          "candidates_exact": null,
+          "valid_complete_output": 0.9591194968553459
+        }
+      }
+    },
+    "L2-LogicAttn (from-scratch, N=2, xnor_popcount+softmax, wiring=learnable)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 4,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "logic_proj",
+        "ffn": "fp",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 2,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "wiring": "learnable",
+        "lm_tau": 0.05,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 4800,
+        "training_seconds": 1218.7492737090215,
+        "parameters": 1126408,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.13273400284302658,
+          "output_bits_per_token": 0.19149468765897604,
+          "teacher_forced_token_accuracy": 0.9554145951197212,
+          "teacher_forced_sequence_accuracy": 0.17395182872435325
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.13480308432873062,
+          "output_bits_per_token": 0.1944797412575964,
+          "teacher_forced_token_accuracy": 0.9543773929938854,
+          "teacher_forced_sequence_accuracy": 0.1688968183169789
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 4,
+          "return_exact": 14,
+          "memory_exact": 8,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.2222222222222222,
+          "return_exact": 0.7777777777777778,
+          "memory_exact": 0.4444444444444444,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 4,
+          "return_exact": 14,
+          "memory_exact": 8,
+          "exception_exact": 18,
+          "candidates_exact": 0,
+          "ok": 18,
+          "invalid_json": 0,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.2222222222222222,
+          "return_exact": 0.7777777777777778,
+          "memory_exact": 0.4444444444444444,
+          "exception_exact": 1.0,
+          "candidates_exact": null,
+          "valid_complete_output": 1.0
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 36,
+          "return_exact": 179,
+          "memory_exact": 134,
+          "exception_exact": 281,
+          "candidates_exact": 0,
+          "ok": 281,
+          "invalid_json": 37,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.11320754716981132,
+          "return_exact": 0.5628930817610063,
+          "memory_exact": 0.42138364779874216,
+          "exception_exact": 0.8836477987421384,
+          "candidates_exact": null,
+          "valid_complete_output": 0.8836477987421384
+        }
+      }
+    },
+    "L2-LogicAttn (from-scratch, N=4, xnor_popcount+softmax, wiring=learnable)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 4,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "logic_proj",
+        "ffn": "fp",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 4,
+        "ffn_n_inputs": 2,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "wiring": "learnable",
+        "lm_tau": 0.05,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 3000,
+        "training_seconds": 1360.346126624965,
+        "parameters": 1538056,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.17891420477410372,
+          "output_bits_per_token": 0.2581186359721919,
+          "teacher_forced_token_accuracy": 0.9414595119721126,
+          "teacher_forced_sequence_accuracy": 0.15997621171573
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.18466398365681932,
+          "output_bits_per_token": 0.2664138134524938,
+          "teacher_forced_token_accuracy": 0.9391622378421625,
+          "teacher_forced_sequence_accuracy": 0.15075825156110614
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 4,
+          "return_exact": 8,
+          "memory_exact": 8,
+          "exception_exact": 12,
+          "candidates_exact": 0,
+          "ok": 12,
+          "invalid_json": 6,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.2222222222222222,
+          "return_exact": 0.4444444444444444,
+          "memory_exact": 0.4444444444444444,
+          "exception_exact": 0.6666666666666666,
+          "candidates_exact": null,
+          "valid_complete_output": 0.6666666666666666
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 4,
+          "return_exact": 9,
+          "memory_exact": 7,
+          "exception_exact": 12,
+          "candidates_exact": 0,
+          "ok": 12,
+          "invalid_json": 6,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.2222222222222222,
+          "return_exact": 0.5,
+          "memory_exact": 0.3888888888888889,
+          "exception_exact": 0.6666666666666666,
+          "candidates_exact": null,
+          "valid_complete_output": 0.6666666666666666
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 34,
+          "return_exact": 139,
+          "memory_exact": 129,
+          "exception_exact": 237,
+          "candidates_exact": 0,
+          "ok": 237,
+          "invalid_json": 79,
+          "invalid_schema": 2,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.1069182389937107,
+          "return_exact": 0.4371069182389937,
+          "memory_exact": 0.4056603773584906,
+          "exception_exact": 0.7452830188679245,
+          "candidates_exact": null,
+          "valid_complete_output": 0.7452830188679245
+        }
+      }
+    },
+    "L2-LogicAttn (from-scratch, N=6, xnor_popcount+softmax, wiring=learnable)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 4,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "logic_proj",
+        "ffn": "fp",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 6,
+        "ffn_n_inputs": 2,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "wiring": "learnable",
+        "lm_tau": 0.05,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 2000,
+        "training_seconds": 1169.1454106669407,
+        "parameters": 2005000,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.2762196389898122,
+          "output_bits_per_token": 0.39850070336674187,
+          "teacher_forced_token_accuracy": 0.9145522601291503,
+          "teacher_forced_sequence_accuracy": 0.10883140053523639
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.27684805254110834,
+          "output_bits_per_token": 0.3994073124808242,
+          "teacher_forced_token_accuracy": 0.9138293616778101,
+          "teacher_forced_sequence_accuracy": 0.09782931906036277
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 4,
+          "return_exact": 8,
+          "memory_exact": 6,
+          "exception_exact": 10,
+          "candidates_exact": 0,
+          "ok": 10,
+          "invalid_json": 7,
+          "invalid_schema": 1,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.2222222222222222,
+          "return_exact": 0.4444444444444444,
+          "memory_exact": 0.3333333333333333,
+          "exception_exact": 0.5555555555555556,
+          "candidates_exact": null,
+          "valid_complete_output": 0.5555555555555556
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 4,
+          "return_exact": 5,
+          "memory_exact": 6,
+          "exception_exact": 7,
+          "candidates_exact": 0,
+          "ok": 7,
+          "invalid_json": 10,
+          "invalid_schema": 1,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.2222222222222222,
+          "return_exact": 0.2777777777777778,
+          "memory_exact": 0.3333333333333333,
+          "exception_exact": 0.3888888888888889,
+          "candidates_exact": null,
+          "valid_complete_output": 0.3888888888888889
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 23,
+          "return_exact": 94,
+          "memory_exact": 71,
+          "exception_exact": 143,
+          "candidates_exact": 0,
+          "ok": 143,
+          "invalid_json": 168,
+          "invalid_schema": 7,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.07232704402515723,
+          "return_exact": 0.29559748427672955,
+          "memory_exact": 0.22327044025157233,
+          "exception_exact": 0.449685534591195,
+          "candidates_exact": null,
+          "valid_complete_output": 0.449685534591195
+        }
+      }
+    },
+    "L2-LogicAttn-KD (AttnKL, N=2, xnor_popcount+softmax, wiring=learnable)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 4,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "logic_proj",
+        "ffn": "fp",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 2,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "wiring": "learnable",
+        "lm_tau": 0.05,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 3200,
+        "training_seconds": 1035.2927176250378,
+        "parameters": 1126408,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.30614641275574284,
+          "output_bits_per_token": 0.44167591146865587,
+          "teacher_forced_token_accuracy": 0.9127893022458426,
+          "teacher_forced_sequence_accuracy": 0.030330062444246207
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.2632165658664033,
+          "output_bits_per_token": 0.3797412342552832,
+          "teacher_forced_token_accuracy": 0.9199354248814218,
+          "teacher_forced_sequence_accuracy": 0.09099018733273863
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 0,
+          "return_exact": 0,
+          "memory_exact": 0,
+          "exception_exact": 0,
+          "candidates_exact": 0,
+          "ok": 0,
+          "invalid_json": 18,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.0,
+          "return_exact": 0.0,
+          "memory_exact": 0.0,
+          "exception_exact": 0.0,
+          "candidates_exact": null,
+          "valid_complete_output": 0.0
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 0,
+          "return_exact": 1,
+          "memory_exact": 1,
+          "exception_exact": 2,
+          "candidates_exact": 0,
+          "ok": 2,
+          "invalid_json": 13,
+          "invalid_schema": 3,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.0,
+          "return_exact": 0.05555555555555555,
+          "memory_exact": 0.05555555555555555,
+          "exception_exact": 0.1111111111111111,
+          "candidates_exact": null,
+          "valid_complete_output": 0.1111111111111111
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 2,
+          "return_exact": 5,
+          "memory_exact": 27,
+          "exception_exact": 30,
+          "candidates_exact": 0,
+          "ok": 30,
+          "invalid_json": 267,
+          "invalid_schema": 21,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.006289308176100629,
+          "return_exact": 0.015723270440251572,
+          "memory_exact": 0.08490566037735849,
+          "exception_exact": 0.09433962264150944,
+          "candidates_exact": null,
+          "valid_complete_output": 0.09433962264150944
+        }
+      }
+    },
+    "L3-C-LogicAttn (from-scratch, N=2, xnor_popcount+mux_gumbel, wiring=learnable)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 4,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "logic_proj",
+        "ffn": "fp",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "mux_gumbel",
+        "n_inputs": 2,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "wiring": "learnable",
+        "lm_tau": 0.05,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 4200,
+        "training_seconds": 1840.2878332500113,
+        "parameters": 1126408,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.28995972028479755,
+          "output_bits_per_token": 0.4183234505124284,
+          "teacher_forced_token_accuracy": 0.904265958054746,
+          "teacher_forced_sequence_accuracy": 0.06303895331549211
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 0.3273928264650837,
+          "output_bits_per_token": 0.47232800716379725,
+          "teacher_forced_token_accuracy": 0.8935824904280245,
+          "teacher_forced_sequence_accuracy": 0.03746654772524532
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 0,
+          "return_exact": 2,
+          "memory_exact": 3,
+          "exception_exact": 5,
+          "candidates_exact": 0,
+          "ok": 5,
+          "invalid_json": 11,
+          "invalid_schema": 2,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.0,
+          "return_exact": 0.1111111111111111,
+          "memory_exact": 0.16666666666666666,
+          "exception_exact": 0.2777777777777778,
+          "candidates_exact": null,
+          "valid_complete_output": 0.2777777777777778
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 0,
+          "return_exact": 1,
+          "memory_exact": 1,
+          "exception_exact": 2,
+          "candidates_exact": 0,
+          "ok": 2,
+          "invalid_json": 14,
+          "invalid_schema": 2,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.0,
+          "return_exact": 0.05555555555555555,
+          "memory_exact": 0.05555555555555555,
+          "exception_exact": 0.1111111111111111,
+          "candidates_exact": null,
+          "valid_complete_output": 0.1111111111111111
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 12,
+          "return_exact": 22,
+          "memory_exact": 68,
+          "exception_exact": 80,
+          "candidates_exact": 0,
+          "ok": 80,
+          "invalid_json": 204,
+          "invalid_schema": 34,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.03773584905660377,
+          "return_exact": 0.06918238993710692,
+          "memory_exact": 0.2138364779874214,
+          "exception_exact": 0.25157232704402516,
+          "candidates_exact": null,
+          "valid_complete_output": 0.25157232704402516
+        }
+      }
+    },
+    "L2-Full-KD (Attn+FFN logic, N=2, xnor_popcount+softmax, wiring=fixed)": {
+      "model": {
+        "max_seq_len": 1024,
+        "d_model": 128,
+        "n_heads": 4,
+        "n_layers": 4,
+        "mlp_ratio": 2,
+        "qk_bits": 128,
+        "v_bits": 128,
+        "logic": true,
+        "attention": "logic_proj",
+        "ffn": "logic",
+        "attention_score": "xnor_popcount",
+        "attention_norm": "softmax",
+        "n_inputs": 2,
+        "parameterization": "warp",
+        "proj_depth": 1,
+        "wiring": "fixed",
+        "lm_tau": 0.05,
+        "gumbel_noise": false,
+        "gumbel_tau": 1.0,
+        "warp_gumbel": false,
+        "weight_tying": false,
+        "pos_init": "sinusoidal",
+        "embed_init_std": 0.25,
+        "wire_format": "compact-v2"
+      },
+      "training": {
+        "steps": 2800,
+        "training_seconds": 2176.7928840839304,
+        "parameters": 214540,
+        "teacher_forced_after_hard": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "hard",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 1.634196338493338,
+          "output_bits_per_token": 2.3576469533832407,
+          "teacher_forced_token_accuracy": 0.5824018515343734,
+          "teacher_forced_sequence_accuracy": 0.0
+        },
+        "teacher_forced_after_soft": {
+          "conditioning": "correct output prefix (teacher forcing); not free generation",
+          "mode": "soft",
+          "examples": 3363,
+          "output_tokens_including_eos": 349980,
+          "output_nll_nats": 1.5682598882882592,
+          "output_bits_per_token": 2.2625207636585514,
+          "teacher_forced_token_accuracy": 0.6372364135093433,
+          "teacher_forced_sequence_accuracy": 0.0
+        }
+      },
+      "original_18_hard": {
+        "counts": {
+          "whole_call_exact": 0,
+          "return_exact": 0,
+          "memory_exact": 0,
+          "exception_exact": 0,
+          "candidates_exact": 0,
+          "ok": 0,
+          "invalid_json": 18,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.0,
+          "return_exact": 0.0,
+          "memory_exact": 0.0,
+          "exception_exact": 0.0,
+          "candidates_exact": null,
+          "valid_complete_output": 0.0
+        }
+      },
+      "original_18_soft": {
+        "counts": {
+          "whole_call_exact": 0,
+          "return_exact": 0,
+          "memory_exact": 0,
+          "exception_exact": 0,
+          "candidates_exact": 0,
+          "ok": 0,
+          "invalid_json": 18,
+          "invalid_schema": 0,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 18,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.0,
+          "return_exact": 0.0,
+          "memory_exact": 0.0,
+          "exception_exact": 0.0,
+          "candidates_exact": null,
+          "valid_complete_output": 0.0
+        }
+      },
+      "diverse_318_hard": {
+        "counts": {
+          "whole_call_exact": 0,
+          "return_exact": 0,
+          "memory_exact": 0,
+          "exception_exact": 0,
+          "candidates_exact": 0,
+          "ok": 0,
+          "invalid_json": 317,
+          "invalid_schema": 1,
+          "invalid_utf8": 0,
+          "eos_missing": 0,
+          "overflow": 0,
+          "generation_error": 0,
+          "examples": 318,
+          "choose_examples": 0
+        },
+        "rates": {
+          "whole_call_exact": 0.0,
+          "return_exact": 0.0,
+          "memory_exact": 0.0,
+          "exception_exact": 0.0,
+          "candidates_exact": null,
+          "valid_complete_output": 0.0
+        }
+      }
+    }
+  },
+  "scope": "Single-call evaluation with recorded input memory on 4 trained modules / 6 hooks; not an all-116-hook PyBot replacement and not trained with Griffith APTrainer."
+}

@@ -1,3 +1,162 @@
+# PyBot × Griffith: complete module I/O distillation
+
+This fork adds an experimental way to learn **each module's complete call result**
+with the official [Griffith](https://github.com/tsukushi-gate/Griffith) library.
+The target includes the return value, the entire updated conversation memory,
+mutable candidate arguments, and exceptions. The model receives the original
+call arguments, rather than six precomputed eligibility flags.
+
+**This is a bounded training and conformance experiment over 4 trained modules (6 hooks),
+not a full 116-hook PyBot replacement.** The original `python -m pybot` chatbot
+continues to run its existing rules under `bot/`. Learned calls are exposed separately through
+`python -m moduleio predict` and never call the original teacher as a fallback.
+
+**Measured improvement in hard discretized LUT evaluation: 0/18 → 15/18 whole-call exact matches**
+on the untouched 18-call held-out validation set (`15/18` hard / `16/18` soft; `18/18` valid JSON,
+`17/18` return exact, `16/18` memory exact, beating the upgraded floating-point control's `14/18`).
+On a strictly leak-free **318-call diverse unseen-entity validation split**, upgrading Griffith's
+`LogicMLP` FFNs from **2-input** to **4-input** WARP LUTs (`model.pt`, `497,160` params,
+2,048 4-input LUT neurons) matches **214/318 (67.3%)** (`211/318` with learnable wiring), beating
+the 2-input learnable-wiring model (**201/318 = 63.2%**, `1,259,016` params) with 60% fewer parameters,
+while 6-input LUTs (`ffn_n_inputs=6`) score **136/318 (42.8%)** and the 4,096-LUT 2-input variant
+matches **223/318 (70.1%)** (`13/18` Orig 18), versus **38/318 (11.9%)** Always-None and
+**247/318 (77.7%)** for the FP control.
+
+[日本語の設計・再現手順](docs/moduleio/README.ja.md) ·
+[Measured experiment](experiments/moduleio/RESULTS.md)
+
+## Module I/O contract
+
+| Hook | Input | Learned output |
+|---|---|---|
+| `observe` | text, full memory before the call | return, full memory after the call, exception |
+| `respond` | text, full memory before the call | reply or `None`, full memory after the call, exception |
+| `choose` | text, full memory, candidates | return, full updated memory and candidates, exception |
+| `after` | text, chosen reply, full memory | return, full memory after the call, exception |
+
+The collector discovers **116 phase hooks in 102 modules** in the recorded PyBot
+revision. It traces the original runtime without changing the order of calls,
+candidate memory copies, selected response, or random-number progression.
+`None` responses with state changes are retained. The `compact-v2` wire codec
+([wire.py](moduleio/wire.py)) places `environment` before `arguments` and uses `"="`
+unchanged-state sentinels while preserving tuple/list distinctions, dictionary order,
+floating-point bits, and shared container references. Unsupported objects or cycles
+fail explicitly.
+
+The promoted student (`experiments/moduleio/model.pt`) uses Griffith's `LogicLadderGPT`
+with **discretized 4-input WARP `LutLayer` FFNs (2,048 LUT neurons × 16 entries,
+`ffn_n_inputs=4`, `wiring="fixed"`)** across all 4 Transformer blocks, distilled with
+Griffith's `kd_kl_loss_seq` from the FP control (`fp-control.pt`). We also expose
+2-, 4-, and 6-input LUT support across both FFN (`--ffn-n-inputs`) and Attention
+(`--n-inputs`) with optional `LearnableMapping` (`--wiring learnable`).
+Embeddings, `LayerNorm`, `nn.MultiheadAttention`, and the vocabulary head remain
+floating-point: **hard evaluation means all LUTs and learned LUT wiring are discretized;
+it does not mean the entire Transformer is a pure Boolean circuit.** Notice also that
+Griffith's `APTrainer` (Akiho Propagation) only supports flat `nn.Sequential`
+fixed-wiring `independent` LUT classifiers and rejects `LogicLadderGPT` and
+`wiring="learnable"`, so training uses `LogicLadderGPT` with `soft_to_ste` and
+Griffith KD instead. The library is pinned to `e0675f4e36596954aa424d522e0ee966bba9a3e1`.
+
+## Install and reproduce
+
+The learning experiment requires Python 3.11+ and PyTorch; the original PyBot
+continues to need only Python 3.8+.
+
+```sh
+pip install '.[moduleio]'
+python -m moduleio inventory
+
+# Generate the 3,681-call leak-free dataset (diverse-train / diverse-validation are checked in).
+python examples/moduleio/make_diverse_specs.py
+python -m moduleio collect-calls \
+  --spec examples/moduleio/diverse_calls.jsonl \
+  --output examples/moduleio/diverse_teacher_calls.jsonl.gz
+
+# 1. Train the L0 FP control (teacher for Griffith KD; trained on diverse-train only).
+python -m moduleio train \
+  --data experiments/moduleio/diverse-train.jsonl.gz \
+  --validation-data experiments/moduleio/diverse-validation.jsonl.gz \
+  --checkpoint experiments/moduleio/fp-control.pt \
+  --report experiments/moduleio/training-fp-control.json \
+  --wire-format compact-v2 --fp-baseline \
+  --max-seq-len 1024 --d-model 128 --n-heads 4 --n-layers 4 --mlp-ratio 4 \
+  --pos-init sinusoidal --embed-init-std 0.25 \
+  --steps 4000 --batch-size 16 --learning-rate 0.003 \
+  --weight-decay 0.01 --lr-schedule wsd --warmup-steps 150 \
+  --loss-weighting example --train-mode soft \
+  --device mps --seed 0 --threads 8
+
+# 2. Train the promoted 4-input Griffith WARP LUT FFN model with Griffith KD.
+python -m moduleio train \
+  --data experiments/moduleio/diverse-train.jsonl.gz \
+  --validation-data experiments/moduleio/diverse-validation.jsonl.gz \
+  --checkpoint experiments/moduleio/model.pt \
+  --report experiments/moduleio/training.json \
+  --wire-format compact-v2 \
+  --attention fp --ffn logic --ffn-n-inputs 4 \
+  --wiring fixed \
+  --init-from experiments/moduleio/fp-control.pt \
+  --teacher-checkpoint experiments/moduleio/fp-control.pt \
+  --kd-alpha 0.5 --kd-temp 2.0 \
+  --max-seq-len 1024 --d-model 128 --n-heads 4 --n-layers 4 --mlp-ratio 2 \
+  --pos-init sinusoidal --embed-init-std 0.25 \
+  --steps 2400 --batch-size 8 --grad-accum 2 --learning-rate 0.001 --lut-lr-scale 10.0 \
+  --weight-decay 0.01 --lr-schedule wsd --warmup-steps 100 \
+  --loss-weighting example --train-mode soft_to_ste \
+  --device mps --seed 0 --threads 8
+
+# 3. Evaluate on both held-out benchmarks in discretized hard mode.
+python -m moduleio evaluate \
+  --checkpoint experiments/moduleio/model.pt \
+  --data experiments/moduleio/model.pt.validation.jsonl.gz \
+  --output experiments/moduleio/hard-validation.json --mode hard --device cpu --threads 8
+
+python -m moduleio evaluate \
+  --checkpoint experiments/moduleio/model.pt \
+  --data experiments/moduleio/diverse-validation.jsonl.gz \
+  --output experiments/moduleio/hard-diverse-validation.json --mode hard --device cpu --threads 8
+```
+
+Evaluation freely generates the **entire typed output** from the input alone.
+It reports whole-call, return, and memory exact match, valid completed outputs,
+active/inactive cases, per-hook results, and a `None`/unchanged-memory baseline.
+Malformed outputs, missing EOS, and overlength inputs remain failures in the
+denominator. Teacher-forced token accuracy is a separate diagnostic.
+
+Natural conversations can also be traced without reducing their states:
+
+```sh
+python -m moduleio collect \
+  --scenarios examples/moduleio/conversations.jsonl \
+  --output examples/moduleio/runtime_trace.jsonl.gz
+python -m unittest discover -s tests/moduleio -v
+```
+
+Natural traces include the complete pre-call RNG state in model inputs. They
+can be much longer than the small demonstration model's context. Training reports
+every excluded record and never silently truncates inputs or outputs. Independent
+call fixtures instead supply a seed and preserve the caller's process RNG.
+Dates are recorded, not virtualized; module-global caches are not snapshotted.
+No guarantee for arbitrary input lengths, hidden process state, or an entire
+learned conversation is implied by a single-call benchmark.
+
+## Added files
+
+| Path | Purpose |
+|---|---|
+| `moduleio/teacher.py`, `codec.py`, `wire.py` | Complete teacher calls and lossless `legacy-v1` / `compact-v2` serialization |
+| `moduleio/data.py` | Input-only prompts, full targets, group splits, explicit coverage |
+| `moduleio/model.py`, `training.py` | Official Griffith `LogicLadderGPT`, `wiring=learnable`, Griffith KD, checkpoints |
+| `moduleio/evaluation.py`, `predictor.py` | Free-generation conformance and teacher-free prediction |
+| `examples/moduleio/` | Input fixtures, recorded calls, all-hook conversation trace |
+| `experiments/moduleio/` | Reproducible weights, split records, measured results |
+
+---
+
+## Original PyBot
+
+The description below documents the original rule-based chatbot.
+
 <p align="center"><img src="assets/banner.png" alt="PyBot: no weights, no training, just rules" width="100%"></p>
 
 <div align="center">
