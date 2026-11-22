@@ -14,7 +14,7 @@ import time
 from collections import defaultdict
 from typing import Any, Callable, Iterable
 
-from . import codec
+from . import codec, wire
 
 
 class InvalidOutputError(ValueError):
@@ -28,31 +28,38 @@ def validate_output(value: Any, hook: str) -> dict:
     and alias relationships *inside* the returned value and arguments remain
     meaningful and are compared by the lossless codec.
     """
-    required = {"return", "memory", "exception"}
-    if hook == "choose":
-        required.add("candidates")
-    if type(value) is not dict or set(value) != required:
-        found = sorted(str(key) for key in value) if isinstance(value, dict) else type(value).__name__
-        raise InvalidOutputError(f"Expected output fields {sorted(required)}, got {found}")
-    if type(value["memory"]) is not dict:
-        raise InvalidOutputError("memory must be the full updated dictionary")
-    exception = value["exception"]
-    if exception is not None:
-        if (type(exception) is not dict or set(exception) != {"type", "args"}
-                or not isinstance(exception["type"], str) or not exception["type"]
-                or not isinstance(exception["args"], tuple)):
-            raise InvalidOutputError("exception must be None or {type: nonempty str, args: tuple}")
-    if hook == "choose" and type(value["candidates"]) is not list:
-        raise InvalidOutputError("choose must return the updated candidates list")
-    normalized = {"return": value["return"], "memory": value["memory"], "exception": exception}
-    if hook == "choose":
-        normalized["candidates"] = value["candidates"]
-    return normalized
+    try:
+        return wire.validate_hook_output(value, hook)
+    except ValueError as exc:
+        raise InvalidOutputError(str(exc)) from exc
 
 
-def decode_output(text: str, hook: str) -> dict:
+def decode_output(
+    text: str,
+    hook: str,
+    *,
+    input_arguments: dict | None = None,
+    wire_format: str | None = None,
+) -> dict:
     """Decode one complete typed JSON value, rejecting partial/excess fields."""
-    return validate_output(codec.loads(text), hook)
+    if wire_format is None:
+        parsed = json.loads(text)
+        wire_format = "legacy-v1" if (isinstance(parsed, dict) and "$type" in parsed) else "compact-v2"
+    if wire_format == "compact-v2":
+        try:
+            return validate_output(
+                wire.decode_output_compact(text, hook, input_arguments=input_arguments),
+                hook,
+            )
+        except json.JSONDecodeError:
+            raise
+        except InvalidOutputError:
+            raise
+        except ValueError as exc:
+            raise InvalidOutputError(str(exc)) from exc
+    if wire_format == "legacy-v1":
+        return validate_output(codec.loads(text), hook)
+    raise ValueError(f"Unsupported wire_format: {wire_format!r}")
 
 
 def exact_equal(left: Any, right: Any) -> bool:
@@ -180,7 +187,17 @@ def evaluate(
         raise ValueError("mode must be hard or soft")
     rows = []
     for index, example in enumerate(examples):
-        expected = decode_output(example["output_text"], example["hook"])
+        try:
+            before = _arguments(example)
+        except ValueError:
+            before = None
+        wire_format = example.get("wire_format")
+        expected = decode_output(
+            example["output_text"],
+            example["hook"],
+            input_arguments=before,
+            wire_format=wire_format,
+        )
         row = _empty_row(example, index, expected)
         started = time.perf_counter()
         try:
@@ -201,7 +218,12 @@ def evaluate(
                 row["status"] = "invalid_utf8"
             else:
                 try:
-                    actual = decode_output(generated["text"], example["hook"])
+                    actual = decode_output(
+                        generated["text"],
+                        example["hook"],
+                        input_arguments=before,
+                        wire_format=wire_format,
+                    )
                 except json.JSONDecodeError as exc:
                     row["status"] = "invalid_json"
                     row["error"] = str(exc)
@@ -222,10 +244,15 @@ def always_none_baseline(examples: Iterable[dict]) -> dict:
     """A non-neural baseline which returns None and leaves all arguments alone."""
     rows = []
     for index, example in enumerate(examples):
-        expected = decode_output(example["output_text"], example["hook"])
+        before = copy.deepcopy(_arguments(example))
+        expected = decode_output(
+            example["output_text"],
+            example["hook"],
+            input_arguments=before,
+            wire_format=example.get("wire_format"),
+        )
         row = _empty_row(example, index, expected)
         started = time.perf_counter()
-        before = copy.deepcopy(_arguments(example))
         actual = {"return": None, "memory": before["memory"], "exception": None}
         if example["hook"] == "choose":
             actual["candidates"] = before["candidates"]

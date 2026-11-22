@@ -10,7 +10,7 @@ import random
 from collections import Counter
 from pathlib import Path
 
-from . import codec
+from . import codec, wire
 
 
 CONTRACT = "pybot-module-call-v1"
@@ -18,13 +18,15 @@ HOOKS = ("observe", "respond", "choose", "after")
 
 
 def input_for_call(module, hook, arguments, *, seed=0, environment_date=None,
-                   rng_state=None):
+                   rng_state=None, wire_format="legacy-v1"):
     """Encode only information available before the call, never its answer.
 
-Independent fixtures explicitly initialize the random generator from ``seed``.
-Natural conversation traces instead supply the full recorded pre-call state.
-The date is an experimental input, not a claim to virtualize Python's clock.
-"""
+    Independent fixtures explicitly initialize the random generator from ``seed``.
+    Natural conversation traces instead supply the full recorded pre-call state.
+    The date is an experimental input, not a claim to virtualize Python's clock.
+    """
+    if wire_format not in wire.WIRE_FORMATS:
+        raise ValueError("unsupported wire_format: " + str(wire_format))
     if hook not in HOOKS:
         raise ValueError("unsupported hook: " + str(hook))
     if not isinstance(module, str) or not module:
@@ -48,11 +50,18 @@ The date is an experimental input, not a claim to virtualize Python's clock.
     # Keep one stable argument order regardless of the caller's JSON key order.
     ordered = {key: arguments[key] for key in ("text", "memory", "reply", "candidates")
                if key in arguments}
-    return codec.dumps({"module": module, "hook": hook,
-                        "arguments": ordered, "environment": environment})
+    if wire_format == "compact-v2":
+        payload = {"module": module, "hook": hook,
+                   "environment": environment, "arguments": ordered}
+        return wire.dumps_compact(payload)
+    payload = {"module": module, "hook": hook,
+               "arguments": ordered, "environment": environment}
+    return codec.dumps(payload)
 
 
-def record_to_example(record):
+def record_to_example(record, *, wire_format="legacy-v1"):
+    if wire_format not in wire.WIRE_FORMATS:
+        raise ValueError("unsupported wire_format: " + str(wire_format))
     if record.get("schema_version") != 1:
         raise ValueError("unsupported trace schema_version")
     arguments = codec.decode(record["input"])
@@ -66,12 +75,16 @@ def record_to_example(record):
         seed=metadata.get("seed", 0),
         environment_date=metadata.get("environment_date"),
         rng_state=None if isolated else codec.decode(metadata["rng_before"]),
+        wire_format=wire_format,
     )
     active = (output["return"] is not None or output["exception"] is not None
               or codec.dumps(arguments["memory"]) != codec.dumps(output["memory"])
               or ("candidates" in arguments and
                   codec.dumps(arguments["candidates"]) != codec.dumps(output["candidates"])))
-    return {"input_text": prompt, "output_text": codec.dumps(output),
+    output_text = (wire.encode_output_compact(output, record["hook"], arguments)
+                   if wire_format == "compact-v2" else codec.dumps(output))
+    return {"input_text": prompt, "output_text": output_text,
+            "wire_format": wire_format,
             "group": str(record["conversation_id"]), "module": record["module"],
             "hook": record["hook"], "active": active, "record": record}
 
@@ -103,8 +116,10 @@ def write_jsonl(path, records):
                                     allow_nan=False) + "\n")
 
 
-def prepare_records(records, *, max_seq_len=None, selected_hooks=None):
+def prepare_records(records, *, max_seq_len=None, selected_hooks=None, wire_format="legacy-v1"):
     """Keep complete examples or report their exclusion; never truncate either side."""
+    if wire_format not in wire.WIRE_FORMATS:
+        raise ValueError("unsupported wire_format: " + str(wire_format))
     examples, excluded = [], []
     selected = set(selected_hooks) if selected_hooks else None
     seen_targets = {}
@@ -113,7 +128,7 @@ def prepare_records(records, *, max_seq_len=None, selected_hooks=None):
         if selected is not None and name not in selected:
             excluded.append({"index": index, "hook": name, "reason": "hook_filter"})
             continue
-        example = record_to_example(record)
+        example = record_to_example(record, wire_format=wire_format)
         # Full bounded sequence: BOS + prompt + SEP + answer + EOS.
         sequence_tokens = (len(example["input_text"].encode("utf-8"))
                            + len(example["output_text"].encode("utf-8")) + 3)

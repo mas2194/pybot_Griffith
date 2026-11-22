@@ -74,6 +74,22 @@ class DataContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             input_for_call("example", "respond", {"text": "hi", "memory": {}, "answer": "leak"})
 
+    def test_compact_v2_record_is_shorter_and_roundtrips_without_loss(self):
+        from moduleio import wire
+
+        row = record(memory={"user": {"name": "Ada"}}, after={"user": {"name": "Ada"}})
+        legacy = record_to_example(row, wire_format="legacy-v1")
+        compact = record_to_example(row, wire_format="compact-v2")
+        self.assertLess(len(compact["input_text"]), len(legacy["input_text"]))
+        self.assertLess(len(compact["output_text"]), len(legacy["output_text"]))
+        self.assertEqual(compact["wire_format"], "compact-v2")
+        decoded = wire.decode_output_compact(
+            compact["output_text"],
+            "respond",
+            codec.decode(row["input"]),
+        )
+        self.assertEqual(decoded, codec.decode(row["output"]))
+
 
 if __name__ == "__main__":
     unittest.main()

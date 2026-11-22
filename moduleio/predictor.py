@@ -36,6 +36,12 @@ class ModuleIOPredictor:
                 or not all(isinstance(fixture, str) and fixture in supported for fixture in fixtures)):
             raise PredictionError("training_fixtures must name isolated_seeded_call and/or runtime_conversation")
         self.training_fixtures = frozenset(fixtures)
+        wire_format = metadata.get("wire_format")
+        if wire_format is None:
+            wire_format = getattr(getattr(model, "config", None), "wire_format", "legacy-v1")
+        if wire_format not in ("legacy-v1", "compact-v2"):
+            raise PredictionError(f"Unsupported wire_format: {wire_format!r}")
+        self.wire_format = wire_format
 
     @classmethod
     def from_checkpoint(cls, path: str) -> "ModuleIOPredictor":
@@ -88,6 +94,8 @@ class ModuleIOPredictor:
         environment = {"seed": seed, "environment_date": environment_date}
         if rng_state is not None:
             environment["rng_state"] = rng_state
+        if self.wire_format != "legacy-v1":
+            environment["wire_format"] = self.wire_format
         input_text = input_for_call(module, hook, copy.deepcopy(arguments), **environment)
         try:
             result = self.model.generate(input_text, max_new_tokens=max_new_tokens, mode=mode)
@@ -98,7 +106,12 @@ class ModuleIOPredictor:
         if result.get("utf8_valid") is False:
             raise PredictionError("Generated output contains invalid UTF-8 bytes")
         try:
-            return decode_output(result["text"], hook)
+            return decode_output(
+                result["text"],
+                hook,
+                input_arguments=arguments,
+                wire_format=self.wire_format,
+            )
         except Exception as exc:
             raise PredictionError(f"Invalid generated output: {type(exc).__name__}: {exc}") from exc
 

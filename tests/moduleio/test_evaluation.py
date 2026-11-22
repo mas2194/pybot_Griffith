@@ -253,6 +253,35 @@ class IndependentPrediction(unittest.TestCase):
             predictor.predict_call("one", "respond", {"text": "hi", "memory": {}}, seed=17)
         self.assertEqual(model.calls, [])
 
+    def test_compact_v2_prediction_and_evaluation_expand_sentinel_without_mutating_input(self):
+        from moduleio import wire
+        from moduleio.data import record_to_example
+
+        arguments = {"text": "hello", "memory": {"user": {"name": "Ada"}}}
+        output = {"return": "Hi!", "memory": {"user": {"name": "Ada"}}, "exception": None}
+        record = {
+            "schema_version": 1, "conversation_id": "compact-test",
+            "module": "one", "hook": "respond",
+            "input": codec.encode(arguments), "output": codec.encode(output),
+            "metadata": {"fixture": "isolated_seeded_call", "seed": 0,
+                         "environment_date": "2026-11-21"},
+        }
+        compact_ex = record_to_example(record, wire_format="compact-v2")
+        eval_report = evaluate(FakeModel([compact_ex["output_text"]]), [compact_ex])
+        self.assertEqual(eval_report["rates"]["whole_call_exact"], 1.0)
+        baseline = always_none_baseline([compact_ex])
+        self.assertEqual(baseline["rates"]["whole_call_exact"], 0.0)
+        self.assertEqual(baseline["rates"]["memory_exact"], 1.0)
+
+        before = copy.deepcopy(arguments)
+        predictor = ModuleIOPredictor(
+            FakeModel([wire.encode_output_compact(output, "respond", arguments)]),
+            {"trained_hooks": ["one.respond"], "wire_format": "compact-v2"},
+        )
+        predicted = predictor.predict_call("one", "respond", arguments, seed=0, environment_date="2026-11-21")
+        self.assertEqual(predicted, output)
+        self.assertEqual(arguments, before)
+
 
 if __name__ == "__main__":
     unittest.main()

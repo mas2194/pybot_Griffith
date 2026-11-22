@@ -59,21 +59,93 @@ def _collect(args):
 
 def _train(args):
     from .model import ModelConfig
-    from .training import fit, save_checkpoint
-    examples, coverage = prepare_records(read_jsonl(args.data), max_seq_len=args.max_seq_len,
-                                         selected_hooks=args.hook)
+    from .training import fit, resolve_device, save_checkpoint
+
+    wire_format = args.wire_format
+    examples, coverage = prepare_records(
+        read_jsonl(args.data),
+        max_seq_len=args.max_seq_len,
+        selected_hooks=args.hook,
+        wire_format=wire_format,
+    )
     if not examples:
         raise ValueError("no complete examples fit the model context; increase --max-seq-len")
-    train, validation, split = split_examples(
-        examples, validation_fraction=args.validation_fraction, seed=args.split_seed)
-    config = ModelConfig(max_seq_len=args.max_seq_len, d_model=args.d_model,
-                         n_heads=args.n_heads, n_layers=args.n_layers,
-                         qk_bits=args.d_model, v_bits=args.d_model,
-                         logic=not args.fp_baseline)
-    model, training_log = fit(train, config, steps=args.steps, batch_size=args.batch_size,
-                              seed=args.seed, learning_rate=args.learning_rate,
-                              threads=args.threads, train_mode=args.train_mode, progress=_progress)
+    if args.validation_data:
+        train = examples
+        validation, val_coverage = prepare_records(
+            read_jsonl(args.validation_data),
+            selected_hooks=args.hook,
+            wire_format=wire_format,
+        )
+        split = {
+            "method": "explicit external validation file",
+            "train_records": len(train),
+            "validation_records": len(validation),
+            "validation_coverage": val_coverage,
+        }
+    else:
+        train, validation, split = split_examples(
+            examples, validation_fraction=args.validation_fraction, seed=args.split_seed)
+    device = resolve_device(args.device)
+    if args.fp_baseline and (args.attention == "logic_proj" or args.ffn == "logic"):
+        raise ValueError("--fp-baseline conflicts with logic --attention/--ffn")
+    config = ModelConfig(
+        max_seq_len=args.max_seq_len,
+        d_model=args.d_model,
+        n_heads=args.n_heads,
+        n_layers=args.n_layers,
+        mlp_ratio=args.mlp_ratio,
+        qk_bits=args.d_model,
+        v_bits=args.d_model,
+        logic=not args.fp_baseline,
+        attention=args.attention,
+        ffn=args.ffn,
+        attention_score=args.attention_score,
+        attention_norm=args.attention_norm,
+        n_inputs=args.n_inputs,
+        ffn_n_inputs=args.ffn_n_inputs,
+        parameterization=args.parameterization,
+        proj_depth=args.proj_depth,
+        wiring=args.wiring,
+        lm_tau=args.lm_tau,
+        gumbel_noise=args.gumbel_noise,
+        gumbel_tau=args.gumbel_tau,
+        warp_gumbel=args.warp_gumbel,
+        weight_tying=args.weight_tying,
+        pos_init=args.pos_init,
+        embed_init_std=args.embed_init_std,
+        wire_format=wire_format,
+    )
+    model, training_log = fit(
+        train,
+        config,
+        steps=args.steps,
+        batch_size=args.batch_size,
+        grad_accum=args.grad_accum,
+        seed=args.seed,
+        learning_rate=args.learning_rate,
+        threads=args.threads,
+        train_mode=args.train_mode,
+        device=device,
+        loss_weighting=args.loss_weighting,
+        lr_schedule=args.lr_schedule,
+        warmup_steps=args.warmup_steps,
+        lut_lr_scale=args.lut_lr_scale,
+        wire_lr_scale=args.wire_lr_scale,
+        weight_decay=args.weight_decay,
+        temp_start=args.temp_start,
+        temp_end=args.temp_end,
+        aux_lambda=args.aux_lambda,
+        sampling=args.sampling,
+        init_from=args.init_from,
+        teacher_checkpoint=args.teacher_checkpoint,
+        kd_alpha=args.kd_alpha,
+        kd_temp=args.kd_temp,
+        attn_kd_weight=args.attn_kd_weight,
+        progress=_progress,
+    )
     metadata = {"contract": CONTRACT,
+                "wire_format": wire_format,
                 "trained_hooks": sorted({e["module"] + "." + e["hook"] for e in train}),
                 "training_fixtures": sorted({e["record"].get("metadata", {}).get("fixture", "unknown")
                                              for e in train}),
@@ -91,24 +163,33 @@ def _train(args):
     save_checkpoint(model, args.checkpoint, metadata=metadata)
     # Explicit split artifacts support independent evaluation without resplitting.
     write_jsonl(str(args.checkpoint) + ".train.jsonl.gz", [e["record"] for e in train])
-    write_jsonl(str(args.checkpoint) + ".validation.jsonl.gz", [e["record"] for e in validation])
+    if not args.validation_data:
+        write_jsonl(str(args.checkpoint) + ".validation.jsonl.gz", [e["record"] for e in validation])
     report_path = args.report or str(args.checkpoint) + ".training.json"
     _write_report(report_path, metadata)
     print(_json({"checkpoint": str(args.checkpoint), "report": report_path,
                  "train_records": len(train), "validation_records": len(validation),
                  "excluded_records": coverage["excluded_records"],
+                 "device": device,
+                 "wire_format": wire_format,
                  "note": "Training loss is not whole-call reproduction accuracy; run evaluate."}))
 
 
 def _evaluate(args):
     import torch
     from .evaluation import evaluate, always_none_baseline
-    from .training import load_checkpoint
+    from .training import load_checkpoint, resolve_device
     torch.set_num_threads(args.threads)
-    model, metadata = load_checkpoint(args.checkpoint)
+    device = resolve_device(args.device)
+    model, metadata = load_checkpoint(args.checkpoint, device=device)
+    wire_format = metadata.get("wire_format") or getattr(model.config, "wire_format", "legacy-v1")
     # Evaluation keeps overflowing examples in the denominator. Generation will
     # reject them explicitly; filtering them here would inflate reported accuracy.
-    examples, coverage = prepare_records(read_jsonl(args.data), selected_hooks=args.hook)
+    examples, coverage = prepare_records(
+        read_jsonl(args.data),
+        selected_hooks=args.hook,
+        wire_format=wire_format,
+    )
     total = len(examples)
     if args.limit is not None:
         examples = examples[:args.limit]
@@ -117,6 +198,7 @@ def _evaluate(args):
     report["always_none_baseline"] = always_none_baseline(examples)
     report["dataset"] = {"available_records": total, "evaluated_records": len(examples),
                          "limit": args.limit, "coverage": coverage,
+                         "wire_format": wire_format,
                          "sha256": examples_fingerprint(examples),
                          "training_sha256": metadata.get("training_data_sha256"),
                          "evaluation_contract": "one call with recorded input memory; "
@@ -160,14 +242,54 @@ def parser():
     train.add_argument("--checkpoint", required=True)
     train.add_argument("--report")
     train.add_argument("--hook", action="append")
+    train.add_argument("--wire-format", choices=("legacy-v1", "compact-v2"), default="compact-v2")
+    train.add_argument("--validation-data")
     train.add_argument("--max-seq-len", type=int, default=2048)
     train.add_argument("--d-model", type=int, default=32)
     train.add_argument("--n-heads", type=int, default=2)
     train.add_argument("--n-layers", type=int, default=1)
+    train.add_argument("--mlp-ratio", type=int, default=2)
+    train.add_argument("--attention", choices=("fp", "logic_proj"), default=None)
+    train.add_argument("--ffn", choices=("fp", "logic"), default=None)
+    train.add_argument("--attention-score", choices=("fp_dot", "xnor_popcount"), default="xnor_popcount")
+    train.add_argument(
+        "--attention-norm",
+        choices=("softmax", "mux_gumbel", "softmax_int", "topk_ste", "threshold"),
+        default="softmax",
+    )
+    train.add_argument("--n-inputs", type=int, choices=(2, 4, 6), default=2)
+    train.add_argument("--ffn-n-inputs", type=int, choices=(2, 4, 6), default=2)
+    train.add_argument("--parameterization", choices=("warp", "softmax", "independent"), default="warp")
+    train.add_argument("--proj-depth", type=int, default=1)
+    train.add_argument("--wiring", choices=("fixed", "learnable"), default="fixed")
+    train.add_argument("--lm-tau", type=float, default=0.05)
+    train.add_argument("--gumbel-noise", action="store_true")
+    train.add_argument("--gumbel-tau", type=float, default=1.0)
+    train.add_argument("--warp-gumbel", action="store_true")
+    train.add_argument("--weight-tying", action="store_true")
+    train.add_argument("--pos-init", choices=("default", "sinusoidal"), default="sinusoidal")
+    train.add_argument("--embed-init-std", type=float, default=0.25)
+    train.add_argument("--device", choices=("auto", "cpu", "mps", "cuda"), default="auto")
     train.add_argument("--steps", type=int, default=300)
     train.add_argument("--batch-size", type=int, default=4)
+    train.add_argument("--grad-accum", type=int, default=1)
     train.add_argument("--learning-rate", type=float, default=0.003)
-    train.add_argument("--train-mode", choices=("soft", "ste"), default="soft")
+    train.add_argument("--lut-lr-scale", type=float, default=1.0)
+    train.add_argument("--wire-lr-scale", type=float, default=3.0)
+    train.add_argument("--lr-schedule", choices=("wsd", "cosine", "constant"), default="wsd")
+    train.add_argument("--warmup-steps", type=int, default=0)
+    train.add_argument("--weight-decay", type=float, default=0.0)
+    train.add_argument("--loss-weighting", choices=("example", "token"), default="example")
+    train.add_argument("--temp-start", type=float, default=2.0)
+    train.add_argument("--temp-end", type=float, default=0.5)
+    train.add_argument("--aux-lambda", type=float, default=0.01)
+    train.add_argument("--sampling", choices=("epoch_bucketed", "random"), default="epoch_bucketed")
+    train.add_argument("--init-from")
+    train.add_argument("--teacher-checkpoint")
+    train.add_argument("--kd-alpha", type=float, default=0.5)
+    train.add_argument("--kd-temp", type=float, default=2.0)
+    train.add_argument("--attn-kd-weight", type=float, default=0.0)
+    train.add_argument("--train-mode", choices=("soft", "train_soft", "ste", "soft_to_ste"), default="train_soft")
     train.add_argument("--seed", type=int, default=0)
     train.add_argument("--split-seed", type=int, default=0)
     train.add_argument("--validation-fraction", type=float, default=0.2)
@@ -182,6 +304,7 @@ def parser():
     evaluate_parser.add_argument("--max-new-tokens", type=int)
     evaluate_parser.add_argument("--limit", type=int)
     evaluate_parser.add_argument("--hook", action="append")
+    evaluate_parser.add_argument("--device", choices=("auto", "cpu", "mps", "cuda"), default="cpu")
     evaluate_parser.add_argument("--threads", type=int, default=1)
     predict = commands.add_parser("predict", help="run a learned call without importing the PyBot teacher")
     predict.add_argument("--checkpoint", required=True)

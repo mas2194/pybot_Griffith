@@ -15,6 +15,7 @@ from contextlib import contextmanager
 from dataclasses import asdict, dataclass
 from importlib import metadata as importlib_metadata
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -22,6 +23,9 @@ import torch
 from torch import nn
 
 from griffith_logic.convert.byte_vocab import encode_bytes
+from griffith_logic.hybrid.policy import LogicSpec
+from griffith_logic.layers.dwn import LearnableMapping
+from griffith_logic.layers.logic_linear import LogicMLP
 from griffith_logic.layers.lut import LutLayer
 from griffith_logic.models import LogicLadderGPT, LogicLadderGPTConfig
 
@@ -60,6 +64,23 @@ class ModelConfig:
     qk_bits: int | None = None
     v_bits: int | None = None
     logic: bool = True
+    attention: str | None = None
+    ffn: str | None = None
+    attention_score: str = "fp_dot"
+    attention_norm: str = "softmax"
+    n_inputs: int = 2
+    ffn_n_inputs: int = 2
+    parameterization: str = "warp"
+    proj_depth: int = 1
+    wiring: str = "fixed"
+    lm_tau: float = 0.05
+    gumbel_noise: bool = False
+    gumbel_tau: float = 1.0
+    warp_gumbel: bool = False
+    weight_tying: bool = False
+    pos_init: str = "default"
+    embed_init_std: float | None = None
+    wire_format: str = "legacy-v1"
 
     def __post_init__(self) -> None:
         # Griffith's LadderAttention returns v_bits channels directly into the
@@ -70,15 +91,59 @@ class ModelConfig:
         if self.v_bits is None:
             object.__setattr__(self, "v_bits", self.d_model)
         for name in ("max_seq_len", "d_model", "n_heads", "n_layers", "mlp_ratio",
-                     "qk_bits", "v_bits"):
+                     "qk_bits", "v_bits", "n_inputs", "ffn_n_inputs", "proj_depth"):
             _integer(name, getattr(self, name))
         if self.max_seq_len < 4 or self.d_model < 4:
             raise ValueError("max_seq_len and d_model must be at least 4")
-        if not isinstance(self.logic, bool):
-            raise TypeError("logic must be a Boolean")
+        for flag in ("logic", "gumbel_noise", "warp_gumbel", "weight_tying"):
+            if not isinstance(getattr(self, flag), bool):
+                raise TypeError(f"{flag} must be a Boolean")
+        if self.attention is None:
+            object.__setattr__(self, "attention", "logic_proj" if self.logic else "fp")
+        if self.ffn is None:
+            object.__setattr__(self, "ffn", "logic" if self.logic else "fp")
+        if self.attention not in ("fp", "logic_proj"):
+            raise ValueError("attention must be fp or logic_proj")
+        if self.ffn not in ("fp", "logic"):
+            raise ValueError("ffn must be fp or logic")
+        object.__setattr__(self, "logic", (self.attention == "logic_proj") or (self.ffn == "logic"))
+        if self.n_inputs not in (2, 4, 6):
+            raise ValueError("n_inputs must be 2, 4, or 6")
+        if self.ffn_n_inputs not in (2, 4, 6):
+            raise ValueError("ffn_n_inputs must be 2, 4, or 6")
+        if self.attention_score not in ("fp_dot", "xnor_popcount"):
+            raise ValueError("attention_score must be fp_dot or xnor_popcount")
+        if self.attention_norm not in ("softmax", "mux_gumbel", "softmax_int", "topk_ste", "threshold"):
+            raise ValueError("unsupported attention_norm")
+        if self.parameterization not in ("warp", "softmax", "independent"):
+            raise ValueError("parameterization must be warp, softmax, or independent")
+        if self.wiring not in ("fixed", "learnable"):
+            raise ValueError("wiring must be fixed or learnable")
+        if (
+            isinstance(self.lm_tau, bool)
+            or not isinstance(self.lm_tau, (int, float))
+            or not math.isfinite(self.lm_tau)
+            or self.lm_tau <= 0
+        ):
+            raise ValueError("lm_tau must be finite and positive")
+        if isinstance(self.gumbel_tau, bool) or not isinstance(self.gumbel_tau, (int, float)) or self.gumbel_tau <= 0:
+            raise ValueError("gumbel_tau must be positive")
+        if self.attention == "logic_proj" and self.gumbel_noise and self.parameterization != "softmax":
+            raise ValueError("gumbel_noise requires parameterization='softmax'")
+        if self.pos_init not in ("default", "sinusoidal"):
+            raise ValueError("pos_init must be default or sinusoidal")
+        if self.embed_init_std is not None and (
+            isinstance(self.embed_init_std, bool)
+            or not isinstance(self.embed_init_std, (int, float))
+            or not math.isfinite(self.embed_init_std)
+            or self.embed_init_std <= 0
+        ):
+            raise ValueError("embed_init_std must be finite and positive")
+        if self.wire_format not in ("legacy-v1", "compact-v2"):
+            raise ValueError("wire_format must be legacy-v1 or compact-v2")
         if any(value % self.n_heads for value in (self.d_model, self.qk_bits, self.v_bits)):
             raise ValueError("d_model, qk_bits and v_bits must be divisible by n_heads")
-        if self.logic and self.v_bits != self.d_model:
+        if self.attention == "logic_proj" and self.v_bits != self.d_model:
             raise ValueError("logic attention requires v_bits == d_model for its residual connection")
 
 
@@ -116,23 +181,38 @@ def prepare_example(input_text: str, output_text: str, max_seq_len: int) -> dict
 
 @contextmanager
 def griffith_mode(module: nn.Module, mode: str):
-    """Use native deterministic soft, hard-ST, or discrete LUT execution.
+    """Use native deterministic soft, train_soft, hard-ST, or discrete LUT execution.
 
-    Dropout is zero and attention normalization is softmax in every supported
-    configuration. WARP's default Gumbel-Sigmoid noise must additionally be
-    disabled for deterministic soft evaluation. All caller modes are restored.
+    ``soft`` and ``hard`` are strictly deterministic (all Gumbel noise disabled).
+    ``train_soft`` enables stochastic Gumbel smoothing/noise when configured on the
+    model during training only. All caller modes are restored on exit.
     """
-    if mode not in ("soft", "hard", "ste"):
-        raise ValueError("mode must be soft, hard or ste")
+    if mode not in ("soft", "train_soft", "hard", "ste"):
+        raise ValueError("mode must be soft, train_soft, hard or ste")
     states = [(child, child.training) for child in module.modules()]
     lut_states = [(child, child.selection, child.gumbel, child.gumbel_noise)
                   for child, _ in states if isinstance(child, LutLayer)]
+    lm_states = [(child, child.forward_mode)
+                 for child, _ in states if isinstance(child, LearnableMapping)]
+    cfg = getattr(module, "config", None)
+    use_warp_gumbel = bool(getattr(cfg, "warp_gumbel", False)) if mode == "train_soft" else False
+    use_softmax_gumbel = bool(getattr(cfg, "gumbel_noise", False)) if mode == "train_soft" else False
     try:
         module.train(mode != "hard")
         for layer, _, _, _ in lut_states:
-            layer.selection = "hard_st" if mode == "ste" else "soft"
-            layer.gumbel = False
-            layer.gumbel_noise = False
+            if mode == "ste":
+                if layer.parameterization not in ("softmax", "warp"):
+                    raise ValueError(
+                        f"ste mode requires softmax or warp parameterization, got {layer.parameterization!r}"
+                    )
+                layer.selection = "hard_st"
+            else:
+                layer.selection = "soft"
+            layer.gumbel = use_warp_gumbel and (layer.parameterization == "warp")
+            layer.gumbel_noise = use_softmax_gumbel and (layer.parameterization == "softmax")
+        if mode != "train_soft":
+            for lm, _ in lm_states:
+                lm.forward_mode = "hard"
         yield
     finally:
         for child, training in states:
@@ -141,6 +221,28 @@ def griffith_mode(module: nn.Module, mode: str):
             layer.selection = selection
             layer.gumbel = gumbel
             layer.gumbel_noise = gumbel_noise
+        for lm, forward_mode in lm_states:
+            lm.forward_mode = forward_mode
+
+
+def _upgrade_to_learnable_wiring(module: nn.Module, lm_tau: float) -> None:
+    """Recursively replace LutLayer modules with official LearnableMapping-enabled LutLayers."""
+    for name, child in list(module.named_children()):
+        if isinstance(child, LutLayer):
+            setattr(module, name, LutLayer(
+                in_dim=child.in_dim,
+                out_dim=child.out_dim,
+                n_inputs=child.n_inputs,
+                grad_factor=child.grad_factor,
+                parameterization=child.parameterization,
+                selection=child.selection,
+                gumbel_noise=child.gumbel_noise,
+                gumbel_tau=child.gumbel_tau,
+                wiring="learnable",
+                lm_tau=lm_tau,
+            ))
+        else:
+            _upgrade_to_learnable_wiring(child, lm_tau)
 
 
 class ModuleIOModel(nn.Module):
@@ -158,24 +260,57 @@ class ModuleIOModel(nn.Module):
             n_layers=c.n_layers,
             mlp_ratio=c.mlp_ratio,
             dropout=0.0,
-            attention="logic_proj" if c.logic else "fp",
-            ffn="logic" if c.logic else "fp",
+            attention=c.attention,
+            ffn=c.ffn,
+            weight_tying=c.weight_tying,
             attention_kwargs=({
                 "qk_bits": c.qk_bits,
                 "v_bits": c.v_bits,
-                "n_inputs": 2,
-                "parameterization": "warp",
-                "proj_depth": 1,
-                "score": "fp_dot",
-                "norm": "softmax",
-                "gumbel_noise": False,
-            } if c.logic else {}),
+                "n_inputs": c.n_inputs,
+                "parameterization": c.parameterization,
+                "proj_depth": c.proj_depth,
+                "score": c.attention_score,
+                "norm": c.attention_norm,
+                "tau": 1.0,
+                "gumbel_noise": c.gumbel_noise,
+                "gumbel_tau": c.gumbel_tau,
+            } if c.attention == "logic_proj" else {}),
         ))
+        if c.ffn == "logic" and c.ffn_n_inputs != 2:
+            ffn_spec = LogicSpec(
+                parameterization="warp",
+                encoder="sigmoid",
+                decoder="groupsum_centered",
+                depth=2,
+                width=c.d_model * c.mlp_ratio,
+                n_inputs=c.ffn_n_inputs,
+            )
+            for block in self.network.blocks:
+                block.ffn = LogicMLP(c.d_model, c.d_model, spec=ffn_spec)
+        if c.wiring == "learnable":
+            _upgrade_to_learnable_wiring(self.network, c.lm_tau)
         for layer in self.network.modules():
             if isinstance(layer, LutLayer):
                 layer.gumbel = False
                 layer.gumbel_noise = False
                 layer.selection = "soft"
+        with torch.no_grad():
+            if c.pos_init == "sinusoidal":
+                scale = float(c.embed_init_std if c.embed_init_std is not None else 0.25)
+                pe = torch.zeros(c.max_seq_len, c.d_model, dtype=torch.float32)
+                positions = torch.arange(c.max_seq_len, dtype=torch.float32).unsqueeze(1)
+                div = torch.exp(
+                    torch.arange(0, c.d_model, 2, dtype=torch.float32)
+                    * (-math.log(10000.0) / c.d_model)
+                )
+                pe[:, 0::2] = torch.sin(positions * div)
+                pe[:, 1::2] = torch.cos(positions * div[: c.d_model // 2])
+                self.network.pos_embed.weight.copy_(pe * scale)
+                self.network.token_embed.weight.normal_(0.0, scale)
+            elif c.embed_init_std is not None:
+                scale = float(c.embed_init_std)
+                self.network.token_embed.weight.normal_(0.0, scale)
+                self.network.pos_embed.weight.normal_(0.0, scale)
 
     def forward(self, input_ids: torch.Tensor, mode: str | None = None) -> torch.Tensor:
         if input_ids.ndim != 2 or input_ids.shape[1] == 0:
